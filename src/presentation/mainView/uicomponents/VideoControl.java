@@ -1,5 +1,6 @@
 package presentation.mainView.uicomponents;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,8 +16,18 @@ public class VideoControl extends HBox {
         jmpNxtKey = new Button("Next");
         jmpPrvKey = new Button("Prev");
         timeLabel = new Label("00:00:01");
+
+        HBox.setMargin(playButton, new Insets(10));
+        HBox.setMargin(jmpNxtKey, new Insets(10));
+        HBox.setMargin(jmpPrvKey, new Insets(10));
+        HBox.setMargin(timeLabel, new Insets(10));
+
         this.getStyleClass().addAll("view-element", "video-control-section");
         this.setAlignment(Pos.CENTER);
         this.getChildren().addAll(timeLabel, jmpPrvKey,playButton,jmpNxtKey);
+    }
+
+    public Button getPlayButton() {
+        return playButton;
     }
 }

@@ -3,13 +3,7 @@ package presentation.mainView;
 import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
-
-import java.awt.*;
-import java.io.File;
 
 public class EditingViewController {
     EditingView root;
@@ -22,36 +16,28 @@ public class EditingViewController {
         this.exportView = new ExportView();
         this.videoViewController = new VideoViewController();
         this.libraryView = new LibraryView();
-        TimeLineView timeLineView = new TimeLineView();
+        TitleComponent titleComponent = new TitleComponent();
+        TimelineViewController timelineViewController = new TimelineViewController();
 
         Insets testInsets = new Insets(10);
 
-
-
-
-        File file = new File("src/data/video/videoplayback.mp4");
-        MediaViewPane mediaViewPane = new MediaViewPane();
-        Media media = new Media(file.toURI().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setAutoPlay(true);
-        mediaViewPane.setMediaView(new MediaView(mediaPlayer));
-
-        mediaViewPane.prefWidthProperty().bind(primaryStage.widthProperty().divide(2));
         libraryView.prefWidthProperty().bind(primaryStage.widthProperty().divide(4));
         exportView.prefWidthProperty().bind(primaryStage.widthProperty().divide(4));
-        timeLineView.prefHeightProperty().bind(primaryStage.heightProperty().divide(2));
+        timelineViewController.getRoot().prefHeightProperty().bind(primaryStage.heightProperty().divide(2));
 
         //videoViewController.getRoot().getMediaViewPane().prefWidthProperty().bind(primaryStage.widthProperty().divide(2));
 
         root.setRight(exportView);
         root.setLeft(libraryView);
         root.setCenter(videoViewController.getRoot());
-        root.setBottom(timeLineView);
+        root.setBottom(timelineViewController.getRoot());
+        root.setTop(titleComponent);
 
         BorderPane.setMargin(exportView, testInsets);
         BorderPane.setMargin(libraryView, testInsets);
+        BorderPane.setMargin(titleComponent, testInsets);
         BorderPane.setMargin(videoViewController.getRoot(), testInsets);
-        BorderPane.setMargin(timeLineView, testInsets);
+        BorderPane.setMargin(timelineViewController.getRoot(), testInsets);
 
 
 

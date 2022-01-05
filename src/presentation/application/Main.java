@@ -14,7 +14,7 @@ public class Main extends Application {
     public void start(Stage primaryStage){
         this.primaryStage = primaryStage;
         editingViewController = new EditingViewController(primaryStage);
-        Scene scene = new Scene(editingViewController.getRoot(), 500, 500);
+        Scene scene = new Scene(editingViewController.getRoot(), 1920, 1080);
         scene.getStylesheets().add("/presentation/application/application.css");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -22,7 +22,7 @@ public class Main extends Application {
     }
 
     public void init(){
-
+        System.setProperty("prism.lcdtext", "false");
     }
 
     public void stop(){
