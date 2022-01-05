@@ -15,7 +15,7 @@ public class Main extends Application {
         Scene scene = new Scene(new HBox(), 500, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
-    //Test Comment
+
     }
 
     public void stop(){
