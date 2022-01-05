@@ -1,20 +1,20 @@
 package presentation.mainView;
 
-import javafx.scene.layout.Pane;
 import presentation.mainView.uicomponents.VideoControl;
 
 public class VideoViewController {
 
     private VideoView root;
+    private VideoPlayer videoPlayer;
     private VideoControl videoControl;
 
     public VideoViewController(){
-        videoControl = new VideoControl();
-        this.root = new VideoView();
-        root.getChildren().addAll(videoControl);
+        this.videoControl = new VideoControl();
+        this.videoPlayer = new VideoPlayer();
+        this.root = new VideoView(videoPlayer, videoControl);
     }
 
-    public Pane getRoot(){
+    public VideoView getRoot(){
         return this.root;
     }
 }

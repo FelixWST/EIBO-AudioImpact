@@ -6,3 +6,7 @@
     -fx-background-color: #393939;
     -fx-background-radius: 20px;
 }
+
+.video-control-section{
+    -fx-background-radius: 0px 0px 10px 10px;
+}

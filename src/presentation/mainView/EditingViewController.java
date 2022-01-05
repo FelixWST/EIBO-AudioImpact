@@ -41,14 +41,16 @@ public class EditingViewController {
         exportView.prefWidthProperty().bind(primaryStage.widthProperty().divide(4));
         timeLineView.prefHeightProperty().bind(primaryStage.heightProperty().divide(2));
 
+        //videoViewController.getRoot().getMediaViewPane().prefWidthProperty().bind(primaryStage.widthProperty().divide(2));
+
         root.setRight(exportView);
         root.setLeft(libraryView);
-        root.setCenter(mediaViewPane);
+        root.setCenter(videoViewController.getRoot());
         root.setBottom(timeLineView);
 
         BorderPane.setMargin(exportView, testInsets);
         BorderPane.setMargin(libraryView, testInsets);
-        BorderPane.setMargin(mediaViewPane, testInsets);
+        BorderPane.setMargin(videoViewController.getRoot(), testInsets);
         BorderPane.setMargin(timeLineView, testInsets);
 
 
