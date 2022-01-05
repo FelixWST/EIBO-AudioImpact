@@ -4,5 +4,5 @@
 
 .view-element{
     -fx-background-color: #393939;
-    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
 }

@@ -14,12 +14,16 @@ public class VideoView extends VBox {
 
     public VideoView(){
         MediaView mediaView = new MediaView();
+        MediaViewPane mediaViewPane = new MediaViewPane();
         Media media = new Media(file.toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
         mediaView.setMediaPlayer(mediaPlayer);
+        //mediaView.setPreserveRatio(true);
+        mediaViewPane.setMediaView(mediaView);
 
-        this.getChildren().addAll(mediaView);
+
+        this.getChildren().addAll(mediaViewPane);
     }
 
 }

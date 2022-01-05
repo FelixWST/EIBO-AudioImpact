@@ -13,6 +13,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage){
         this.primaryStage = primaryStage;
+        editingViewController = new EditingViewController(primaryStage);
         Scene scene = new Scene(editingViewController.getRoot(), 500, 500);
         scene.getStylesheets().add("/presentation/application/application.css");
         primaryStage.setScene(scene);
@@ -21,7 +22,7 @@ public class Main extends Application {
     }
 
     public void init(){
-        editingViewController = new EditingViewController();
+
     }
 
     public void stop(){
