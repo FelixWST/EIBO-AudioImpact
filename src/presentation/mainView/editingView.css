@@ -1,7 +1,8 @@
 *{
-    -fx-background-color: #333333;
+
 }
 
 .view-element{
-    -fx-background-color: red;
+    -fx-background-color: #393939;
+    -fx-border-radius: 20px;
 }
