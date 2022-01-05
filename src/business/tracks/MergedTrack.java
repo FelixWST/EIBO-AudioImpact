@@ -27,6 +27,12 @@ public class MergedTrack {
         return this.title;
     }
 
+    public int getDuration(){
+        return this.duration;
+    }
 
+    public AudioTrack[] getAudioTracks() {
+        return this.audioTracks;
+    }
 
 }
