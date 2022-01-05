@@ -1,5 +1,6 @@
 package presentation.application;
 
+import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
@@ -14,6 +15,8 @@ public class Main extends Application {
         Scene scene = new Scene(new HBox(), 500, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        SimpleMinim testObjekt;
     //Test Comment
     }
 
