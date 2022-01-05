@@ -8,7 +8,7 @@ import java.io.File;
 
 public class VideoView extends MediaView {
 
-    File file = new File("C:\\Users\\nikla\\Downloads\\The Breathtaking Beauty of Nature _ HD.mp4");
+    File file = new File("src/data/video/videoplayback.mp4");
 
     public VideoView(){
         Media media = new Media(file.toURI().toString());
