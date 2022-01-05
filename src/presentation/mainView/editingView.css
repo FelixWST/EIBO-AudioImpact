@@ -1,0 +1,7 @@
+*{
+    -fx-background-color: #d4d4;
+}
+
+.view-element{
+    -fx-background-color: red;
+}
