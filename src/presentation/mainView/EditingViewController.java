@@ -5,14 +5,14 @@ import javafx.scene.layout.Pane;
 public class EditingViewController {
     EditingView root;
     ExportView exportView;
-    VideoView videoView;
+    VideoViewController videoViewController;
 
     public EditingViewController(){
         this.root = new EditingView();
         this.exportView = new ExportView();
-        this.videoView = new VideoView();
+        this.videoViewController = new VideoViewController();
         root.setRight(exportView);
-        root.setCenter(videoView);
+        root.setCenter(videoViewController.getRoot());
 
     }
 
