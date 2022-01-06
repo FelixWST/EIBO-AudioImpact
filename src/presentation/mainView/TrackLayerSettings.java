@@ -1,5 +1,6 @@
 package presentation.mainView;
 
+import business.playback.TrackPlayer;
 import business.tracks.AudioTrackType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,7 +19,7 @@ public class TrackLayerSettings extends HBox {
         int g = Integer.valueOf(colorHex.substring( 3, 5 ),16 );
         int b = Integer.valueOf(colorHex.substring( 5, 7 ),16 );
 
-        volumeSettingSlider = new Slider();
+        volumeSettingSlider = new Slider(-80, 6, 0);
         volumeSettingSlider.prefWidthProperty().bind(this.widthProperty().multiply(0.8));
         mute = new Button("M");
         mute.prefWidthProperty().bind(this.widthProperty().multiply(0.1));

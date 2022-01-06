@@ -18,6 +18,8 @@ public class TrackPlayer {
     private float volume;
     private Thread playerThread;
     private int lastStoppedPosition = 0;
+    public final float MIN_GAIN = -80;
+    public final float MAX_GAIN = 6;
 
     public TrackPlayer(AudioTrack audioTrack) {
         this.minim = new SimpleMinim(false);
@@ -51,8 +53,12 @@ public class TrackPlayer {
 
     }
 
-    public void setVolume() {
-
+    public void setVolume(float gain) {
+        if(simpleAudioPlayer!=null){
+            if(gain>=MIN_GAIN && gain<=MAX_GAIN){
+                simpleAudioPlayer.setGain(gain);
+            }
+        }
     }
 
     public boolean isPlaying(){

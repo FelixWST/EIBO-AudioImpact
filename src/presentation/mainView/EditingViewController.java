@@ -20,7 +20,7 @@ public class EditingViewController {
         this.videoViewController = new VideoViewController(application);
         this.libraryView = new LibraryView();
         TitleComponent titleComponent = new TitleComponent();
-        TimelineViewController timelineViewController = new TimelineViewController();
+        TimelineViewController timelineViewController = new TimelineViewController(application);
 
         Insets testInsets = new Insets(10);
 

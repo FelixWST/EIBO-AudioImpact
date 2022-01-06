@@ -37,6 +37,12 @@ public class PlayerManager {
         }
     }
 
+    public void setTrackVolume(AudioTrackType trackType, float gain){
+        if(player.containsKey(trackType) && player.get(trackType)!=null){
+            player.get(trackType).setVolume(gain);
+        }
+    }
+
 
 
 
