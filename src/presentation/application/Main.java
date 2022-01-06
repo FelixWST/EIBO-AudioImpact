@@ -1,5 +1,6 @@
 package presentation.application;
 
+import business.managing.PlayerManager;
 import business.managing.TrackManager;
 import business.playback.TrackPlayer;
 import business.tracks.AudioTrack;
@@ -37,8 +38,9 @@ public class Main extends Application {
         TrackManager trackManager = new TrackManager();
         trackManager.addMergedTrack(firstMergedTrack);
 
-        TrackPlayer trackPlayer = new TrackPlayer(firstMergedTrack);
-        trackPlayer.play();
+        PlayerManager playerManager = new PlayerManager(firstMergedTrack);
+        playerManager.startPlaying();
+
 
 
     }

@@ -2,33 +2,35 @@ package business.playback;
 
 
 import business.tracks.AudioTrack;
+import business.tracks.AudioTrackType;
 import business.tracks.MergedTrack;
+import ddf.minim.AudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
 
+import java.util.HashMap;
+
 public class TrackPlayer {
     private SimpleMinim minim;
-    private SimpleAudioPlayer audioPlayer;
-    private MergedTrack mergedTrack;
+    private SimpleAudioPlayer simpleAudioPlayer;
+    private AudioTrack audioTrack;
     private int time;
     private float volume;
 
-    public TrackPlayer(MergedTrack mergedTrack) {
+    public TrackPlayer(AudioTrack audioTrack) {
         this.minim = new SimpleMinim(true);
-        this.mergedTrack = mergedTrack;
+        this.audioTrack = audioTrack;
     }
 
     public void play() {
         //Thread aufrufen
-        if(mergedTrack.getAudioTracks()!=null){
-            for(AudioTrack t : mergedTrack.getAudioTracks()){
+        if(audioTrack!=null){
                 new Thread(){
                     public void run(){
-                        audioPlayer = minim.loadMP3File(t.getPath());
-                        audioPlayer.play();
+                        simpleAudioPlayer = minim.loadMP3File(audioTrack.getPath());
+                        simpleAudioPlayer.play();
                     }
                 }.start();
-            }
         }
 
     }
