@@ -9,19 +9,27 @@ import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
 public class TrackPlayer {
     private SimpleMinim minim;
     private SimpleAudioPlayer audioPlayer;
-    private AudioTrack audioTrack;
+    private MergedTrack mergedTrack;
     private int time;
     private float volume;
 
-    public TrackPlayer(SimpleMinim minim, SimpleAudioPlayer audioPlayer, AudioTrack audioTrack, int time) {
-        this.minim = minim;
-        this.audioPlayer = audioPlayer;
-        this.audioTrack = audioTrack;
-        this.time = time;
+    public TrackPlayer(MergedTrack mergedTrack) {
+        this.minim = new SimpleMinim(true);
+        this.mergedTrack = mergedTrack;
     }
 
     public void play() {
         //Thread aufrufen
+        if(mergedTrack.getAudioTracks()!=null){
+            for(AudioTrack t : mergedTrack.getAudioTracks()){
+                new Thread(){
+                    public void run(){
+                        audioPlayer = minim.loadMP3File(t.getPath());
+                        audioPlayer.play();
+                    }
+                }.start();
+            }
+        }
 
     }
 

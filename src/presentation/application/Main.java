@@ -1,5 +1,11 @@
 package presentation.application;
 
+import business.managing.TrackManager;
+import business.playback.TrackPlayer;
+import business.tracks.AudioTrack;
+import business.tracks.AudioTrackType;
+import business.tracks.Genre;
+import business.tracks.MergedTrack;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
@@ -18,6 +24,22 @@ public class Main extends Application {
         scene.getStylesheets().add("/presentation/application/application.css");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        AudioTrack testAtmoTrack = new AudioTrack("src/data/testData/exampleTrack/atmosphere.mp3", AudioTrackType.ATMOSPHERE);
+        AudioTrack testDepthTrack = new AudioTrack("src/data/testData/exampleTrack/depth.mp3", AudioTrackType.DEPTH);
+        AudioTrack testIntensityTrack = new AudioTrack("src/data/testData/exampleTrack/intensity.mp3", AudioTrackType.INTENSITY);
+
+        MergedTrack firstMergedTrack = new MergedTrack("Test", 200, Genre.CINEMATIC);
+        firstMergedTrack.addTrack(testAtmoTrack);
+        firstMergedTrack.addTrack(testDepthTrack);
+        firstMergedTrack.addTrack(testIntensityTrack);
+
+        TrackManager trackManager = new TrackManager();
+        trackManager.addMergedTrack(firstMergedTrack);
+
+        TrackPlayer trackPlayer = new TrackPlayer(firstMergedTrack);
+        trackPlayer.play();
+
 
     }
 
