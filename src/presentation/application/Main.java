@@ -17,14 +17,13 @@ public class Main extends Application {
 
     private Stage primaryStage;
     private EditingViewController editingViewController;
+    TrackManager trackManager;
+    public PlayerManager playerManager;
+
+
     @Override
     public void start(Stage primaryStage){
         this.primaryStage = primaryStage;
-        editingViewController = new EditingViewController(primaryStage);
-        Scene scene = new Scene(editingViewController.getRoot(), 1920, 1080);
-        scene.getStylesheets().add("/presentation/application/application.css");
-        primaryStage.setScene(scene);
-        primaryStage.show();
 
         AudioTrack testAtmoTrack = new AudioTrack("src/data/testData/exampleTrack/atmosphere.mp3", AudioTrackType.ATMOSPHERE);
         AudioTrack testDepthTrack = new AudioTrack("src/data/testData/exampleTrack/depth.mp3", AudioTrackType.DEPTH);
@@ -35,14 +34,17 @@ public class Main extends Application {
         firstMergedTrack.addTrack(testDepthTrack);
         firstMergedTrack.addTrack(testIntensityTrack);
 
-        TrackManager trackManager = new TrackManager();
+        trackManager = new TrackManager();
         trackManager.addMergedTrack(firstMergedTrack);
 
-        PlayerManager playerManager = new PlayerManager(firstMergedTrack);
-        playerManager.startPlaying();
+        playerManager = new PlayerManager(firstMergedTrack);
+        //playerManager.startPlaying();
 
-
-
+        editingViewController = new EditingViewController(primaryStage, this);
+        Scene scene = new Scene(editingViewController.getRoot(), 1920, 1080);
+        scene.getStylesheets().add("/presentation/application/application.css");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     public void init(){

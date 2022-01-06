@@ -3,6 +3,7 @@ package presentation.mainView;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.media.MediaPlayer;
+import presentation.application.Main;
 import presentation.mainView.uicomponents.VideoControl;
 
 public class VideoViewController {
@@ -10,8 +11,10 @@ public class VideoViewController {
     private VideoView root;
     private VideoPlayer videoPlayer;
     private VideoControl videoControl;
+    private Main application;
 
-    public VideoViewController(){
+    public VideoViewController(Main application){
+        this.application = application;
         this.videoControl = new VideoControl();
         this.videoPlayer = new VideoPlayer();
         this.root = new VideoView(videoPlayer, videoControl);
@@ -29,12 +32,15 @@ public class VideoViewController {
             switch(status){
                 case READY:
                     videoPlayer.getMediaPlayer().play();
+                    application.playerManager.startPlaying();
                     break;
                 case PAUSED:
                     videoPlayer.getMediaPlayer().play();
+                    application.playerManager.startPlaying();
                     break;
                 case PLAYING:
                     videoPlayer.getMediaPlayer().pause();
+                    application.playerManager.pausePlaying();
                     break;
             }
         });

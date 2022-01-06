@@ -16,34 +16,46 @@ public class TrackPlayer {
     private AudioTrack audioTrack;
     private int time;
     private float volume;
+    private Thread playerThread;
+    private int lastStoppedPosition = 0;
 
     public TrackPlayer(AudioTrack audioTrack) {
-        this.minim = new SimpleMinim(true);
+        this.minim = new SimpleMinim(false);
         this.audioTrack = audioTrack;
+        playerThread = new Thread();
     }
 
     public void play() {
-        //Thread aufrufen
-        if(audioTrack!=null){
-                new Thread(){
-                    public void run(){
-                        simpleAudioPlayer = minim.loadMP3File(audioTrack.getPath());
-                        simpleAudioPlayer.play();
-                    }
-                }.start();
+        if(!isPlaying()){
+            //Thread aufrufen
+            if(audioTrack!=null){
+                    playerThread = new Thread(){
+                        public void run(){
+                            simpleAudioPlayer = minim.loadMP3File(audioTrack.getPath());
+                            simpleAudioPlayer.play(lastStoppedPosition);
+                        }
+                    };
+                    playerThread.start();
+            }
         }
 
     }
 
     public void pause() {
-
+        simpleAudioPlayer.pause();
+        lastStoppedPosition = simpleAudioPlayer.position();
+        playerThread.interrupt();
     }
 
-    public void jumpTo(){
+    public void jumpTo(int timeInMillis){
 
     }
 
     public void setVolume() {
 
+    }
+
+    public boolean isPlaying(){
+        return (simpleAudioPlayer==null) ? false : simpleAudioPlayer.isPlaying();
     }
 }

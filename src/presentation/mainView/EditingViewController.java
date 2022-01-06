@@ -4,17 +4,20 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import presentation.application.Main;
 
 public class EditingViewController {
     EditingView root;
     ExportView exportView;
     LibraryView libraryView;
     VideoViewController videoViewController;
+    Main application;
 
-    public EditingViewController(Stage primaryStage){
+    public EditingViewController(Stage primaryStage, Main application){
+        this.application = application;
         this.root = new EditingView();
         this.exportView = new ExportView();
-        this.videoViewController = new VideoViewController();
+        this.videoViewController = new VideoViewController(application);
         this.libraryView = new LibraryView();
         TitleComponent titleComponent = new TitleComponent();
         TimelineViewController timelineViewController = new TimelineViewController();

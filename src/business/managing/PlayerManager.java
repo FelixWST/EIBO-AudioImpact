@@ -27,5 +27,17 @@ public class PlayerManager {
         }
     }
 
+    public void startPlaying(int timeInMillis){
+
+    }
+
+    public void pausePlaying(){
+        for(Map.Entry<AudioTrackType, TrackPlayer> entry : player.entrySet()){
+            entry.getValue().pause();
+        }
+    }
+
+
+
 
 }
