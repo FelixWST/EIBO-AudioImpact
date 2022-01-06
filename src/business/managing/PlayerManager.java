@@ -43,6 +43,14 @@ public class PlayerManager {
         }
     }
 
+    public void toggleMuteOnTrack(AudioTrackType trackType){
+        //Track Muten, darf aber keinen einfluss auf Automation haben
+    }
+
+    public void toggleSoloOnTrack(AudioTrackType trackType){
+        //Track Solo = rest auf Mute
+    }
+
 
 
 

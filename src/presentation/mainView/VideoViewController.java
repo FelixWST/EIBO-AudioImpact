@@ -6,6 +6,8 @@ import javafx.scene.media.MediaPlayer;
 import presentation.application.Main;
 import presentation.mainView.uicomponents.VideoControl;
 
+import java.util.concurrent.TimeUnit;
+
 public class VideoViewController {
 
     private VideoView root;
@@ -58,7 +60,27 @@ public class VideoViewController {
             }
         });
 
+        videoPlayer.getMediaPlayer().currentTimeProperty().addListener(((observableValue, duration, t1) -> {
+            root.videoProgressBar.setProgress(t1.toMillis()/videoPlayer.getMediaPlayer().getMedia().getDuration().toMillis());
+            videoControl.getTimeLabel().setText(millisToTimecode((long) t1.toMillis()));
 
+            System.out.println(videoPlayer.getMediaPlayer().getMedia().getMetadata().toString());
+        }));
+
+        videoPlayer.getMediaPlayer().onEndOfMediaProperty().addListener(((observableValue, runnable, t1) -> {
+            System.out.println("End Of Video");
+        }));
+
+
+
+    }
+
+    public String millisToTimecode(long millis){
+        return String.format("%02d:%02d:%02d:%02d",
+                TimeUnit.MILLISECONDS.toHours(millis),
+                TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+                TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)),
+                (TimeUnit.MILLISECONDS.toMillis(millis) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(millis)))/40);
     }
 
     public VideoView getRoot(){

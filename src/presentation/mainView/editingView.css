@@ -56,3 +56,15 @@
 #video-control-section Button:pressed{
     -fx-opacity: 0.5;
 }
+
+.progress-bar .track{
+    -fx-background-color: #393939;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}
+.progress-bar .bar {
+    -fx-background-color: #ffac00;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-radius: 0;
+}

@@ -31,6 +31,32 @@ public class TimelineViewController {
             application.playerManager.setTrackVolume(AudioTrackType.INTENSITY, t1.floatValue());
         }));
 
+        root.timelineTrackSettings.tls1.mute.setOnAction((event)->{
+
+        });
+
+        root.timelineTrackSettings.tls2.mute.setOnAction((event)->{
+
+        });
+
+        root.timelineTrackSettings.tls3.mute.setOnAction((event)->{
+
+        });
+
+
+        //SOLO -> DE-SOLO oder solo in Playermanager?
+        root.timelineTrackSettings.tls1.solo.setOnAction((event)->{
+
+        });
+
+        root.timelineTrackSettings.tls2.solo.setOnAction((event)->{
+
+        });
+
+        root.timelineTrackSettings.tls3.solo.setOnAction((event)->{
+
+        });
+
 
     }
 
