@@ -9,7 +9,7 @@ public class VideoDropZone extends HBox {
     Label addIcon;
 
     public VideoDropZone(){
-        addIcon = new Label("+");
+        addIcon = new Label("-");
         this.setAlignment(Pos.CENTER);
         this.getChildren().addAll(addIcon);
     }
