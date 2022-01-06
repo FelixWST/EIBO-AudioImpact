@@ -68,3 +68,9 @@
     -fx-background-insets: 0 0 0 0;
     -fx-border-radius: 0;
 }
+
+.tracktype-label{
+    -fx-text-alignment: left;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
