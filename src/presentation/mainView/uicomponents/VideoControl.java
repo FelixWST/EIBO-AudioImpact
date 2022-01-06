@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
-public class VideoControl extends HBox {
+public class  VideoControl extends HBox {
     Button playButton, jmpPrvKey, jmpNxtKey;
     Label timeLabel;
 
