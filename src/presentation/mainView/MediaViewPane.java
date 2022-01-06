@@ -35,7 +35,7 @@ public class MediaViewPane extends Region {
         if(mediaView!=null){
             mediaView.setFitWidth(getWidth());
             mediaView.setFitHeight(getHeight());
-            layoutInArea(mediaView, 0,0,getWidth(),getHeight(),0, HPos.CENTER, VPos.BOTTOM);
+            layoutInArea(mediaView, 0,0,getWidth(),getHeight(),0, HPos.CENTER, VPos.CENTER);
         }
         super.layoutChildren();
     }
