@@ -50,10 +50,10 @@ public class VideoViewController {
             public void changed(ObservableValue<? extends MediaPlayer.Status> observableValue, MediaPlayer.Status status, MediaPlayer.Status t1) {
                 switch(t1){
                     case PLAYING:
-                        videoControl.getPlayButton().setText("Pause");
+                        videoControl.getPlayButton().setId("pause-button");
                         break;
                     default:
-                        videoControl.getPlayButton().setText("Play");
+                        videoControl.getPlayButton().setId("play-button");
                 }
             }
         });

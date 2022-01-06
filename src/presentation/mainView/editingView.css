@@ -22,3 +22,37 @@
     -fx-border-width: 2px;
     -fx-border-style: hidden solid hidden hidden;
 }
+
+#play-button{
+    -fx-background-image: url(../../data/assets/play.png);
+}
+
+#pause-button{
+    -fx-background-image: url(../../data/assets/pause.png);
+}
+
+#skip-fw-button{
+    -fx-background-image: url(../../data/assets/forward.png);
+}
+
+#skip-bw-button{
+    -fx-background-image: url(../../data/assets/backward.png);
+}
+
+#video-control-section Button{
+    -fx-pref-height: 25;
+    -fx-pref-width: 25;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position:center;
+}
+
+#video-control-section Button:hover{
+    -fx-cursor: hand;
+    -fx-opacity: 0.8;
+}
+
+#video-control-section Button:pressed{
+    -fx-opacity: 0.5;
+}

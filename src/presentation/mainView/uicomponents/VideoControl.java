@@ -12,10 +12,16 @@ public class  VideoControl extends HBox {
     Label timeLabel;
 
     public VideoControl(){
-        playButton = new Button("Play");
-        jmpNxtKey = new Button("Next");
-        jmpPrvKey = new Button("Prev");
+        this.setId("video-control-section");
+        playButton = new Button();
+        playButton.setId("play-button");
+        jmpNxtKey = new Button("");
+        jmpNxtKey.setId("skip-fw-button");
+        jmpPrvKey = new Button("");
+        jmpPrvKey.setId("skip-bw-button");
         timeLabel = new Label("00:00:01");
+
+
 
         HBox.setMargin(playButton, new Insets(10));
         HBox.setMargin(jmpNxtKey, new Insets(10));
