@@ -3,6 +3,7 @@ package presentation.mainView.timelineView;
 import business.tracks.AudioTrackType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import presentation.application.Main;
@@ -12,23 +13,21 @@ public class TimelineViewController {
 
     private StackPane root;
     private TimeLineView timeLineView;
-    TimelineTimeIndicator timelineTimeIndicator;
     VideoViewController videoViewController;
     private Main application;
 
     public TimelineViewController(Main application, VideoViewController videoViewController){
         this.videoViewController = videoViewController;
         timeLineView = new TimeLineView();
-        timelineTimeIndicator = new TimelineTimeIndicator();
 
 
         videoViewController.getMediaPlayer().setOnReady(()->{
-            timelineTimeIndicator.timeIndicator.setMax(application.videoFile.getDuration());
+            timeLineView.timelineTracks.timelineSlider.setMax(application.videoFile.getDuration());
         });
 
-        timelineTimeIndicator.timeIndicator.valueChangingProperty().addListener(((observableValue, aBoolean, t1) -> {
+        timeLineView.timelineTracks.timelineSlider.valueChangingProperty().addListener(((observableValue, aBoolean, t1) -> {
             if(!t1){
-                videoViewController.getMediaPlayer().seek(new Duration(timelineTimeIndicator.timeIndicator.getValue()));
+                videoViewController.getMediaPlayer().seek(new Duration(timeLineView.timelineTracks.timelineSlider.getValue()));
             }
         }));
 
@@ -87,8 +86,8 @@ public class TimelineViewController {
 
     }
 
-    public TimelineTimeIndicator getTimelineTimeIndicator(){
-        return this.timelineTimeIndicator;
+    public Slider getTimelineSlider(){
+        return this.timeLineView.timelineTracks.timelineSlider;
     }
 
     public StackPane getTimeLineView(){
