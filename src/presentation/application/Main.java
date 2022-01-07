@@ -15,6 +15,7 @@ import presentation.mainView.EditingViewController;
 import java.io.File;
 
 public class Main extends Application {
+    //Comment
 
     private Stage primaryStage;
     public EditingViewController editingViewController;
