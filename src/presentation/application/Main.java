@@ -1,6 +1,8 @@
 package presentation.application;
 
+import business.managing.PlayerManager;
 import business.managing.TrackManager;
+import business.managing.VideoFile;
 import business.playback.TrackPlayer;
 import business.tracks.AudioTrack;
 import business.tracks.AudioTrackType;
@@ -12,18 +14,20 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import presentation.mainView.EditingViewController;
 
+import java.io.File;
+
 public class Main extends Application {
 
     private Stage primaryStage;
-    private EditingViewController editingViewController;
+    public EditingViewController editingViewController;
+    public VideoFile videoFile;
+    TrackManager trackManager;
+    public PlayerManager playerManager;
+
+
     @Override
     public void start(Stage primaryStage){
         this.primaryStage = primaryStage;
-        editingViewController = new EditingViewController(primaryStage);
-        Scene scene = new Scene(editingViewController.getRoot(), 1920, 1080);
-        scene.getStylesheets().add("/presentation/application/application.css");
-        primaryStage.setScene(scene);
-        primaryStage.show();
 
         AudioTrack testAtmoTrack = new AudioTrack("src/data/testData/exampleTrack/atmosphere.mp3", AudioTrackType.ATMOSPHERE);
         AudioTrack testDepthTrack = new AudioTrack("src/data/testData/exampleTrack/depth.mp3", AudioTrackType.DEPTH);
@@ -34,13 +38,20 @@ public class Main extends Application {
         firstMergedTrack.addTrack(testDepthTrack);
         firstMergedTrack.addTrack(testIntensityTrack);
 
-        TrackManager trackManager = new TrackManager();
+        trackManager = new TrackManager();
         trackManager.addMergedTrack(firstMergedTrack);
 
-        TrackPlayer trackPlayer = new TrackPlayer(firstMergedTrack);
-        trackPlayer.play();
+        playerManager = new PlayerManager(firstMergedTrack);
+
+        videoFile = new VideoFile(new File("src/data/video/videoplayback.mp4"));
 
 
+
+        editingViewController = new EditingViewController(primaryStage, this);
+        Scene scene = new Scene(editingViewController.getRoot(), 1920, 1080);
+        scene.getStylesheets().add("/presentation/application/application.css");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     public void init(){

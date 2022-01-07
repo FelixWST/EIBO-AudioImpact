@@ -3,56 +3,95 @@ package presentation.mainView;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import presentation.application.Main;
 import presentation.mainView.uicomponents.VideoControl;
+
+import java.util.concurrent.TimeUnit;
 
 public class VideoViewController {
 
     private VideoView root;
     private VideoPlayer videoPlayer;
     private VideoControl videoControl;
+    private VideoDropZoneController videoDropZoneController;
+    private Main application;
+    MediaPlayer mediaPlayer;
+    MediaView mediaView;
 
-    public VideoViewController(){
+    public VideoViewController(Main application){
+        this.application = application;
         this.videoControl = new VideoControl();
         this.videoPlayer = new VideoPlayer();
-        this.root = new VideoView(videoPlayer, videoControl);
+        this.videoDropZoneController = new VideoDropZoneController();
+        this.root = new VideoView(videoPlayer, videoDropZoneController.getRoot(), videoControl);
+
+        mediaPlayer = new MediaPlayer(application.videoFile.getVideoMedia());
+        mediaView = new MediaView(mediaPlayer);
+
+
+        videoPlayer.setMediaView(mediaView);
 
         videoPlayer.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                System.out.println(videoPlayer.mediaView.getFitWidth());
+                System.out.println(mediaView.getFitWidth());
             }
         });
 
         videoControl.getPlayButton().setOnAction((event)->{
-            MediaPlayer.Status status = videoPlayer.getMediaPlayer().getStatus();
+            MediaPlayer.Status status = mediaPlayer.getStatus();
 
             switch(status){
                 case READY:
-                    videoPlayer.getMediaPlayer().play();
+                    mediaPlayer.play();
+                    application.playerManager.startPlaying();
                     break;
                 case PAUSED:
-                    videoPlayer.getMediaPlayer().play();
+                    mediaPlayer.play();
+                    application.playerManager.startPlaying();
                     break;
                 case PLAYING:
-                    videoPlayer.getMediaPlayer().pause();
+                    mediaPlayer.pause();
+                    application.playerManager.pausePlaying();
                     break;
             }
         });
 
-        videoPlayer.getMediaPlayer().statusProperty().addListener(new ChangeListener<MediaPlayer.Status>() {
+        mediaPlayer.statusProperty().addListener(new ChangeListener<MediaPlayer.Status>() {
             @Override
             public void changed(ObservableValue<? extends MediaPlayer.Status> observableValue, MediaPlayer.Status status, MediaPlayer.Status t1) {
                 switch(t1){
                     case PLAYING:
-                        videoControl.getPlayButton().setText("Pause");
+                        videoControl.getPlayButton().setId("pause-button");
                         break;
                     default:
-                        videoControl.getPlayButton().setText("Play");
+                        videoControl.getPlayButton().setId("play-button");
                 }
             }
         });
 
+        mediaPlayer.currentTimeProperty().addListener(((observableValue, duration, t1) -> {
+            root.videoProgressBar.setProgress(t1.toMillis()/mediaPlayer.getMedia().getDuration().toMillis());
+            videoControl.getTimeLabel().setText(millisToTimecode((long) t1.toMillis()));
 
+            application.editingViewController.timelineViewController.timelineTimeIndicator.timeIndicator.setValue(t1.toMillis());
+        }));
+
+        mediaPlayer.onEndOfMediaProperty().addListener(((observableValue, runnable, t1) -> {
+            System.out.println("End Of Video");
+        }));
+
+
+
+    }
+
+    public String millisToTimecode(long millis){
+        return String.format("%02d:%02d:%02d:%02d",
+                TimeUnit.MILLISECONDS.toHours(millis),
+                TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+                TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)),
+                (TimeUnit.MILLISECONDS.toMillis(millis) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(millis)))/40);
     }
 
     public VideoView getRoot(){

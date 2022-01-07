@@ -10,6 +10,9 @@ public class Project {
     private TrackEditor trackEditor;
     private TrackManager trackManager;
 
+    public Project(){
+    }
+
     public Project(String projectTitle, String fileName, String path, TrackEditor trackEditor, TrackManager trackManager) {
         this.projectTitle = projectTitle;
         this.fileName = fileName;

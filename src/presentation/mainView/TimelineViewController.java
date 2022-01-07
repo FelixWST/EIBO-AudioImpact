@@ -1,26 +1,92 @@
 package presentation.mainView;
 
+import business.tracks.AudioTrackType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import presentation.mainView.uicomponents.TrackLayer;
+import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
+import presentation.application.Main;
 
 public class TimelineViewController {
 
-    private TimeLineView root;
+    private StackPane root;
+    private TimeLineView timeLineView;
+    TimelineTimeIndicator timelineTimeIndicator;
+    VideoViewController videoViewController;
+    private Main application;
 
-    public TimelineViewController(){
-        root = new TimeLineView();
-        root.heightProperty().addListener(new ChangeListener<Number>() {
+    public TimelineViewController(Main application, VideoViewController videoViewController){
+        this.videoViewController = videoViewController;
+        timeLineView = new TimeLineView();
+        timelineTimeIndicator = new TimelineTimeIndicator();
+
+
+        videoViewController.mediaPlayer.setOnReady(()->{
+            timelineTimeIndicator.timeIndicator.setMax(application.videoFile.getDuration());
+        });
+
+        timelineTimeIndicator.timeIndicator.valueChangingProperty().addListener(((observableValue, aBoolean, t1) -> {
+            if(!t1){
+                videoViewController.mediaPlayer.seek(new Duration(timelineTimeIndicator.timeIndicator.getValue()));
+            }
+        }));
+
+
+
+        root = new StackPane();
+        //root.getChildren().addAll(timeLineView, timelineTimeIndicator);
+        root.getChildren().addAll(timeLineView);
+
+        timeLineView.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                System.out.println("New height: "+t1.intValue());
-                root.timelineTracks.tl1.kf1.setRadius(root.timelineTracks.tl1.getHeight()/10);
+                timeLineView.timelineTracks.tl1.kf1.setRadius(timeLineView.timelineTracks.tl1.getHeight()/10);
             }
         });
 
+        timeLineView.timelineTrackSettings.tls1.volumeSettingSlider.valueProperty().addListener(((observableValue, number, t1) -> {
+            application.playerManager.setTrackVolume(AudioTrackType.DEPTH, t1.floatValue());
+        }));
+
+        timeLineView.timelineTrackSettings.tls2.volumeSettingSlider.valueProperty().addListener(((observableValue, number, t1) -> {
+            application.playerManager.setTrackVolume(AudioTrackType.ATMOSPHERE, t1.floatValue());
+        }));
+
+        timeLineView.timelineTrackSettings.tls3.volumeSettingSlider.valueProperty().addListener(((observableValue, number, t1) -> {
+            application.playerManager.setTrackVolume(AudioTrackType.INTENSITY, t1.floatValue());
+        }));
+
+        timeLineView.timelineTrackSettings.tls1.mute.setOnAction((event)->{
+
+        });
+
+        timeLineView.timelineTrackSettings.tls2.mute.setOnAction((event)->{
+
+        });
+
+        timeLineView.timelineTrackSettings.tls3.mute.setOnAction((event)->{
+
+        });
+
+
+        //SOLO -> DE-SOLO oder solo in Playermanager?
+        timeLineView.timelineTrackSettings.tls1.solo.setOnAction((event)->{
+
+        });
+
+        timeLineView.timelineTrackSettings.tls2.solo.setOnAction((event)->{
+
+        });
+
+        timeLineView.timelineTrackSettings.tls3.solo.setOnAction((event)->{
+
+        });
+
+
+
     }
 
-    public TimeLineView getRoot(){
+    public StackPane getTimeLineView(){
         return this.root;
     }
 }

@@ -2,46 +2,66 @@ package business.playback;
 
 
 import business.tracks.AudioTrack;
+import business.tracks.AudioTrackType;
 import business.tracks.MergedTrack;
+import ddf.minim.AudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
 
+import java.util.HashMap;
+
 public class TrackPlayer {
     private SimpleMinim minim;
-    private SimpleAudioPlayer audioPlayer;
-    private MergedTrack mergedTrack;
+    private SimpleAudioPlayer simpleAudioPlayer;
+    private AudioTrack audioTrack;
     private int time;
     private float volume;
+    private Thread playerThread;
+    private int lastStoppedPosition = 0;
+    public final float MIN_GAIN = -80;
+    public final float MAX_GAIN = 6;
 
-    public TrackPlayer(MergedTrack mergedTrack) {
-        this.minim = new SimpleMinim(true);
-        this.mergedTrack = mergedTrack;
+    public TrackPlayer(AudioTrack audioTrack) {
+        this.minim = new SimpleMinim(false);
+        this.audioTrack = audioTrack;
+        playerThread = new Thread();
     }
 
     public void play() {
-        //Thread aufrufen
-        if(mergedTrack.getAudioTracks()!=null){
-            for(AudioTrack t : mergedTrack.getAudioTracks()){
-                new Thread(){
-                    public void run(){
-                        audioPlayer = minim.loadMP3File(t.getPath());
-                        audioPlayer.play();
-                    }
-                }.start();
+        if(!isPlaying()){
+            //Thread aufrufen
+            if(audioTrack!=null){
+                    playerThread = new Thread(){
+                        public void run(){
+                            simpleAudioPlayer = minim.loadMP3File(audioTrack.getPath());
+                            simpleAudioPlayer.play(lastStoppedPosition);
+                        }
+                    };
+                    playerThread.start();
             }
         }
 
     }
 
     public void pause() {
+        simpleAudioPlayer.pause();
+        lastStoppedPosition = simpleAudioPlayer.position();
+        playerThread.interrupt();
+    }
+
+    public void jumpTo(int timeInMillis){
 
     }
 
-    public void jumpTo(){
-
+    public void setVolume(float gain) {
+        if(simpleAudioPlayer!=null){
+            if(gain>=MIN_GAIN && gain<=MAX_GAIN){
+                simpleAudioPlayer.setGain(gain);
+            }
+        }
     }
 
-    public void setVolume() {
-
+    public boolean isPlaying(){
+        return (simpleAudioPlayer==null) ? false : simpleAudioPlayer.isPlaying();
     }
 }
