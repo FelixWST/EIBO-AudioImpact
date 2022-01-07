@@ -12,8 +12,14 @@ Nice to have:
 -Timeline ticks nach 25fps
 -load project button
 -Thread für import
+-timeline horizontal scrollpane
+-playhead line in timeline
+-Keyboard steuerung(Play Pause)
 
 Bugs:
+-button text springt
+-timeline scrubben error
+-textfield context menu
 
 Fragen:
 -getter in View?

@@ -6,8 +6,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import javafx.util.StringConverter;
 import presentation.application.Main;
 import presentation.mainView.videoView.VideoViewController;
+
+import java.util.concurrent.TimeUnit;
 
 public class TimelineViewController {
 
@@ -22,12 +25,14 @@ public class TimelineViewController {
 
 
         videoViewController.getMediaPlayer().setOnReady(()->{
-            timeLineView.timelineTracks.timelineSlider.setMax(application.videoFile.getDuration());
+            timeLineView.timelineTracks.timelineSlider.setMax(videoViewController.getMediaPlayer().getTotalDuration().toMillis());
         });
 
         timeLineView.timelineTracks.timelineSlider.valueChangingProperty().addListener(((observableValue, aBoolean, t1) -> {
             if(!t1){
-                videoViewController.getMediaPlayer().seek(new Duration(timeLineView.timelineTracks.timelineSlider.getValue()));
+
+                Duration dt = Duration.millis(timeLineView.timelineTracks.timelineSlider.getValue());
+                videoViewController.getMediaPlayer().seek(dt);
             }
         }));
 
@@ -82,6 +87,18 @@ public class TimelineViewController {
 
         });
 
+        timeLineView.timelineTracks.timelineSlider.setLabelFormatter(new StringConverter<Double>() {
+            @Override
+            public String toString(Double aDouble) {
+                return millisToTimecode(aDouble.longValue());
+            }
+
+            @Override
+            public Double fromString(String s) {
+                return null;
+            }
+        });
+
 
 
     }
@@ -92,5 +109,11 @@ public class TimelineViewController {
 
     public StackPane getTimeLineView(){
         return this.root;
+    }
+
+    public String millisToTimecode(long millis){
+        return String.format("%02d:%02d",
+                TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
+                TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
     }
 }

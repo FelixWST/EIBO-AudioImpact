@@ -4,6 +4,8 @@ import business.tracks.AudioTrackType;
 import javafx.geometry.Insets;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
+import javafx.util.StringConverter;
 import presentation.mainView.uicomponents.TrackLayer;
 
 public class TimelineTracks extends VBox {
@@ -24,7 +26,14 @@ public class TimelineTracks extends VBox {
         VBox.setMargin(tl2, new Insets(5,10,5,0));
         VBox.setMargin(tl3, new Insets(5,10,10,0));
 
-        timelineSlider = new Slider(0,100,20);
+        timelineSlider = new Slider();
+        timelineSlider.getStyleClass().addAll("timeLineSlider");
+        timelineSlider.setShowTickMarks(true);
+        timelineSlider.setShowTickLabels(true);
+        timelineSlider.setMajorTickUnit(1000);
+        timelineSlider.setMinorTickCount(25);
+        timelineSlider.setBlockIncrement(1000);
+        timelineSlider.setSnapToTicks(true);
 
         this.getChildren().addAll(timelineSlider, tl1, tl2, tl3);
     }

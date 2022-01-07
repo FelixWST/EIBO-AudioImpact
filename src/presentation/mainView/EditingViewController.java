@@ -28,11 +28,15 @@ public class EditingViewController {
         TitleComponent titleComponent = new TitleComponent();
         timelineViewController = new TimelineViewController(application, videoViewController);
 
-        Insets testInsets = new Insets(10);
+        Insets titleInsets = new Insets(10,20,0,20);
+        Insets videoViewInsets = new Insets(10,20,20,20);
+        Insets libraryViewInsets = new Insets(10,10,20,20);
+        Insets exportViewInsets = new Insets(10,20,20,10);
+        Insets timeLineViewInsets = new Insets(20,20,20,20);
 
         libraryView.prefWidthProperty().bind(primaryStage.widthProperty().divide(4));
         exportView.prefWidthProperty().bind(primaryStage.widthProperty().divide(4));
-        timelineViewController.getTimeLineView().prefHeightProperty().bind(primaryStage.heightProperty().divide(2));
+        timelineViewController.getTimeLineView().prefHeightProperty().bind(primaryStage.heightProperty().multiply(0.5));
 
         //videoViewController.getRoot().getMediaViewPane().prefWidthProperty().bind(primaryStage.widthProperty().divide(2));
 
@@ -42,11 +46,11 @@ public class EditingViewController {
         root.setBottom(timelineViewController.getTimeLineView());
         root.setTop(titleComponent);
 
-        BorderPane.setMargin(exportView, testInsets);
-        BorderPane.setMargin(libraryView, testInsets);
-        BorderPane.setMargin(titleComponent, testInsets);
-        BorderPane.setMargin(videoViewController.getRoot(), testInsets);
-        BorderPane.setMargin(timelineViewController.getTimeLineView(), testInsets);
+        BorderPane.setMargin(exportView, exportViewInsets);
+        BorderPane.setMargin(libraryView, libraryViewInsets);
+        BorderPane.setMargin(titleComponent, titleInsets);
+        BorderPane.setMargin(videoViewController.getRoot(), videoViewInsets);
+        BorderPane.setMargin(timelineViewController.getTimeLineView(), timeLineViewInsets);
 
 
 

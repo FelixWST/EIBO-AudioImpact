@@ -74,3 +74,38 @@
     -fx-font-size: 20px;
     -fx-font-weight: bold;
 }
+
+.title-label{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.timeLineSlider .track {
+    -fx-control-inner-background: transparent;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0 0 0 0, 0, 0;
+    -fx-background-radius: 0, 0, 0;
+    -fx-padding: 0;
+}
+
+.timeLineSlider .axis .axis-tick-mark{
+    -fx-fill: null;
+    -fx-stroke: #FFFFFF;
+}
+
+.timeLineSlider .axis .axis-minor-tick-mark {
+    -fx-fill: null;
+    -fx-stroke: #adadad;
+}
+
+.timeLineSlider .axis{
+    -fx-tick-label-fill: #FFFFFF;
+}
+
+.timeLineSlider .thumb{
+    -fx-background-image: url(../../data/assets/playhead.png);
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat no-repeat;
+    -fx-background-size: contain;
+    -fx-background-position:center;
+}

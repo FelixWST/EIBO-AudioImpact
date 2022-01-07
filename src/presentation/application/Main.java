@@ -3,14 +3,12 @@ package presentation.application;
 import business.managing.PlayerManager;
 import business.managing.TrackManager;
 import business.managing.VideoFile;
-import business.playback.TrackPlayer;
 import business.tracks.AudioTrack;
 import business.tracks.AudioTrackType;
 import business.tracks.Genre;
 import business.tracks.MergedTrack;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import presentation.mainView.EditingViewController;
 

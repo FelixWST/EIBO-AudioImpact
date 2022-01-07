@@ -8,11 +8,16 @@ import javafx.scene.layout.VBox;
 
 public class LibraryView extends VBox {
     ListView<String> listView;
+    Label titlelabel;
 
     public LibraryView(){
+
+
         this.getStylesheets().add("/presentation/mainView/editingView.css");
         this.getStyleClass().add("view-element");
-        this.getChildren().add(new Label("Library"));
+        titlelabel = new Label("Library");
+        titlelabel.getStyleClass().addAll("title-label");
+        this.getChildren().add(titlelabel);
 
         listView = new ListView<String>();
         ObservableList< String> items = FXCollections.observableArrayList("Theme 1", "Theme 2", "Theme 3");
