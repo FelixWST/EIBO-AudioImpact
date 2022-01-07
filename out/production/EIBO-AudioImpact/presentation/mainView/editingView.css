@@ -1,0 +1,24 @@
+*{
+    -fx-text-fill: #ffffff;
+    -fx-font-family: sans-serif;
+}
+
+.view-element{
+    -fx-background-color: #393939;
+    -fx-background-radius: 10px;
+}
+
+.video-control-section{
+    -fx-background-radius: 0px 0px 10px 10px;
+}
+
+.track-layer{
+    -fx-background-radius: 0px 10px 10px 0px;
+}
+
+.track-layer-setting{
+    -fx-background-radius: 10px 0px 0px 10px;
+    -fx-border-color: #393939;
+    -fx-border-width: 2px;
+    -fx-border-style: hidden solid hidden hidden;
+}
