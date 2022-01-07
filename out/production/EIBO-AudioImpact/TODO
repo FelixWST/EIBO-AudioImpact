@@ -10,5 +10,9 @@ Nice to have:
 -get framerate von video für Timecode
 -Waveform in Tracks
 -Timeline ticks nach 25fps
+-load project button
 
 Bugs:
+
+Fragen:
+-getter in View?

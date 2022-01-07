@@ -1,4 +1,4 @@
-package presentation.mainView;
+package presentation.mainView.timelineView;
 
 import business.tracks.AudioTrackType;
 import javafx.beans.value.ChangeListener;
@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import presentation.application.Main;
+import presentation.mainView.videoView.VideoViewController;
 
 public class TimelineViewController {
 
@@ -21,13 +22,13 @@ public class TimelineViewController {
         timelineTimeIndicator = new TimelineTimeIndicator();
 
 
-        videoViewController.mediaPlayer.setOnReady(()->{
+        videoViewController.getMediaPlayer().setOnReady(()->{
             timelineTimeIndicator.timeIndicator.setMax(application.videoFile.getDuration());
         });
 
         timelineTimeIndicator.timeIndicator.valueChangingProperty().addListener(((observableValue, aBoolean, t1) -> {
             if(!t1){
-                videoViewController.mediaPlayer.seek(new Duration(timelineTimeIndicator.timeIndicator.getValue()));
+                videoViewController.getMediaPlayer().seek(new Duration(timelineTimeIndicator.timeIndicator.getValue()));
             }
         }));
 
@@ -84,6 +85,10 @@ public class TimelineViewController {
 
 
 
+    }
+
+    public TimelineTimeIndicator getTimelineTimeIndicator(){
+        return this.timelineTimeIndicator;
     }
 
     public StackPane getTimeLineView(){

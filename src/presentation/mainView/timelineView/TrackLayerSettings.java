@@ -1,4 +1,4 @@
-package presentation.mainView;
+package presentation.mainView.timelineView;
 
 import business.tracks.AudioTrackType;
 import javafx.geometry.Insets;
