@@ -25,14 +25,17 @@ public class TimelineViewController {
             timelineTimeIndicator.timeIndicator.setMax(application.videoFile.getDuration());
         });
 
-        timelineTimeIndicator.timeIndicator.valueProperty().addListener(((observableValue, number, t1) -> {
-            videoViewController.mediaPlayer.seek(new Duration(timelineTimeIndicator.timeIndicator.getValue()));
+        timelineTimeIndicator.timeIndicator.valueChangingProperty().addListener(((observableValue, aBoolean, t1) -> {
+            if(!t1){
+                videoViewController.mediaPlayer.seek(new Duration(timelineTimeIndicator.timeIndicator.getValue()));
+            }
         }));
 
 
 
         root = new StackPane();
-        root.getChildren().addAll(timeLineView, timelineTimeIndicator);
+        //root.getChildren().addAll(timeLineView, timelineTimeIndicator);
+        root.getChildren().addAll(timeLineView);
 
         timeLineView.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
