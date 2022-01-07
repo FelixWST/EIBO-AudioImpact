@@ -1,11 +1,9 @@
-package presentation.mainView;
+package presentation.mainView.videoView;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import presentation.mainView.uicomponents.VideoControl;
 

@@ -1,6 +1,5 @@
-package presentation.mainView;
+package presentation.mainView.timelineView;
 
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 public class TimeLineView extends HBox {

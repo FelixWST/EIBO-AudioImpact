@@ -5,6 +5,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import presentation.application.Main;
+import presentation.mainView.exportView.ExportView;
+import presentation.mainView.libraryView.LibraryView;
+import presentation.mainView.timelineView.TimelineViewController;
+import presentation.mainView.titleView.TitleComponent;
+import presentation.mainView.videoView.VideoViewController;
 
 public class EditingViewController {
     EditingView root;
@@ -45,6 +50,14 @@ public class EditingViewController {
 
 
 
+    }
+
+    public VideoViewController getVideoViewController(){
+        return this.videoViewController;
+    }
+
+    public TimelineViewController getTimelineViewController(){
+        return this.timelineViewController;
     }
 
     public Pane getRoot(){

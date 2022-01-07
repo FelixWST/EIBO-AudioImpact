@@ -1,4 +1,4 @@
-package presentation.mainView;
+package presentation.mainView.libraryView;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +15,7 @@ public class LibraryView extends VBox {
         this.getChildren().add(new Label("Library"));
 
         listView = new ListView<String>();
-        ObservableList<String> items = FXCollections.observableArrayList("Theme 1", "Theme 2", "Theme 3");
+        ObservableList< String> items = FXCollections.observableArrayList("Theme 1", "Theme 2", "Theme 3");
         listView.setItems(items);
         listView.setPrefSize(130,250);
         this.getChildren().add(listView);

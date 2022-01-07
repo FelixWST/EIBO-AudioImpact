@@ -1,4 +1,4 @@
-package presentation.mainView;
+package presentation.mainView.videoView;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,8 +16,8 @@ public class VideoViewController {
     private VideoControl videoControl;
     private VideoDropZoneController videoDropZoneController;
     private Main application;
-    MediaPlayer mediaPlayer;
-    MediaView mediaView;
+    private MediaPlayer mediaPlayer;
+    private MediaView mediaView;
 
     public VideoViewController(Main application){
         this.application = application;
@@ -75,7 +75,7 @@ public class VideoViewController {
             root.videoProgressBar.setProgress(t1.toMillis()/mediaPlayer.getMedia().getDuration().toMillis());
             videoControl.getTimeLabel().setText(millisToTimecode((long) t1.toMillis()));
 
-            application.editingViewController.timelineViewController.timelineTimeIndicator.timeIndicator.setValue(t1.toMillis());
+            application.editingViewController.getTimelineViewController().getTimelineTimeIndicator().getTimeIndicator().setValue(t1.toMillis());
         }));
 
         mediaPlayer.onEndOfMediaProperty().addListener(((observableValue, runnable, t1) -> {
@@ -96,5 +96,13 @@ public class VideoViewController {
 
     public VideoView getRoot(){
         return this.root;
+    }
+
+    public MediaView getMediaView(){
+        return this.mediaView;
+    }
+
+    public MediaPlayer getMediaPlayer(){
+        return this.mediaPlayer;
     }
 }

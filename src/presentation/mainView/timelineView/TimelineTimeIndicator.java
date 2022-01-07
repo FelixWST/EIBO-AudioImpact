@@ -1,4 +1,4 @@
-package presentation.mainView;
+package presentation.mainView.timelineView;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Slider;
@@ -13,5 +13,9 @@ public class TimelineTimeIndicator extends HBox {
         timeIndicator.prefWidthProperty().bind(this.widthProperty().multiply(0.7));
         this.setAlignment(Pos.TOP_RIGHT);
         this.getChildren().addAll(timeIndicator);
+    }
+
+    public Slider getTimeIndicator(){
+        return this.timeIndicator;
     }
 }

@@ -1,4 +1,4 @@
-package presentation.mainView;
+package presentation.mainView.videoView;
 
 public class VideoDropZoneController {
 

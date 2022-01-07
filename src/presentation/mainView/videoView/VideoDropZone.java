@@ -1,4 +1,4 @@
-package presentation.mainView;
+package presentation.mainView.videoView;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
