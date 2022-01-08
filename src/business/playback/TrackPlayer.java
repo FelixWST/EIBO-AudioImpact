@@ -40,7 +40,7 @@ public class TrackPlayer {
                     playerThread.start();
             }
         }
-
+    System.out.println("CurrTimeMs:"+System.currentTimeMillis());
     }
 
     public void pause() {
