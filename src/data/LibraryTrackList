@@ -1,0 +1,7 @@
+#EXTM3U
+#EXTINF 200, NAME:TestTrackAtmosphere - GENRE:CINEMATIC -
+src/data/testData/exampleTrack/atmosphere.mp3
+#EXTINF 200, NAME:TestTrackDepth - GENRE:CINEMATIC -
+src/data/testData/exampleTrack/depth.mp3
+#EXTINF 200, NAME:TestTrackIntensity - GENRE:CINEMATIC -
+src/data/testData/exampleTrack/intensity.mp3

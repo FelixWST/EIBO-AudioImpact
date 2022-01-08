@@ -11,6 +11,7 @@ public class LibraryViewController {
     MergedTrack mergedTrack;
 
     public LibraryViewController() {
+
         libraryView = new LibraryView();
         ObservableList<MergedTrack> items = FXCollections.observableArrayList();
         libraryView.listView.setItems(items);

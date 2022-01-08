@@ -1,5 +1,5 @@
 package business.tracks;
 
 public enum Genre {
-    MOOD,CINEMATIC,ACTION, COMEDY, HISTORICAL
+    MOOD,CINEMATIC,ACTION, COMEDY,
 }

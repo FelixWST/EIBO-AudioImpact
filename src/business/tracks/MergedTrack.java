@@ -6,15 +6,15 @@ public class MergedTrack {
 
     private String title;
     private ArrayList<Genre> genres;
-    private int duration;
+    private long duration;
     private ArrayList<AudioTrack> audioTracks;
     //Cover IMAGE oder Dateipfad
 
-    public MergedTrack(String title, int duration, Genre ... genres){
+    public MergedTrack(String title, long duration, Genre ... genres){
         this(title, duration, new ArrayList<AudioTrack>(), genres);
     }
 
-    public MergedTrack(String title, int duration, ArrayList<AudioTrack> audioTracks, Genre... genres){
+    public MergedTrack(String title, long duration, ArrayList<AudioTrack> audioTracks, Genre... genres){
         this.title = title;
         this.duration = duration;
         this.audioTracks = audioTracks;
@@ -29,7 +29,7 @@ public class MergedTrack {
         return this.title;
     }
 
-    public int getDuration(){
+    public long getDuration(){
         return this.duration;
     }
 
@@ -40,4 +40,5 @@ public class MergedTrack {
     public void addTrack(AudioTrack track){
         this.audioTracks.add(track);
     }
+
 }

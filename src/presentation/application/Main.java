@@ -37,6 +37,7 @@ public class Main extends Application {
         firstMergedTrack.addTrack(testIntensityTrack);
 
         trackManager = new TrackManager();
+        trackManager.loadLibrary();
         trackManager.addMergedTrack(firstMergedTrack);
 
         playerManager = new PlayerManager(firstMergedTrack);
