@@ -60,7 +60,7 @@ public class TrackManager {
                            title.addTrack(IntensityTrack);
                        }
                         addMergedTrack(title);
-                        playerManager = new PlayerManager(title);
+                        //playerManager = new PlayerManager(title);
                     }
 
 
