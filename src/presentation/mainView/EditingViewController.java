@@ -1,32 +1,42 @@
 package presentation.mainView;
 
+import business.managing.PlayerManager;
+import business.managing.Project;
+import business.managing.TrackManager;
 import javafx.geometry.Insets;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import presentation.application.Main;
-import presentation.mainView.exportView.ExportView;
-import presentation.mainView.libraryView.LibraryView;
+import presentation.mainView.exportView.ExportViewController;
+import presentation.mainView.libraryView.LibraryViewController;
 import presentation.mainView.timelineView.TimelineViewController;
-import presentation.mainView.titleView.TitleComponent;
+import presentation.mainView.titleView.TitleView;
+import presentation.mainView.titleView.TitleViewController;
 import presentation.mainView.videoView.VideoViewController;
 
 public class EditingViewController {
-    EditingView root;
-    ExportView exportView;
-    LibraryView libraryView;
-    VideoViewController videoViewController;
-    TimelineViewController timelineViewController;
-    Main application;
+    private EditingView root;
+    private ExportViewController exportViewController;
+    private LibraryViewController libraryViewController;
+    private VideoViewController videoViewController;
+    private TimelineViewController timelineViewController;
+    private TitleViewController titleViewController;
 
-    public EditingViewController(Stage primaryStage, Main application){
-        this.application = application;
+    private Project project;
+    private PlayerManager playerManager;
+    private TrackManager trackManager;
+
+    public EditingViewController(Stage primaryStage, Project project, PlayerManager playerManager, TrackManager trackManager){
+        this.project = project;
+        this.playerManager = playerManager;
+        this.trackManager = trackManager;
+
         this.root = new EditingView();
-        this.exportView = new ExportView();
-        this.videoViewController = new VideoViewController(application);
-        this.libraryView = new LibraryView();
-        TitleComponent titleComponent = new TitleComponent();
-        timelineViewController = new TimelineViewController(application, videoViewController);
+        this.exportViewController = new ExportViewController();
+        this.videoViewController = new VideoViewController(this, project, playerManager, trackManager);
+        this.libraryViewController = new LibraryViewController();
+        this.titleViewController = new TitleViewController(project);
+        this.timelineViewController = new TimelineViewController(this, project, playerManager, trackManager);
 
         Insets titleInsets = new Insets(10,20,0,20);
         Insets videoViewInsets = new Insets(10,20,20,20);
@@ -34,26 +44,21 @@ public class EditingViewController {
         Insets exportViewInsets = new Insets(10,20,20,10);
         Insets timeLineViewInsets = new Insets(20,20,20,20);
 
-        libraryView.prefWidthProperty().bind(primaryStage.widthProperty().divide(4));
-        exportView.prefWidthProperty().bind(primaryStage.widthProperty().divide(4));
-        timelineViewController.getTimeLineView().prefHeightProperty().bind(primaryStage.heightProperty().multiply(0.5));
+        libraryViewController.getRoot().prefWidthProperty().bind(primaryStage.widthProperty().divide(4));
+        exportViewController.getRoot().prefWidthProperty().bind(primaryStage.widthProperty().divide(4));
+        timelineViewController.getRoot().prefHeightProperty().bind(primaryStage.heightProperty().multiply(0.5));
 
-        //videoViewController.getRoot().getMediaViewPane().prefWidthProperty().bind(primaryStage.widthProperty().divide(2));
-
-        root.setRight(exportView);
-        root.setLeft(libraryView);
+        root.setRight(exportViewController.getRoot());
+        root.setLeft(libraryViewController.getRoot());
         root.setCenter(videoViewController.getRoot());
-        root.setBottom(timelineViewController.getTimeLineView());
-        root.setTop(titleComponent);
+        root.setBottom(timelineViewController.getRoot());
+        root.setTop(titleViewController.getRoot());
 
-        BorderPane.setMargin(exportView, exportViewInsets);
-        BorderPane.setMargin(libraryView, libraryViewInsets);
-        BorderPane.setMargin(titleComponent, titleInsets);
+        BorderPane.setMargin(exportViewController.getRoot(), exportViewInsets);
+        BorderPane.setMargin(libraryViewController.getRoot(), libraryViewInsets);
+        BorderPane.setMargin(titleViewController.getRoot(), titleInsets);
         BorderPane.setMargin(videoViewController.getRoot(), videoViewInsets);
-        BorderPane.setMargin(timelineViewController.getTimeLineView(), timeLineViewInsets);
-
-
-
+        BorderPane.setMargin(timelineViewController.getRoot(), timeLineViewInsets);
     }
 
     public VideoViewController getVideoViewController(){

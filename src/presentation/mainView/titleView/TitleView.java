@@ -4,11 +4,15 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
-public class TitleComponent extends HBox {
+public class TitleView extends HBox {
 
-    public TitleComponent(){
+    Label titleLabel;
+
+    public TitleView(){
+        titleLabel = new Label();
+
         this.setAlignment(Pos.CENTER);
         this.getStyleClass().add("view-element");
-        this.getChildren().addAll(new Label("Untitled Project"));
+        this.getChildren().addAll(titleLabel);
     }
 }

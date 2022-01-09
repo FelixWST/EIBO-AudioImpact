@@ -3,6 +3,7 @@ package presentation.mainView.timelineView;
 import javafx.scene.layout.HBox;
 
 public class TimeLineView extends HBox {
+
     TimelineTracks timelineTracks;
     TimelineTrackSettings timelineTrackSettings;
 

@@ -1,7 +1,5 @@
 package business.editing;
 
-import java.security.KeyException;
-
 public class Keyframe {
     private int time;
     private double volume;
@@ -24,5 +22,13 @@ public class Keyframe {
 
     public void setVolume(double volume) {
         this.volume = volume;
+    }
+
+    public boolean equals(Keyframe keyframe){
+        return keyframe.getTime() == this.time && keyframe.getVolume() == this.volume;
+    }
+
+    public String toString(){
+        return "Keyframe at time "+time+" with volume "+volume;
     }
 }

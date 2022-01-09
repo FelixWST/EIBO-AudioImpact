@@ -7,14 +7,18 @@ import javafx.collections.ObservableList;
 
 public class LibraryViewController {
 
-    LibraryView libraryView;
+    LibraryView root;
     MergedTrack mergedTrack;
 
     public LibraryViewController() {
 
-        libraryView = new LibraryView();
+        root = new LibraryView();
         ObservableList<MergedTrack> items = FXCollections.observableArrayList();
-        libraryView.listView.setItems(items);
+        root.listView.setItems(items);
+    }
+
+    public LibraryView getRoot(){
+        return this.root;
     }
 
 }

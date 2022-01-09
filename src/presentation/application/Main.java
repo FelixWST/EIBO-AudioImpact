@@ -1,6 +1,8 @@
 package presentation.application;
 
+import business.editing.Keyframe;
 import business.managing.PlayerManager;
+import business.managing.Project;
 import business.managing.TrackManager;
 import business.managing.VideoFile;
 import business.tracks.AudioTrack;
@@ -22,31 +24,25 @@ public class Main extends Application {
     TrackManager trackManager;
     public PlayerManager playerManager;
 
+    private Project project;
+
 
     @Override
     public void start(Stage primaryStage){
         this.primaryStage = primaryStage;
 
-        AudioTrack testAtmoTrack = new AudioTrack("src/data/testData/exampleTrack/atmosphere.mp3", AudioTrackType.ATMOSPHERE);
-        AudioTrack testDepthTrack = new AudioTrack("src/data/testData/exampleTrack/depth.mp3", AudioTrackType.DEPTH);
-        AudioTrack testIntensityTrack = new AudioTrack("src/data/testData/exampleTrack/intensity.mp3", AudioTrackType.INTENSITY);
-
-        MergedTrack firstMergedTrack = new MergedTrack("Test", 200, Genre.CINEMATIC);
-        firstMergedTrack.addTrack(testAtmoTrack);
-        firstMergedTrack.addTrack(testDepthTrack);
-        firstMergedTrack.addTrack(testIntensityTrack);
-
         trackManager = new TrackManager();
-        trackManager.loadLibrary();
-        trackManager.addMergedTrack(firstMergedTrack);
+        trackManager.loadTestTrack();
 
-        playerManager = new PlayerManager(firstMergedTrack);
+        project = new Project("Testprojekt", "testproject.prj", "path", trackManager.getMergedTrack(0));
+        project.setVideoFile(new VideoFile(new File("src/data/video/videoplayback.mp4")));
 
-        videoFile = new VideoFile(new File("src/data/video/videoplayback.mp4"));
+        playerManager = new PlayerManager(project.getMergedTrack());
+        project.getKeyframeManager(AudioTrackType.ATMOSPHERE).addKeyframe(new Keyframe(10,20));
+        project.getKeyframeManager(AudioTrackType.ATMOSPHERE).addKeyframe(new Keyframe(1000,20));
+        project.getKeyframeManager(AudioTrackType.ATMOSPHERE).addKeyframe(new Keyframe(15000,20));
 
-
-
-        editingViewController = new EditingViewController(primaryStage, this);
+        editingViewController = new EditingViewController(primaryStage, project, playerManager, trackManager);
         Scene scene = new Scene(editingViewController.getRoot(), 1920, 1080);
         scene.getStylesheets().add("/presentation/application/application.css");
         primaryStage.setScene(scene);

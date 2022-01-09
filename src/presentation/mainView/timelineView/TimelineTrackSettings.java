@@ -24,6 +24,12 @@ public class TimelineTrackSettings extends VBox {
         VBox.setMargin(tls3, new Insets(5,0,10,10));
 
         totalVolume = new Slider(0,100,10);
+        totalVolume.prefWidthProperty().bind(this.widthProperty().multiply(0.8));
+        totalVolume.getStyleClass().addAll("totalVolumeSlider");
+        totalVolume.setShowTickMarks(true);
+        totalVolume.setShowTickLabels(true);
+        totalVolume.setMajorTickUnit(10);
+        totalVolume.setMinorTickCount(10);
 
         this.getChildren().addAll(totalVolume, tls1, tls2, tls3);
     }

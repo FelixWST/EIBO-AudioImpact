@@ -35,6 +35,20 @@ public class TrackManager {
         this.trackNumber = trackNumber;
     }
 
+    public void loadTestTrack(){
+        AudioTrack testAtmoTrack = new AudioTrack("src/data/testData/exampleTrack/atmosphere.mp3", AudioTrackType.ATMOSPHERE);
+        AudioTrack testDepthTrack = new AudioTrack("src/data/testData/exampleTrack/depth.mp3", AudioTrackType.DEPTH);
+        AudioTrack testIntensityTrack = new AudioTrack("src/data/testData/exampleTrack/intensity.mp3", AudioTrackType.INTENSITY);
+
+        MergedTrack firstMergedTrack = new MergedTrack("Test", 200, Genre.CINEMATIC);
+        firstMergedTrack.addTrack(testAtmoTrack);
+        firstMergedTrack.addTrack(testDepthTrack);
+        firstMergedTrack.addTrack(testIntensityTrack);
+
+        this.trackList.add(firstMergedTrack);
+
+    }
+
     public void loadLibrary() {
         count = 1;
         title = "mergedTrack"+count;
@@ -112,6 +126,10 @@ public class TrackManager {
 
     public void addMergedTrack(MergedTrack mergedTrack){
         this.trackList.add(mergedTrack);
+    }
+
+    public MergedTrack getMergedTrack(int index){
+        return this.trackList.get(index);
     }
 
 
