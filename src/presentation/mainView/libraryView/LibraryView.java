@@ -19,7 +19,7 @@ public class LibraryView extends VBox {
         listView = new ListView<MergedTrack>();
 
 
-        listView.setPrefSize(130,250);
+       // listView.setPrefSize(130,250);
         this.getChildren().add(listView);
         //this.setStyle("-fx-background-color: grey");
     }

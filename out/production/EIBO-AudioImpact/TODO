@@ -1,5 +1,6 @@
 ToDo:
 -Property loading
+-WindowTitle
 
 In arbeit:
 -timeline mouse eventhandler aufräumen
@@ -17,6 +18,8 @@ Nice to have:
 -popup mit progressbar bei import
 -Make Up for Non linearity of Gain (dB)
 -delete all Keyframes on one track
+- Keyboard l, ll j,jj fw ffw... (setRate)
+-button hover mousepointer
 
 Bugs:
 -button text springt
