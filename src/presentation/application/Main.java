@@ -37,10 +37,19 @@ public class Main extends Application {
         project = new Project("Testprojekt", "testproject.prj", "path", trackManager.getMergedTrack(0));
         project.setVideoFile(new VideoFile(new File("src/data/video/videoplayback.mp4")));
 
-        playerManager = new PlayerManager(project.getMergedTrack());
-        project.getKeyframeManager(AudioTrackType.ATMOSPHERE).addKeyframe(new Keyframe(10,20));
-        project.getKeyframeManager(AudioTrackType.ATMOSPHERE).addKeyframe(new Keyframe(1000,20));
-        project.getKeyframeManager(AudioTrackType.ATMOSPHERE).addKeyframe(new Keyframe(15000,20));
+        playerManager = new PlayerManager(project.getMergedTrack(), project.getKeyframeManagers());
+        project.getKeyframeManager(AudioTrackType.ATMOSPHERE).addKeyframe(new Keyframe(10,-80));
+        project.getKeyframeManager(AudioTrackType.ATMOSPHERE).addKeyframe(new Keyframe(8000,-60));
+        project.getKeyframeManager(AudioTrackType.ATMOSPHERE).addKeyframe(new Keyframe(15000,6));
+
+        /*project.getKeyframeManager(AudioTrackType.DEPTH).addKeyframe(new Keyframe(4500,3));
+        project.getKeyframeManager(AudioTrackType.DEPTH).addKeyframe(new Keyframe(800,6));
+        project.getKeyframeManager(AudioTrackType.DEPTH).addKeyframe(new Keyframe(15000,-80));
+        System.out.println(project.getKeyframeManager(AudioTrackType.DEPTH).getKeyframes());*/
+
+        project.getKeyframeManager(AudioTrackType.INTENSITY).addKeyframe(new Keyframe(0,-80));
+        project.getKeyframeManager(AudioTrackType.INTENSITY).addKeyframe(new Keyframe(8000,0));
+        project.getKeyframeManager(AudioTrackType.INTENSITY).addKeyframe(new Keyframe(13400,6));
 
         editingViewController = new EditingViewController(primaryStage, project, playerManager, trackManager);
         Scene scene = new Scene(editingViewController.getRoot(), 1920, 1080);

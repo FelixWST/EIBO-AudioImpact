@@ -109,3 +109,26 @@
     -fx-background-size: contain;
     -fx-background-position:center;
 }
+
+
+.totalVolumeSlider .track {
+    -fx-control-inner-background: transparent;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0 0 0 0, 0, 0;
+    -fx-background-radius: 0, 0, 0;
+    -fx-padding: 0;
+}
+
+.totalVolumeSlider .axis .axis-tick-mark{
+    -fx-fill: null;
+    -fx-stroke: #FFFFFF;
+}
+
+.totalVolumeSlider .axis .axis-minor-tick-mark {
+    -fx-fill: null;
+    -fx-stroke: #adadad;
+}
+
+.totalVolumeSlider .axis{
+    -fx-tick-label-fill: #FFFFFF;
+}

@@ -1,5 +1,6 @@
 package business.managing;
 
+import business.editing.Keyframe;
 import business.editing.KeyframeManager;
 import business.tracks.AudioTrack;
 import business.tracks.AudioTrackType;
@@ -88,5 +89,38 @@ public class Project {
         return this.projectTitle;
     }
 
+    public int findPreviousKeyframeTime(int millis){
+        int timeDelta = Integer.MAX_VALUE;
+        Keyframe closest = new Keyframe(0,0);
+
+        for(KeyframeManager kfm : keyframeManagers){
+            for(int i = 0; i<kfm.getKeyframes().size(); i++){
+                if(kfm.getKeyframes().get(i).getTime() < millis){
+                    if(millis - kfm.getKeyframes().get(i).getTime() < timeDelta){
+                        closest = kfm.getKeyframes().get(i);
+                        timeDelta = millis - kfm.getKeyframes().get(i).getTime();
+                    }
+                }
+            }
+        }
+        return closest.getTime();
+    }
+
+    public int findNextKeyframeTime(int millis){
+        int timeDelta = Integer.MAX_VALUE;
+        Keyframe closest = new Keyframe((int)videoFile.getDuration(), 0);
+
+        for(KeyframeManager kfm : keyframeManagers){
+            for(int i = 0; i<kfm.getKeyframes().size(); i++){
+                if(kfm.getKeyframes().get(i).getTime() > millis){
+                    if(kfm.getKeyframes().get(i).getTime() - millis < timeDelta){
+                        closest = kfm.getKeyframes().get(i);
+                        timeDelta = kfm.getKeyframes().get(i).getTime()-millis;
+                    }
+                }
+            }
+        }
+        return closest.getTime();
+    }
 
 }

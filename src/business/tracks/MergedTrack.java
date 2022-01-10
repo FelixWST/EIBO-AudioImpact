@@ -37,6 +37,15 @@ public class MergedTrack {
         return this.audioTracks;
     }
 
+    public AudioTrack getAudioTrack(AudioTrackType audioTrackType){
+        for(AudioTrack at : audioTracks){
+            if(at.getAudioTrackType() == audioTrackType){
+                return at;
+            }
+        }
+        return null;
+    }
+
     public void addTrack(AudioTrack track){
         this.audioTracks.add(track);
     }

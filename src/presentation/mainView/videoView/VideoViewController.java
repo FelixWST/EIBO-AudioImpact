@@ -7,6 +7,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.util.Duration;
 import presentation.application.Main;
 import presentation.mainView.EditingViewController;
 import presentation.mainView.uicomponents.VideoControl;
@@ -53,16 +54,40 @@ public class VideoViewController {
                     mediaPlayer.play();
                     playerManager.startPlaying();
                     break;
+
                 case PAUSED:
                     mediaPlayer.play();
-                    playerManager.startPlaying();
+                    playerManager.startPlaying((int) mediaPlayer.getCurrentTime().toMillis());
                     break;
+
                 case PLAYING:
-                    mediaPlayer.pause();
-                    playerManager.pausePlaying();
+                    if(mediaPlayer.getCurrentTime().equals(mediaPlayer.getTotalDuration())){
+                        mediaPlayer.seek(new Duration(0));
+                        mediaPlayer.play();
+                        playerManager.startPlaying(0);
+                        videoControl.getPlayButton().setId("pause-button");
+                    }else{
+                        mediaPlayer.pause();
+                        playerManager.pausePlaying();
+                    }
+                    break;
+
+                case STOPPED:
                     break;
             }
         });
+
+        videoControl.getJmpPrvKey().setOnAction((event -> {
+            mediaPlayer.pause();
+            playerManager.pausePlaying();
+            mediaPlayer.seek(new Duration(project.findPreviousKeyframeTime((int) mediaPlayer.getCurrentTime().toMillis())));
+        }));
+
+        videoControl.getJmpNxtKey().setOnAction((event -> {
+            mediaPlayer.pause();
+            playerManager.pausePlaying();
+            mediaPlayer.seek(new Duration(project.findNextKeyframeTime((int) mediaPlayer.getCurrentTime().toMillis())));
+        }));
 
         mediaPlayer.statusProperty().addListener(new ChangeListener<MediaPlayer.Status>() {
             @Override
@@ -84,11 +109,10 @@ public class VideoViewController {
             editingViewController.getTimelineViewController().getTimelineSlider().setValue(t1.toMillis());
         }));
 
-        mediaPlayer.onEndOfMediaProperty().addListener(((observableValue, runnable, t1) -> {
-            System.out.println("End Of Video");
-        }));
-
-
+        mediaPlayer.setOnEndOfMedia(()->{
+            playerManager.pausePlaying();
+            videoControl.getPlayButton().setId("play-button");
+        });
 
     }
 

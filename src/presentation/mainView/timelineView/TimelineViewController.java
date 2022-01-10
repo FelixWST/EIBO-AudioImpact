@@ -25,6 +25,8 @@ public class TimelineViewController {
     private PlayerManager playerManager;
     private TrackManager trackManager;
     private VideoViewController videoViewController;
+    private TimelineTracksController timelineTracksController;
+    private TimelineTrackSettingsController timelineTrackSettingsController;
 
     public TimelineViewController(EditingViewController editingViewController, Project project, PlayerManager playerManager, TrackManager trackManager){
         this.editingViewController = editingViewController;
@@ -32,71 +34,28 @@ public class TimelineViewController {
         this.playerManager = playerManager;
         this.trackManager = trackManager;
         this.videoViewController = editingViewController.getVideoViewController();
+        this.timelineTracksController = new TimelineTracksController(project);
+        this.timelineTrackSettingsController = new TimelineTrackSettingsController(project, playerManager);
         this.root = new TimeLineView();
+        timelineTrackSettingsController.getRoot().prefWidthProperty().bind(root.widthProperty().multiply(0.3));
+        timelineTracksController.getRoot().prefWidthProperty().bind(root.widthProperty().multiply(0.7));
+        root.getChildren().addAll(timelineTrackSettingsController.getRoot(), timelineTracksController.getRoot());
 
 
         videoViewController.getMediaPlayer().setOnReady(()->{
-            root.timelineTracks.timelineSlider.setMax(videoViewController.getMediaPlayer().getTotalDuration().toMillis());
+            timelineTracksController.getRoot().timelineSlider.setMax(videoViewController.getMediaPlayer().getTotalDuration().toMillis());
         });
 
-        root.timelineTracks.timelineSlider.valueChangingProperty().addListener(((observableValue, aBoolean, t1) -> {
+        timelineTracksController.getRoot().timelineSlider.valueChangingProperty().addListener(((observableValue, aBoolean, t1) -> {
             if(!t1){
 
-                Duration dt = Duration.millis(root.timelineTracks.timelineSlider.getValue());
+                Duration dt = Duration.millis(timelineTracksController.getRoot().timelineSlider.getValue());
                 videoViewController.getMediaPlayer().seek(dt);
             }
         }));
 
 
-
-        //root.getChildren().addAll(timeLineView, timelineTimeIndicator);
-
-        root.heightProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                root.timelineTracks.tl1.kf1.setRadius(root.timelineTracks.tl1.getHeight()/10);
-            }
-        });
-
-        root.timelineTrackSettings.tls1.volumeSettingSlider.valueProperty().addListener(((observableValue, number, t1) -> {
-            playerManager.setTrackVolume(AudioTrackType.DEPTH, t1.floatValue());
-        }));
-
-        root.timelineTrackSettings.tls2.volumeSettingSlider.valueProperty().addListener(((observableValue, number, t1) -> {
-            playerManager.setTrackVolume(AudioTrackType.ATMOSPHERE, t1.floatValue());
-        }));
-
-        root.timelineTrackSettings.tls3.volumeSettingSlider.valueProperty().addListener(((observableValue, number, t1) -> {
-            playerManager.setTrackVolume(AudioTrackType.INTENSITY, t1.floatValue());
-        }));
-
-        root.timelineTrackSettings.tls1.mute.setOnAction((event)->{
-
-        });
-
-        root.timelineTrackSettings.tls2.mute.setOnAction((event)->{
-
-        });
-
-        root.timelineTrackSettings.tls3.mute.setOnAction((event)->{
-
-        });
-
-
-        //SOLO -> DE-SOLO oder solo in Playermanager?
-        root.timelineTrackSettings.tls1.solo.setOnAction((event)->{
-
-        });
-
-        root.timelineTrackSettings.tls2.solo.setOnAction((event)->{
-
-        });
-
-        root.timelineTrackSettings.tls3.solo.setOnAction((event)->{
-
-        });
-
-        root.timelineTracks.timelineSlider.setLabelFormatter(new StringConverter<Double>() {
+        timelineTracksController.getRoot().timelineSlider.setLabelFormatter(new StringConverter<Double>() {
             @Override
             public String toString(Double aDouble) {
                 return millisToTimecode(aDouble.longValue());
@@ -108,37 +67,15 @@ public class TimelineViewController {
             }
         });
 
-        root.timelineTracks.tl1.widthProperty().addListener(((observableValue, number, t1) -> {
-            for(KeyframeManager keyframeManager : project.getKeyframeManagers()){
-                testDrawKeyframes(keyframeManager);
-            }
-        }));
 
 
 
 
 
-    }
-
-    public void testDrawKeyframes(KeyframeManager keyframeManager){
-        long totalduration = project.getVideoFile().getDuration();
-        double timelineWidth = root.timelineTracks.tl1.getWidth();
-
-        double pxPerMs = (timelineWidth / totalduration);
-        System.out.println("Duration: "+totalduration);
-        System.out.println("PX Width: "+timelineWidth);
-        System.out.println("Pixel pro Ms: "+pxPerMs);
-
-        for(Keyframe kf : keyframeManager.getKeyframes()){
-            Circle keyFrameCircle = new Circle();
-            keyFrameCircle.setRadius(10);
-            keyFrameCircle.setCenterX(pxPerMs*kf.getTime());
-            root.timelineTracks.tl1.getChildren().addAll(keyFrameCircle);
-        }
     }
 
     public Slider getTimelineSlider(){
-        return this.root.timelineTracks.timelineSlider;
+        return this.timelineTracksController.getRoot().timelineSlider;
     }
 
     public TimeLineView getRoot(){

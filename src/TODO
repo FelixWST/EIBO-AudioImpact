@@ -5,6 +5,7 @@ ToDo:
 Erledigt:
 
 In arbeit:
+-timeline mouse eventhandler aufräumen
 
 Nice to have:
 -Slider vielleicht nicht linear, damit wirkung deutlicher?
@@ -17,11 +18,17 @@ Nice to have:
 -playhead line in timeline
 -Keyboard steuerung(Play Pause)
 -popup mit progressbar bei import
+-Make Up for Non linearity of Gain (dB)
+-Make Keyframes dragable
+-hover on line add keyframe with plus icon?
+-remove keyframe right click
+-delete all Keyframes on one track
 
 Bugs:
 -button text springt
 -timeline scrubben error
 -textfield context menu
+-only one keyframe selctable with single click && has to stay selected on resize
 
 Fragen:
 -getter in View?

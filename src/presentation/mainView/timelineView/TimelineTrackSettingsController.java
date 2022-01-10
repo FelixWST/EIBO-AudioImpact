@@ -1,0 +1,58 @@
+package presentation.mainView.timelineView;
+
+import business.managing.PlayerManager;
+import business.managing.Project;
+import business.playback.TrackPlayer;
+import business.tracks.AudioTrack;
+import business.tracks.AudioTrackType;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.scene.layout.VBox;
+
+
+import java.util.HashMap;
+
+public class TimelineTrackSettingsController {
+
+    private TimelineTrackSettings root;
+    private HashMap<AudioTrackType, TrackLayerSettings> trackLayers;
+    private Project project;
+    private PlayerManager playerManager;
+
+    public TimelineTrackSettingsController(Project project, PlayerManager playerManager){
+        this.root = new TimelineTrackSettings();
+        this.project = project;
+        this.playerManager = playerManager;
+        trackLayers = new HashMap<>();
+
+        for(AudioTrack audioTrack : project.getMergedTrack().getAudioTracks()){
+            trackLayers.put(audioTrack.getAudioTrackType(), new TrackLayerSettings(audioTrack.getAudioTrackType()));
+            trackLayers.get(audioTrack.getAudioTrackType()).prefHeightProperty().bind(root.heightProperty().divide(project.getMergedTrack().getAudioTracks().size()));
+            VBox.setMargin(trackLayers.get(audioTrack.getAudioTrackType()), new Insets(10,0,5,10));
+            root.getChildren().add(trackLayers.get(audioTrack.getAudioTrackType()));
+
+            trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.valueProperty().addListener(((observableValue, number, t1) -> {
+                playerManager.setTrackVolume(audioTrack.getAudioTrackType(), t1.floatValue());
+            }));
+
+            trackLayers.get(audioTrack.getAudioTrackType()).mute.setOnAction((event)->{
+                playerManager.toggleMuteOnTrack(audioTrack.getAudioTrackType());
+            });
+
+            trackLayers.get(audioTrack.getAudioTrackType()).solo.setOnAction((event)->{
+
+            });
+
+            playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).volumePropertyProperty().addListener(((observableValue, number, t1) -> {
+                Platform.runLater(()->{
+                    trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setValue(t1.doubleValue());
+                });
+
+            }));
+        }
+    }
+
+    public TimelineTrackSettings getRoot() {
+        return root;
+    }
+}

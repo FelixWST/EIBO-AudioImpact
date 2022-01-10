@@ -45,6 +45,14 @@ public class  VideoControl extends VBox {
         return playButton;
     }
 
+    public Button getJmpPrvKey(){
+        return this.jmpPrvKey;
+    }
+
+    public Button getJmpNxtKey() {
+        return jmpNxtKey;
+    }
+
     public Label getTimeLabel(){
         return this.timeLabel;
     }
