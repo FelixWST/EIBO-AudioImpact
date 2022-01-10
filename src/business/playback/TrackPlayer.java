@@ -91,11 +91,11 @@ public class TrackPlayer {
         return (simpleAudioPlayer==null) ? false : simpleAudioPlayer.isPlaying();
     }
 
-    public SimpleFloatProperty volumePropertyProperty() {
+    public SimpleFloatProperty volumeProperty() {
         return volumeProperty;
     }
 
-    public SimpleBooleanProperty mutePropertyProperty() {
+    public SimpleBooleanProperty muteProperty() {
         return muteProperty;
     }
 

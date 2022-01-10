@@ -2,7 +2,6 @@ package presentation.mainView.timelineView;
 
 import business.managing.PlayerManager;
 import business.managing.Project;
-import business.playback.TrackPlayer;
 import business.tracks.AudioTrack;
 import business.tracks.AudioTrackType;
 import javafx.application.Platform;
@@ -43,7 +42,9 @@ public class TimelineTrackSettingsController {
 
             });
 
-            playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).volumePropertyProperty().addListener(((observableValue, number, t1) -> {
+            trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setValue(playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).volumeProperty().getValue());
+
+            playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).volumeProperty().addListener(((observableValue, number, t1) -> {
                 Platform.runLater(()->{
                     trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setValue(t1.doubleValue());
                 });

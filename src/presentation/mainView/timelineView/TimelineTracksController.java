@@ -86,7 +86,7 @@ public class TimelineTracksController {
 
             if(keyframeManager.getKeyframes().size()==0){
                 //If a audiotrack has no Keyframes yet, we can just draw a straight line from beginning to end at the current volume
-                Line onlyLine = connect(new Circle(0,selectedTrackLayer.getHeight(),5), new Circle(selectedTrackLayer.getWidth(), selectedTrackLayer.getHeight(),5), keyframeManager.getAudioTrackType());
+                Line onlyLine = connect(new Circle(0,selectedTrackLayer.getHeight()-pxPerGainVer * (TrackPlayer.DEFAULT_GAIN+mapVolumeToPositiveRange),5), new Circle(selectedTrackLayer.getWidth(), selectedTrackLayer.getHeight()-pxPerGainVer * (TrackPlayer.DEFAULT_GAIN+mapVolumeToPositiveRange),5), keyframeManager.getAudioTrackType());
                 onlyLine.setOnMouseClicked((event -> {
                     System.out.println(event.getX()+" | "+ event.getY());
 

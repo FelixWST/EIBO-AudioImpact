@@ -22,7 +22,7 @@ Bugs:
 -button text springt
 -timeline scrubben error
 -textfield context menu
--only one keyframe selctable with single click && has to stay selected on resize
+
 
 Fragen:
 -getter in View?
