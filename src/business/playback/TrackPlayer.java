@@ -95,6 +95,10 @@ public class TrackPlayer {
         return volumeProperty;
     }
 
+    public SimpleBooleanProperty mutePropertyProperty() {
+        return muteProperty;
+    }
+
     private class VolumeModifierThread extends Thread{
         VolumeModifierThread(){
             setDaemon(true);

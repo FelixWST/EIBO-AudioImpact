@@ -6,11 +6,15 @@ import business.managing.Project;
 import business.playback.TrackPlayer;
 import business.tracks.AudioTrack;
 import business.tracks.AudioTrackType;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -20,8 +24,11 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import presentation.mainView.uicomponents.TrackLayer;
+
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class TimelineTracksController {
 
@@ -111,6 +118,9 @@ public class TimelineTracksController {
 
                     Circle c = (Circle) event.getSource();
                     c.toFront();
+                    c.setStroke(Color.rgb(255,255,255));
+                    c.setStrokeWidth(2);
+
                 }));
 
                 keyframeCircle.setOnMouseDragged((event -> {
@@ -118,6 +128,8 @@ public class TimelineTracksController {
                     double deltaY = event.getSceneY() - orgSceneY;
 
                     Circle c = (Circle) event.getSource();
+                    c.setStroke(Color.rgb(255,255,255));
+                    c.setStrokeWidth(2);
 
                     if((c.getCenterX()+deltaX) > 0 && (c.getCenterX()+deltaX) < selectedTrackLayer.getWidth()){
                         c.setCenterX(c.getCenterX()+deltaX);
@@ -133,26 +145,34 @@ public class TimelineTracksController {
 
 
                 keyframeCircle.setOnMouseReleased((event -> {
-
                     Circle c = (Circle) event.getSource();
                     int newKfTime = (int) (c.getCenterX()/pxPerMsHor);
                     double newKfValue = ((selectedTrackLayer.getHeight()-c.getCenterY())/pxPerGainVer-mapVolumeToPositiveRange);
                     keyframeManager.removeKeyframe(kf);
+
                     if(event.getButton() != MouseButton.SECONDARY){
                         keyframeManager.addKeyframe(new Keyframe(newKfTime, newKfValue));
                     }
+
+                    if(event.getClickCount()==2){
+                        TextInputDialog textInputDialog = new TextInputDialog(""+kf.getVolume());
+                        textInputDialog.setTitle("Change Keyframe Value");
+                        textInputDialog.setHeaderText("Enter your new Volume @"+kf.getTime()+" ms");
+                        textInputDialog.setContentText("Volume between "+TrackPlayer.MIN_GAIN+" and "+TrackPlayer.MAX_GAIN);
+
+                        Button okButton = (Button) textInputDialog.getDialogPane().lookupButton(ButtonType.OK);
+                        TextField inputField = textInputDialog.getEditor();
+                        BooleanBinding isValid = Bindings.createBooleanBinding(()->isValidValue(inputField.getText()), inputField.textProperty());
+                        okButton.disableProperty().bind(isValid.not());
+                        Optional<String> result = textInputDialog.showAndWait();
+                        result.ifPresent((value)->{
+                            keyframeManager.addKeyframe(new Keyframe(newKfTime, Double.parseDouble(value)));
+                        });
+                    }
+
                     repaint();
                 }));
 
-                keyframeCircle.setOnMouseClicked((event -> {
-                    if(event.getClickCount()==2){
-                        System.out.println("PopUp to make Value Change");
-                    }
-                    //System.out.println("Ouh i feel clicked :3");
-                    //System.out.println(kf.toString());
-                    keyframeCircle.setStroke(Color.rgb(255,255,255));
-                    keyframeCircle.setStrokeWidth(2);
-                }));
 
                /* keyframeCircle.addEventHandler(MouseEvent.ANY, event -> {
                     if(event.getEventType() == MouseEvent.MOUSE_PRESSED && event.getButton() == MouseButton.SECONDARY){
@@ -210,7 +230,6 @@ public class TimelineTracksController {
                 selectedTrackLayer.getChildren().addAll(lineToVoid);
             }
         }
-
     }
 
     private Line connect(Circle c1, Circle c2, AudioTrackType audioTrackType){
@@ -227,5 +246,19 @@ public class TimelineTracksController {
         line.setCursor(Cursor.CROSSHAIR);
 
         return line;
+    }
+
+    private boolean isValidValue(String input){
+        //check if is number
+        try{
+            Double.parseDouble(input);
+        }catch (Exception e){
+            return false;
+        }
+
+        if(Double.parseDouble(input) >= TrackPlayer.MIN_GAIN && Double.parseDouble(input) <= TrackPlayer.MAX_GAIN ){
+            return true;
+        }
+        return false;
     }
 }

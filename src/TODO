@@ -1,8 +1,5 @@
 ToDo:
 -Property loading
--playermanager bekommt videoduration um laufzeit zu begrenzen
-
-Erledigt:
 
 In arbeit:
 -timeline mouse eventhandler aufräumen
@@ -16,20 +13,26 @@ Nice to have:
 -Thread für import
 -timeline horizontal scrollpane
 -playhead line in timeline
--Keyboard steuerung(Play Pause)
+-Keyboard steuerung(Play Pause next kF prv kf)
 -popup mit progressbar bei import
 -Make Up for Non linearity of Gain (dB)
--Make Keyframes dragable
--hover on line add keyframe with plus icon?
--remove keyframe right click
 -delete all Keyframes on one track
 
 Bugs:
 -button text springt
 -timeline scrubben error
 -textfield context menu
--only one keyframe selctable with single click && has to stay selected on resize
+
 
 Fragen:
 -getter in View?
 -wie soll audioprogramm präsentiert werden?
+
+
+
+
+Erledigt:
+-Make Keyframes dragable
+-hover on line add keyframe with plus icon?
+-remove keyframe right click
+-popup change keyframe value on double Click

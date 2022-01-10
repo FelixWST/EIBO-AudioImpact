@@ -58,11 +58,10 @@ public class PlayerManager {
 
     public void toggleMuteOnTrack(AudioTrackType trackType){
         player.get(trackType).mute();
-        //Track Muten, darf aber keinen einfluss auf Automation haben
     }
 
     public void toggleSoloOnTrack(AudioTrackType trackType){
-        //Track Solo = rest auf Mute
+        //Solo einzelne Spur
     }
 
     public TrackPlayer getTrackPlayer(AudioTrackType audioTrackType){

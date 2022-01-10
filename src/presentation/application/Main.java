@@ -19,11 +19,10 @@ import java.io.File;
 public class Main extends Application {
 
     private Stage primaryStage;
-    public EditingViewController editingViewController;
-    public VideoFile videoFile;
-    TrackManager trackManager;
-    public PlayerManager playerManager;
-
+    private EditingViewController editingViewController;
+    private VideoFile videoFile;
+    private TrackManager trackManager;
+    private PlayerManager playerManager;
     private Project project;
 
 

@@ -9,7 +9,10 @@ import business.tracks.AudioTrackType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
 import presentation.mainView.EditingViewController;
@@ -36,9 +39,11 @@ public class TimelineViewController {
         this.videoViewController = editingViewController.getVideoViewController();
         this.timelineTracksController = new TimelineTracksController(project);
         this.timelineTrackSettingsController = new TimelineTrackSettingsController(project, playerManager);
+
         this.root = new TimeLineView();
         timelineTrackSettingsController.getRoot().prefWidthProperty().bind(root.widthProperty().multiply(0.3));
         timelineTracksController.getRoot().prefWidthProperty().bind(root.widthProperty().multiply(0.7));
+
         root.getChildren().addAll(timelineTrackSettingsController.getRoot(), timelineTracksController.getRoot());
 
 
@@ -74,7 +79,6 @@ public class TimelineViewController {
 
 
     }
-
 
 
     public Slider getTimelineSlider(){
