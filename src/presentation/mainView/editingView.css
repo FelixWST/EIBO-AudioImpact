@@ -23,6 +23,26 @@
     -fx-border-style: hidden solid hidden hidden;
 }
 
+.track-layer-setting Button{
+    -fx-background-color: #393939;
+}
+
+#mute-active{
+    -fx-background-color: #00aa2d;
+}
+
+#mute-inactive{
+    -fx-background-color: #393939;
+}
+
+#solo-active{
+    -fx-background-color: #ffd600;
+}
+
+#solo-inactive{
+    -fx-background-color: #393939;
+}
+
 #play-button{
     -fx-background-image: url(../../data/assets/play.png);
 }

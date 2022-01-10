@@ -109,9 +109,6 @@ public class TimelineTracksController {
 
                 keyframeCircle.setCursor(Cursor.HAND);
 
-
-
-
                 keyframeCircle.setOnMousePressed((event -> {
                     orgSceneX = event.getSceneX();
                     orgSceneY = event.getSceneY();

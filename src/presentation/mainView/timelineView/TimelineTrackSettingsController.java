@@ -42,6 +42,14 @@ public class TimelineTrackSettingsController {
 
             });
 
+            playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).muteProperty().addListener(((observableValue, aBoolean, t1) -> {
+                if(t1){
+                    trackLayers.get(audioTrack.getAudioTrackType()).mute.setId("mute-active");
+                }else{
+                    trackLayers.get(audioTrack.getAudioTrackType()).mute.setId("mute-inactive");
+                }
+            }));
+
             trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setValue(playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).volumeProperty().getValue());
 
             playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).volumeProperty().addListener(((observableValue, number, t1) -> {
