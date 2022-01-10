@@ -35,6 +35,7 @@ public class Main extends Application {
 
         project = new Project("Testprojekt", "testproject.prj", "path", trackManager.getMergedTrack(0));
         project.setVideoFile(new VideoFile(new File("src/data/video/videoplayback.mp4")));
+        //project.setVideoFile(new VideoFile(new File("src/data/video/biggerTestClip.mp4")));
 
         playerManager = new PlayerManager(project.getMergedTrack(), project.getKeyframeManagers());
         project.getKeyframeManager(AudioTrackType.ATMOSPHERE).addKeyframe(new Keyframe(10,-80));

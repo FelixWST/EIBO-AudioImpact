@@ -6,6 +6,7 @@ import business.managing.PlayerManager;
 import business.managing.Project;
 import business.managing.TrackManager;
 import business.tracks.AudioTrackType;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
@@ -54,9 +55,16 @@ public class TimelineViewController {
 
         timelineTracksController.getRoot().timelineSlider.valueChangingProperty().addListener(((observableValue, aBoolean, t1) -> {
             if(!t1){
-
                 Duration dt = Duration.millis(timelineTracksController.getRoot().timelineSlider.getValue());
-                videoViewController.getMediaPlayer().seek(dt);
+                new Thread(()->{
+                    Platform.runLater(()->{
+                        System.out.println("StartTime"+videoViewController.getMediaPlayer().getStartTime());
+                        System.out.println("EndTime"+videoViewController.getMediaPlayer().getStopTime());
+                        System.out.println("seeked duration"+dt);
+
+                        videoViewController.getMediaPlayer().seek(dt);
+                    });
+                }).start();
             }
         }));
 
