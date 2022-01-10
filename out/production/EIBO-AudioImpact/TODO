@@ -1,6 +1,8 @@
 ToDo:
 -Property loading
 -WindowTitle
+-Slider für spuren keyframes erzeugen , wie? intervall?
+-Kommentieren, für Prüfung sinnvoll
 
 In arbeit:
 -timeline mouse eventhandler aufräumen

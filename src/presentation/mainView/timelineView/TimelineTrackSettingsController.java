@@ -1,5 +1,6 @@
 package presentation.mainView.timelineView;
 
+import business.editing.Keyframe;
 import business.managing.PlayerManager;
 import business.managing.Project;
 import business.playback.TrackPlayer;
@@ -9,6 +10,7 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 
 
@@ -61,6 +63,11 @@ public class TimelineTrackSettingsController {
 
             trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.valueProperty().addListener(((observableValue, number, t1) -> {
                 playerManager.setTrackVolume(audioTrack.getAudioTrackType(), t1.floatValue());
+                if(trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.valueChangingProperty().get()){
+                    Platform.runLater(()->{
+                        project.getKeyframeManager(audioTrack.getAudioTrackType()).addKeyframe(new Keyframe(playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).getPosition(), t1.doubleValue()));
+                    });
+                }
                 //property von -80 bis +6
                 trackLayers.get(audioTrack.getAudioTrackType()).volumeProgress.setProgress((t1.doubleValue()+80)/86);
             }));
@@ -84,10 +91,12 @@ public class TimelineTrackSettingsController {
             trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setValue(playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).volumeProperty().getValue());
 
             playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).volumeProperty().addListener(((observableValue, number, t1) -> {
+
+            if(!trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.valueChangingProperty().get()){
                 Platform.runLater(()->{
                     trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setValue(t1.doubleValue());
                 });
-
+            }
             }));
 
 

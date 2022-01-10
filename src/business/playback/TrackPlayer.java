@@ -83,6 +83,10 @@ public class TrackPlayer {
         }
     }
 
+    public int getPosition(){
+        return (simpleAudioPlayer!=null) ? simpleAudioPlayer.position() : 0;
+    }
+
     public void mute(){
         muteProperty.set(!muteProperty.get());
     }
