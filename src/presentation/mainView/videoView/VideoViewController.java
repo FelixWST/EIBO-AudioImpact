@@ -105,7 +105,9 @@ public class VideoViewController {
         mediaPlayer.currentTimeProperty().addListener(((observableValue, duration, t1) -> {
             root.videoProgressBar.setProgress(t1.toMillis()/mediaPlayer.getMedia().getDuration().toMillis());
             videoControl.getTimeLabel().setText(millisToTimecode((long) t1.toMillis()));
-            editingViewController.getTimelineViewController().getTimelineSlider().setValue(t1.toMillis());
+            if(!editingViewController.getTimelineViewController().getTimelineSlider().isValueChanging()){
+                editingViewController.getTimelineViewController().getTimelineSlider().setValue(t1.toMillis());
+            }
         }));
 
         mediaPlayer.setOnEndOfMedia(()->{
