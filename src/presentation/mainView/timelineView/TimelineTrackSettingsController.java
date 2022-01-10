@@ -2,6 +2,7 @@ package presentation.mainView.timelineView;
 
 import business.managing.PlayerManager;
 import business.managing.Project;
+import business.playback.TrackPlayer;
 import business.tracks.AudioTrack;
 import business.tracks.AudioTrackType;
 import javafx.application.Platform;
@@ -26,12 +27,23 @@ public class TimelineTrackSettingsController {
 
         for(AudioTrack audioTrack : project.getMergedTrack().getAudioTracks()){
             trackLayers.put(audioTrack.getAudioTrackType(), new TrackLayerSettings(audioTrack.getAudioTrackType()));
+            String id = "";
+            switch (audioTrack.getAudioTrackType()){
+                case DEPTH -> id = "track-settings-volume-depth";
+                case INTENSITY -> id = "track-settings-volume-intensity";
+                case ATMOSPHERE -> id = "track-settings-volume-atmosphere";
+            }
+            trackLayers.get(audioTrack.getAudioTrackType()).volumeProgress.setId(id);
+            trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setId(id);
+
             trackLayers.get(audioTrack.getAudioTrackType()).prefHeightProperty().bind(root.heightProperty().divide(project.getMergedTrack().getAudioTracks().size()));
             VBox.setMargin(trackLayers.get(audioTrack.getAudioTrackType()), new Insets(10,0,5,10));
             root.getChildren().add(trackLayers.get(audioTrack.getAudioTrackType()));
 
             trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.valueProperty().addListener(((observableValue, number, t1) -> {
                 playerManager.setTrackVolume(audioTrack.getAudioTrackType(), t1.floatValue());
+                //property von -80 bis +6
+                trackLayers.get(audioTrack.getAudioTrackType()).volumeProgress.setProgress((t1.doubleValue()+80)/86);
             }));
 
             trackLayers.get(audioTrack.getAudioTrackType()).mute.setOnAction((event)->{
@@ -58,6 +70,10 @@ public class TimelineTrackSettingsController {
                 });
 
             }));
+
+
+
+
         }
     }
 

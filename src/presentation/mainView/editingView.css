@@ -27,6 +27,11 @@
     -fx-background-color: #393939;
 }
 
+.track-layer-setting Button:hover{
+    -fx-background-color: #5c5c5c;
+    -fx-cursor: hand;
+}
+
 #mute-active{
     -fx-background-color: #00aa2d;
 }
@@ -130,6 +135,10 @@
     -fx-background-position:center;
 }
 
+.timeLineSlider .thumb:hover{
+    -fx-cursor: hand;
+}
+
 
 .totalVolumeSlider .track {
     -fx-control-inner-background: transparent;
@@ -137,6 +146,10 @@
     -fx-background-insets: 0 0 0 0, 0, 0;
     -fx-background-radius: 0, 0, 0;
     -fx-padding: 0;
+}
+
+.totalVolumeSlider .thumb{
+    -fx-cursor: hand;
 }
 
 .totalVolumeSlider .axis .axis-tick-mark{
@@ -152,3 +165,40 @@
 .totalVolumeSlider .axis{
     -fx-tick-label-fill: #FFFFFF;
 }
+
+#tracklayer-setting-container .slider .track{
+    -fx-background-color: transparent;
+}
+
+#tracklayer-setting-container .slider .thumb:hover{
+    -fx-border-width: 2px;
+    -fx-border-color: #fff;
+    -fx-border-radius: 15;
+    -fx-cursor: hand;
+}
+
+#tracklayer-setting-container .progress-bar .track{
+    -fx-background-color: #C4C4C4;
+    -fx-border-radius: 0;
+    -fx-background-radius: 5;
+}
+
+#tracklayer-setting-container .progress-bar .bar{
+    -fx-background-radius: 2;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-radius: 0;
+    -fx-padding: 0.25em;
+}
+
+#tracklayer-setting-container #track-settings-volume-intensity .bar, #tracklayer-setting-container #track-settings-volume-intensity .thumb{
+    -fx-background-color: #FB3C3B;
+}
+
+#tracklayer-setting-container #track-settings-volume-depth .bar, #tracklayer-setting-container #track-settings-volume-depth .thumb{
+    -fx-background-color: #FCC429;
+}
+
+#tracklayer-setting-container #track-settings-volume-atmosphere .bar, #tracklayer-setting-container #track-settings-volume-atmosphere .thumb{
+    -fx-background-color: #55FEF8;
+}
+
