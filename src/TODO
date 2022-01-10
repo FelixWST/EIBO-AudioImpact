@@ -1,6 +1,7 @@
 ToDo:
 -Property loading
 -WindowTitle
+-Slider für spuren keyframes erzeugen , wie? intervall?
 
 In arbeit:
 -timeline mouse eventhandler aufräumen
@@ -9,7 +10,7 @@ Nice to have:
 -Slider vielleicht nicht linear, damit wirkung deutlicher?
 -get framerate von video für Timecode
 -Waveform in Tracks
--Timeline ticks nach 25fps
+
 -load project button
 -Thread für import
 -timeline horizontal scrollpane
@@ -42,3 +43,5 @@ Erledigt:
 -hover on line add keyframe with plus icon?
 -remove keyframe right click
 -popup change keyframe value on double Click
+-Timeline ticks nach fps
+-Rechtsklick Context Menu -> Alle Keyframes in Spur löschen

@@ -3,19 +3,23 @@ package business.editing;
 import business.playback.TrackPlayer;
 import business.tracks.AudioTrack;
 import business.tracks.AudioTrackType;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
+import java.security.Key;
 import java.util.ArrayList;
 
 public class KeyframeManager {
 
     AudioTrackType audioTrackType;
-    ArrayList<Keyframe> keyframes;
+    ObservableList<Keyframe> keyframes;
+
 
     public KeyframeManager(AudioTrackType audioTrackType){
-        this(audioTrackType, new ArrayList<Keyframe>());
+        this(audioTrackType, FXCollections.observableList(new ArrayList<Keyframe>()));
     }
 
-    public KeyframeManager(AudioTrackType audioTrackType, ArrayList<Keyframe> keyframes){
+    public KeyframeManager(AudioTrackType audioTrackType, ObservableList<Keyframe> keyframes){
         this.audioTrackType = audioTrackType;
         this.keyframes = keyframes;
     }
@@ -79,7 +83,9 @@ public class KeyframeManager {
     }
 
     public void clearAllKeyframes(){
-        this.keyframes = new ArrayList<Keyframe>();
+        for(int i = keyframes.size()-1;i>=0;i--){
+            keyframes.remove(i);
+        }
     }
 
     public boolean isKeyframeAlreadyExisting(Keyframe keyframe){
@@ -95,7 +101,7 @@ public class KeyframeManager {
         return false;
     }
 
-    public ArrayList<Keyframe> getKeyframes(){
+    public ObservableList<Keyframe> getKeyframes(){
         return this.keyframes;
     }
 

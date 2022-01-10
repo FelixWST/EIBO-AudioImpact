@@ -7,6 +7,8 @@ import business.tracks.AudioTrack;
 import business.tracks.AudioTrackType;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 
 
@@ -39,6 +41,23 @@ public class TimelineTrackSettingsController {
             trackLayers.get(audioTrack.getAudioTrackType()).prefHeightProperty().bind(root.heightProperty().divide(project.getMergedTrack().getAudioTracks().size()));
             VBox.setMargin(trackLayers.get(audioTrack.getAudioTrackType()), new Insets(10,0,5,10));
             root.getChildren().add(trackLayers.get(audioTrack.getAudioTrackType()));
+
+
+            MenuItem deleteAll = new MenuItem("Clear all Keyframes");
+            ContextMenu deleteAllContext = new ContextMenu(deleteAll);
+            deleteAll.setOnAction((actionEvent -> {
+                project.getKeyframeManager(audioTrack.getAudioTrackType()).clearAllKeyframes();
+                //repaint?
+            }));
+
+            deleteAllContext.autoHideProperty().set(true);
+            deleteAllContext.setStyle("-fx-background-color: #333333");
+
+            trackLayers.get(audioTrack.getAudioTrackType()).setOnContextMenuRequested((contextMenuEvent -> {
+                deleteAllContext.show(trackLayers.get(audioTrack.getAudioTrackType()), contextMenuEvent.getScreenX(), contextMenuEvent.getScreenY());
+            }));
+
+
 
             trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.valueProperty().addListener(((observableValue, number, t1) -> {
                 playerManager.setTrackVolume(audioTrack.getAudioTrackType(), t1.floatValue());

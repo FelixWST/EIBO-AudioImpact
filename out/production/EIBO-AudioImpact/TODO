@@ -9,7 +9,7 @@ Nice to have:
 -Slider vielleicht nicht linear, damit wirkung deutlicher?
 -get framerate von video für Timecode
 -Waveform in Tracks
--Timeline ticks nach 25fps
+
 -load project button
 -Thread für import
 -timeline horizontal scrollpane
@@ -20,6 +20,7 @@ Nice to have:
 -delete all Keyframes on one track
 - Keyboard l, ll j,jj fw ffw... (setRate)
 -button hover mousepointer
+-wenn shift gedrückt nur horizontal dragbar
 
 Bugs:
 -button text springt
@@ -41,3 +42,5 @@ Erledigt:
 -hover on line add keyframe with plus icon?
 -remove keyframe right click
 -popup change keyframe value on double Click
+-Timeline ticks nach fps
+-Rechtsklick Context Menu -> Alle Keyframes in Spur löschen

@@ -8,12 +8,15 @@ import business.tracks.AudioTrack;
 import business.tracks.AudioTrackType;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
+import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -47,6 +50,13 @@ public class TimelineTracksController {
             trackLayers.get(audioTrack.getAudioTrackType()).prefHeightProperty().bind(root.heightProperty().divide(project.getMergedTrack().getAudioTracks().size()));
             VBox.setMargin(trackLayers.get(audioTrack.getAudioTrackType()), new Insets(10,10,5,0));
             root.getChildren().add(trackLayers.get(audioTrack.getAudioTrackType()));
+
+            project.getKeyframeManager(audioTrack.getAudioTrackType()).getKeyframes().addListener(new ListChangeListener<Keyframe>() {
+                @Override
+                public void onChanged(Change<? extends Keyframe> change) {
+                    repaint();
+                }
+            });
         }
 
 
@@ -98,6 +108,7 @@ public class TimelineTracksController {
                 selectedTrackLayer.getChildren().add(onlyLine);
                 subGraphFill.getPoints().addAll(0.0,selectedTrackLayer.getHeight(), 0.0, selectedTrackLayer.getHeight()- (TrackPlayer.DEFAULT_GAIN *pxPerGainVer+mapVolumeToPositiveRange), selectedTrackLayer.getWidth(), selectedTrackLayer.getHeight()-(TrackPlayer.DEFAULT_GAIN*pxPerGainVer+mapVolumeToPositiveRange), selectedTrackLayer.getWidth(), selectedTrackLayer.getHeight());
             }
+
 
             for(int i = 0; i<keyframeManager.getKeyframes().size(); i++){
                 Keyframe kf = keyframeManager.getKeyframes().get(i);
