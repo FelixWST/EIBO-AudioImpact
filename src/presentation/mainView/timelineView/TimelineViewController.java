@@ -44,6 +44,7 @@ public class TimelineViewController {
 
         videoViewController.getMediaPlayer().setOnReady(()->{
             timelineTracksController.getRoot().timelineSlider.setMax(videoViewController.getMediaPlayer().getTotalDuration().toMillis());
+            timelineTracksController.repaint();
         });
 
         timelineTracksController.getRoot().timelineSlider.valueChangingProperty().addListener(((observableValue, aBoolean, t1) -> {
@@ -73,6 +74,8 @@ public class TimelineViewController {
 
 
     }
+
+
 
     public Slider getTimelineSlider(){
         return this.timelineTracksController.getRoot().timelineSlider;

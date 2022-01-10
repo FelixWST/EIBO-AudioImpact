@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -20,6 +21,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import presentation.mainView.uicomponents.TrackLayer;
 import java.util.HashMap;
+import java.util.Map;
 
 public class TimelineTracksController {
 
@@ -46,21 +48,21 @@ public class TimelineTracksController {
         }));
 
 
-        //Listener auf Keyframes anmelden (Observable list)
+        repaint();
+        //Listener auf Keyframes anmelden (Observable list)?
     }
 
     public TimelineTracks getRoot() {
         return root;
     }
 
-    private void repaint(){
+    public void repaint(){
+        System.out.println();
         //TODO: Keyframes must be drawn over shapes to make them fully clickable
         // Dann lines per binding connecten und nicht fest programmieren
         //Line set on mouse clicked auslagern und nicht 4 mal
         //MAP VOLUME TO -80 to +6
         int mapVolumeToPositiveRange = 80;
-
-
 
         long totalDuration = project.getVideoFile().getDuration();
         for(KeyframeManager keyframeManager : project.getKeyframeManagers()){

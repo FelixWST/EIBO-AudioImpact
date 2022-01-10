@@ -114,6 +114,7 @@ public class VideoViewController {
             videoControl.getPlayButton().setId("play-button");
         });
 
+
     }
 
     public String millisToTimecode(long millis){
