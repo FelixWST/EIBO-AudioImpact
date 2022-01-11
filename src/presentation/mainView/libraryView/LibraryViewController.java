@@ -15,10 +15,10 @@ public class LibraryViewController {
     public LibraryViewController() {
         trackManager = new TrackManager();
         root = new LibraryView();
-        //root.listView.getItems().addAll(trackManager.getMergedTrack(0));
+
         ObservableList<MergedTrack> content = FXCollections.observableArrayList();
         content.setAll(trackManager.getTrackList());
-        //root.listView.setItems(items);
+        root.listView.setItems(content);
     }
 
     public LibraryView getRoot(){
