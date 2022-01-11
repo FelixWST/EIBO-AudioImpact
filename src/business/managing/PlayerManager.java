@@ -104,7 +104,6 @@ public class PlayerManager {
     public void setTotalVolumeProperty(double volumeProperty){
         this.totalVolumeProperty.set(volumeProperty);
         for(Map.Entry<AudioTrackType, TrackPlayer> entry : player.entrySet()){
-            //float totalVolumeModifier = (float) ((TrackPlayer.MIN_GAIN + ((TrackPlayer.MAX_GAIN - TrackPlayer.MIN_GAIN) / (1 - 0)) * (totalVolumeProperty.get() - 0)) - TrackPlayer.MAX_GAIN);
             entry.getValue().setTotalVolumeModifier((float) Math.abs(totalVolumeProperty.get()));
         }
     }
