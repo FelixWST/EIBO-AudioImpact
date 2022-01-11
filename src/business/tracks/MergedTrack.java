@@ -48,11 +48,8 @@ public class MergedTrack {
 
     @Override
     public String toString() {
-        return "MergedTrack{" +
-                "title='" + title + '\'' +
-                ", genres=" + genres +
-                ", duration=" + duration +
-                '}';
+        return title + " " + genres + " " + duration;
+
     }
 
     public void addTrack(AudioTrack track){

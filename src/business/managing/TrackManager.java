@@ -47,6 +47,7 @@ public class TrackManager {
     public void loadLibrary() {
         AudioTrackType audioTrackType;
         String mergedTrackName ="defualt Name";
+        Genre genre = null;
 
         try {
             reader = new BufferedReader(new FileReader("src/data/LibraryTrackList"));
@@ -56,7 +57,8 @@ public class TrackManager {
                         mergedTrackName = getMergedTrackTitle(line);
                     }
                     if(line.contains("GENRE")){
-                        audioTrackType = getAudioTrackType(line);
+                        genre = getGenre(line);
+
                     }
 
                     if(line.contains(".mp3")) {
@@ -80,7 +82,7 @@ public class TrackManager {
             e.printStackTrace();
         }
 
-        MergedTrack mergedTrack = new MergedTrack(mergedTrackName, duration, Genre.CINEMATIC);
+        MergedTrack mergedTrack = new MergedTrack(mergedTrackName, duration, genre);
 
         mergedTrack.addTrack(AtmosphereTrack);
         mergedTrack.addTrack(DepthTrack);

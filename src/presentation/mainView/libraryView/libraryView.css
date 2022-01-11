@@ -1,0 +1,11 @@
+.list-view {
+    -fx-text-fill: black;
+}
+
+.list-view:showing {
+    -fx-text-fill: black;
+}
+
+.list-view:hover {
+    -fx-text-fill: black;
+}

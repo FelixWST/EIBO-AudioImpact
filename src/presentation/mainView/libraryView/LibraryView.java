@@ -21,8 +21,7 @@ public class LibraryView extends VBox {
         this.getChildren().add(new Label("Library"));
 
         listView = new ListView<MergedTrack>();
-
-        listView.setPrefSize(130,250);
+        listView.getStyleClass().addAll("list-view");
 
         this.setStyle("-fx-text-fill: black");
         this.getChildren().add(listView);
