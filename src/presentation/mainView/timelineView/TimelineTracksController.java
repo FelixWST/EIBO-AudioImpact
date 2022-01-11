@@ -139,6 +139,9 @@ public class TimelineTracksController {
                     c.setStroke(Color.rgb(255,255,255));
                     c.setStrokeWidth(2);
 
+                    double newKfValue = ((selectedTrackLayer.getHeight()-c.getCenterY())/pxPerGainVer-mapVolumeToPositiveRange);
+                    kf.setVolume(newKfValue);
+
                     if((c.getCenterX()+deltaX) > 0 && (c.getCenterX()+deltaX) < selectedTrackLayer.getWidth()){
                         c.setCenterX(c.getCenterX()+deltaX);
                         orgSceneX = event.getSceneX();

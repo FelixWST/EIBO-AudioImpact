@@ -28,6 +28,7 @@ Bugs:
 -button text springt
 -timeline scrubben error (Mac)
 -textfield context menu
+-wenn volumeproperty nicht ändert && Player erneut von vorne beginnt ist Tracksettingslider auf falschem Wert
 
 
 Fragen:

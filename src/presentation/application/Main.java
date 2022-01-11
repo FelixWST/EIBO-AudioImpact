@@ -1,6 +1,7 @@
 package presentation.application;
 
 import business.editing.Keyframe;
+import business.exporting.WaveExporter;
 import business.managing.PlayerManager;
 import business.managing.Project;
 import business.managing.TrackManager;
@@ -50,13 +51,18 @@ public class Main extends Application {
 
         project.getKeyframeManager(AudioTrackType.INTENSITY).addKeyframe(new Keyframe(0,-80));
         project.getKeyframeManager(AudioTrackType.INTENSITY).addKeyframe(new Keyframe(8000,0));
-        project.getKeyframeManager(AudioTrackType.INTENSITY).addKeyframe(new Keyframe(13400,6));
+        project.getKeyframeManager(AudioTrackType.INTENSITY).addKeyframe(new Keyframe(13400,0));
 
         editingViewController = new EditingViewController(primaryStage, project, playerManager, trackManager);
         Scene scene = new Scene(editingViewController.getRoot(), 1920, 1080);
         scene.getStylesheets().add("/presentation/application/application.css");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+
+        WaveExporter wf = new WaveExporter(project.getKeyframeManager(AudioTrackType.ATMOSPHERE));
+        wf.export();
+
     }
 
     public void init(){
