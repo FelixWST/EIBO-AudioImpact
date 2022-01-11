@@ -46,6 +46,15 @@ public class MergedTrack {
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "MergedTrack{" +
+                "title='" + title + '\'' +
+                ", genres=" + genres +
+                ", duration=" + duration +
+                '}';
+    }
+
     public void addTrack(AudioTrack track){
         this.audioTracks.add(track);
     }

@@ -12,13 +12,15 @@ public class LibraryViewController {
     MergedTrack mergedTrack;
     TrackManager trackManager;
 
-    public LibraryViewController() {
-        trackManager = new TrackManager();
+    public LibraryViewController(TrackManager trackManager) {
+        this.trackManager = trackManager;
         root = new LibraryView();
 
         ObservableList<MergedTrack> content = FXCollections.observableArrayList();
         content.setAll(trackManager.getTrackList());
         root.listView.setItems(content);
+        System.out.println(trackManager.getTrackList().toString());
+        root.listView.setEditable(true);
     }
 
     public LibraryView getRoot(){

@@ -34,7 +34,7 @@ public class EditingViewController {
         this.root = new EditingView();
         this.exportViewController = new ExportViewController();
         this.videoViewController = new VideoViewController(this, project, playerManager, trackManager);
-        this.libraryViewController = new LibraryViewController();
+        this.libraryViewController = new LibraryViewController(trackManager);
         this.titleViewController = new TitleViewController(project);
         this.timelineViewController = new TimelineViewController(this, project, playerManager, trackManager);
 

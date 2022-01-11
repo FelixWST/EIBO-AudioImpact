@@ -20,13 +20,12 @@ public class LibraryView extends VBox {
         this.getStyleClass().add("view-element");
         this.getChildren().add(new Label("Library"));
 
-        //
-
         listView = new ListView<MergedTrack>();
 
+        listView.setPrefSize(130,250);
 
-       //listView.setPrefSize(130,250);
+        this.setStyle("-fx-text-fill: black");
         this.getChildren().add(listView);
-        //this.setStyle("-fx-background-color: grey");
+
     }
 }

@@ -22,15 +22,15 @@ public class TrackManager {
     private AudioTrack AtmosphereTrack;
     private AudioTrack DepthTrack;
     private AudioTrack IntensityTrack;
-
+    private String mergedTrackName;
     public TrackManager(){
         trackList = new ArrayList<>();
     }
 
-    public TrackManager(ArrayList<MergedTrack> trackList, int trackNumber) {
+   /* public TrackManager(ArrayList<MergedTrack> trackList, int trackNumber) {
         this.trackList = trackList;
         this.trackNumber = trackNumber;
-    }
+    }*/
 
     public void loadTestTrack(){
         AudioTrack testAtmoTrack = new AudioTrack("src/data/testData/exampleTrack/atmosphere.mp3", AudioTrackType.ATMOSPHERE);
@@ -52,6 +52,7 @@ public class TrackManager {
             reader = new BufferedReader(new FileReader("src/data/LibraryTrackList"));
             try {
                 while((line = reader.readLine()) != null) {
+                    mergedTrackName = getMergedTrackTitle(line);
 
                     if(line.contains(".mp3")) {
                         Mp3File mp3File = new Mp3File(line);
@@ -72,7 +73,7 @@ public class TrackManager {
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         }
-        MergedTrack mergedTrack = new MergedTrack(getMergedTrackTitle(line), duration, getGenre(line));
+        MergedTrack mergedTrack = new MergedTrack(mergedTrackName, duration, Genre.CINEMATIC);
 
         mergedTrack.addTrack(AtmosphereTrack);
         mergedTrack.addTrack(DepthTrack);
@@ -97,7 +98,7 @@ public class TrackManager {
 
     private String getMergedTrackTitle(String line) {
         if(line.contains("NAME:")){
-            mergedTrackTitle = line.substring(line.indexOf("NAME:"), (line.indexOf("NAME:") + line.indexOf(" ")));
+            mergedTrackTitle = "TEST";
             return mergedTrackTitle;
         } else {
             return mergedTrackTitle = "defaultName";

@@ -28,11 +28,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage){
-        this.primaryStage = primaryStage;
 
         trackManager = new TrackManager();
-        trackManager.loadTestTrack();
-        //trackManager.loadLibrary();
+        //trackManager.loadTestTrack();
+        trackManager.loadLibrary();
+
+        this.primaryStage = primaryStage;
 
         project = new Project("Testprojekt", "testproject.prj", "path", trackManager.getMergedTrack(0));
         project.setVideoFile(new VideoFile(new File("src/data/video/videoPlayback.mp4")));
