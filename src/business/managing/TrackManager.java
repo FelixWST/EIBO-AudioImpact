@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class TrackManager {
 
     private ArrayList<MergedTrack> trackList;
-    private int trackNumber;
     private BufferedReader reader;
     private String line;
     private long duration;
@@ -22,7 +21,6 @@ public class TrackManager {
     private AudioTrack AtmosphereTrack;
     private AudioTrack DepthTrack;
     private AudioTrack IntensityTrack;
-    private String mergedTrackName;
 
     public TrackManager(){
         trackList = new ArrayList<>();
@@ -44,36 +42,44 @@ public class TrackManager {
         firstMergedTrack.addTrack(testIntensityTrack);
 
         this.trackList.add(firstMergedTrack);
-
     }
 
     public void loadLibrary() {
+        AudioTrackType audioTrackType;
+        String mergedTrackName ="defualt Name";
 
         try {
             reader = new BufferedReader(new FileReader("src/data/LibraryTrackList"));
             try {
                 while((line = reader.readLine()) != null) {
-                    mergedTrackName = getMergedTrackTitle(line);
+                    if(line.contains("NAME")){
+                        mergedTrackName = getMergedTrackTitle(line);
+                    }
+                    if(line.contains("GENRE")){
+                        audioTrackType = getAudioTrackType(line);
+                    }
 
                     if(line.contains(".mp3")) {
                         Mp3File mp3File = new Mp3File(line);
                         duration = mp3File.getLengthInSeconds();
 
-                       if(getAudtioTrackType(line).equals(AudioTrackType.ATMOSPHERE)) {
+                       if(getAudioTrackType(line).equals(AudioTrackType.ATMOSPHERE)) {
                            AtmosphereTrack = new AudioTrack(line, AudioTrackType.ATMOSPHERE);
-                       } else if(getAudtioTrackType(line).equals(AudioTrackType.DEPTH)) {
+                       } else if(getAudioTrackType(line).equals(AudioTrackType.DEPTH)) {
                            DepthTrack = new AudioTrack(line, AudioTrackType.DEPTH);
                        } else {
                            IntensityTrack = new AudioTrack(line, AudioTrackType.INTENSITY);
                        }
                     }
                 }
+                System.out.println("MergedTrack Name:"+ mergedTrackTitle);
             } catch(IOException | UnsupportedTagException | InvalidDataException e) {
                 e.printStackTrace();
             }
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         }
+
         MergedTrack mergedTrack = new MergedTrack(mergedTrackName, duration, Genre.CINEMATIC);
 
         mergedTrack.addTrack(AtmosphereTrack);
@@ -97,15 +103,10 @@ public class TrackManager {
     }
 
     private String getMergedTrackTitle(String line) {
-        if(line.contains("NAME:")){
-            mergedTrackTitle = "TEST";
-            return mergedTrackTitle;
-        } else {
-            return mergedTrackTitle = "defaultName";
-        }
+           return mergedTrackTitle = line.substring(line.indexOf(":")+1, line.length());
     }
 
-    private AudioTrackType getAudtioTrackType(String line) {
+    private AudioTrackType getAudioTrackType(String line) {
         if(line.contains("atmosphere")) {
            return AudioTrackType.ATMOSPHERE;
         } else if(line.contains("depth")) {
@@ -113,10 +114,6 @@ public class TrackManager {
         } else {
             return AudioTrackType.INTENSITY;
         }
-    }
-
-    public int getTrackNumber() {
-        return this.trackNumber;
     }
 
     public void addMergedTrack(MergedTrack mergedTrack){

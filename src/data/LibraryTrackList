@@ -1,8 +1,6 @@
 #EXTM3U
-#EXTINF NAME: TestTrackTitle
-#EXTINF 200, GENRE:CINEMATIC -
+#EXTINF NAME:TestTrackTitle
+#EXTINF GENRE:CINEMATIC
 src/data/testData/exampleTrack/atmosphere.mp3
-#EXTINF 200, GENRE:CINEMATIC -
 src/data/testData/exampleTrack/depth.mp3
-#EXTINF 200, GENRE:CINEMATIC -
 src/data/testData/exampleTrack/intensity.mp3
