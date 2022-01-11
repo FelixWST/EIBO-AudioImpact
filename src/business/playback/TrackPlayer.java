@@ -21,6 +21,7 @@ public class TrackPlayer {
     private int time;
     private SimpleFloatProperty volumeProperty;
     private SimpleBooleanProperty muteProperty;
+    private SimpleBooleanProperty soloProperty;
     private Thread playerThread;
     private int lastStoppedPosition = 0;
     public static final float MIN_GAIN = -80;
@@ -37,6 +38,7 @@ public class TrackPlayer {
         this.volumeProperty = new SimpleFloatProperty();
         volumeProperty.set(keyframeManager.getVolumeAtTime(lastStoppedPosition));
         this.muteProperty = new SimpleBooleanProperty(false);
+        this.soloProperty = new SimpleBooleanProperty(false);
     }
 
     public void play() {
@@ -101,6 +103,10 @@ public class TrackPlayer {
 
     public SimpleBooleanProperty muteProperty() {
         return muteProperty;
+    }
+
+    public SimpleBooleanProperty soloProperty(){
+        return this.soloProperty;
     }
 
     private class VolumeModifierThread extends Thread{

@@ -61,7 +61,39 @@ public class PlayerManager {
     }
 
     public void toggleSoloOnTrack(AudioTrackType trackType){
-        //Solo einzelne Spur
+        if(player.get(trackType).soloProperty().get()){
+            player.get(trackType).soloProperty().set(false);
+            if(isAnotherPlayerSolo()){
+                player.get(trackType).mute();
+            }
+            for(Map.Entry<AudioTrackType, TrackPlayer> entry : player.entrySet()){
+                if(entry.getValue().muteProperty().get() && !isAnotherPlayerSolo()){
+                    //Nur wenn kein player mehr auf Solo ist
+                    entry.getValue().mute();
+                }
+            }
+        }else{
+            player.get(trackType).soloProperty().set(true);
+            if(player.get(trackType).muteProperty().get()){
+                player.get(trackType).mute();
+            }
+            for(Map.Entry<AudioTrackType, TrackPlayer> entry : player.entrySet()){
+                if(entry.getKey()!=trackType){
+                    if(!entry.getValue().muteProperty().get() && !entry.getValue().soloProperty().get()){
+                        entry.getValue().mute();
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean isAnotherPlayerSolo(){
+        for(Map.Entry<AudioTrackType, TrackPlayer> entry : player.entrySet()){
+            if(entry.getValue().soloProperty().get()){
+               return true;
+            }
+        }
+        return false;
     }
 
     public TrackPlayer getTrackPlayer(AudioTrackType audioTrackType){

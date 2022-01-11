@@ -85,7 +85,7 @@ public class TimelineTrackSettingsController {
             });
 
             trackLayers.get(audioTrack.getAudioTrackType()).solo.setOnAction((event)->{
-
+                playerManager.toggleSoloOnTrack(audioTrack.getAudioTrackType());
             });
 
             playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).muteProperty().addListener(((observableValue, aBoolean, t1) -> {
@@ -93,6 +93,14 @@ public class TimelineTrackSettingsController {
                     trackLayers.get(audioTrack.getAudioTrackType()).mute.setId("mute-active");
                 }else{
                     trackLayers.get(audioTrack.getAudioTrackType()).mute.setId("mute-inactive");
+                }
+            }));
+
+            playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).soloProperty().addListener(((observableValue, aBoolean, t1) -> {
+                if(t1){
+                    trackLayers.get(audioTrack.getAudioTrackType()).solo.setId("solo-active");
+                }else{
+                    trackLayers.get(audioTrack.getAudioTrackType()).solo.setId("solo-inactive");
                 }
             }));
 
