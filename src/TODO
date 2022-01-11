@@ -1,7 +1,6 @@
 ToDo:
 -Property loading
 -WindowTitle
--Slider für spuren keyframes erzeugen , wie? intervall?
 -Kommentieren, für Prüfung sinnvoll
 
 In arbeit:
@@ -22,6 +21,7 @@ Nice to have:
 - Keyboard l, ll j,jj fw ffw... (setRate)
 -button hover mousepointer
 -wenn shift gedrückt nur horizontal dragbar
+-totalvolume video lineare lautstärke an gain von player anpassen?
 
 
 Bugs:
@@ -45,3 +45,4 @@ Erledigt:
 -Timeline ticks nach fps
 -Rechtsklick Context Menu -> Alle Keyframes in Spur löschen
 -Volume Sliders set Keyframes way to often when being dragged
+-Slider für spuren keyframes erzeugen , wie? intervall?
