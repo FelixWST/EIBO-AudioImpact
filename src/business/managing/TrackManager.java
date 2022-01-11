@@ -17,9 +17,7 @@ public class TrackManager {
     private int trackNumber;
     private BufferedReader reader;
     private String line;
-    private String audioTrackType;
     private long duration;
-    private String genre;
     private String mergedTrackTitle;
     private AudioTrack AtmosphereTrack;
     private AudioTrack DepthTrack;
@@ -80,7 +78,9 @@ public class TrackManager {
         mergedTrack.addTrack(DepthTrack);
         mergedTrack.addTrack(IntensityTrack);
 
-        addMergedTrack(mergedTrack);
+       //addMergedTrack(mergedTrack);
+        this.trackList.add(mergedTrack);
+        System.out.println("Merged Track added");
     }
 
     private Genre getGenre(String line) {

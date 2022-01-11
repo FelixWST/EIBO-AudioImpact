@@ -32,7 +32,7 @@ public class Main extends Application {
 
         trackManager = new TrackManager();
         trackManager.loadTestTrack();
-        trackManager.loadLibrary();
+        //trackManager.loadLibrary();
 
         project = new Project("Testprojekt", "testproject.prj", "path", trackManager.getMergedTrack(0));
         project.setVideoFile(new VideoFile(new File("src/data/video/videoPlayback.mp4")));
