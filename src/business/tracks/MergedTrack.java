@@ -33,6 +33,10 @@ public class MergedTrack {
         return this.duration;
     }
 
+    public String getGenre() {
+        return this.genres.toString();
+    }
+
     public ArrayList<AudioTrack> getAudioTracks() {
         return this.audioTracks;
     }
