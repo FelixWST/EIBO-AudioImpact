@@ -26,7 +26,7 @@ public class TrackPlayer {
     private int lastStoppedPosition = 0;
     public static final float MIN_GAIN = -80;
     public static final float MAX_GAIN = 6;
-    public static final float DEFAULT_GAIN = -20;
+    public static final float DEFAULT_GAIN = 6;
     private VolumeModifierThread volumeModifierThread;
 
     public TrackPlayer(AudioTrack audioTrack, KeyframeManager keyframeManager) {
@@ -73,14 +73,21 @@ public class TrackPlayer {
 
     public void setVolume(float gain) {
         if(simpleAudioPlayer!=null){
-            if(gain>=MIN_GAIN && gain<=MAX_GAIN){
-                if(!muteProperty.get()){
+            if(!muteProperty.get()){
+                if(gain>=MIN_GAIN && gain<=MAX_GAIN){
                     simpleAudioPlayer.setGain(gain);
                     volumeProperty.set(gain);
-                }else{
+                }else if(gain<MIN_GAIN){
+                    System.out.println("LOWER THAN MIN");
                     simpleAudioPlayer.setGain(MIN_GAIN);
                     volumeProperty.set(MIN_GAIN);
+                }else if(gain>MAX_GAIN){
+                    simpleAudioPlayer.setGain(MAX_GAIN);
+                    volumeProperty.set(MAX_GAIN);
                 }
+            }else{
+                simpleAudioPlayer.setGain(MIN_GAIN);
+                volumeProperty.set(MIN_GAIN);
             }
         }
     }

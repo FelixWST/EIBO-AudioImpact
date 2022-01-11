@@ -5,6 +5,8 @@ import business.playback.TrackPlayer;
 import business.tracks.AudioTrack;
 import business.tracks.AudioTrackType;
 import business.tracks.MergedTrack;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,9 +14,10 @@ import java.util.Map;
 
 public class PlayerManager {
 
-    MergedTrack mergedTrack;
-    HashMap<AudioTrackType, TrackPlayer> player;
-    HashMap<AudioTrackType, KeyframeManager> keyframeManagers;
+    private MergedTrack mergedTrack;
+    private HashMap<AudioTrackType, TrackPlayer> player;
+    private HashMap<AudioTrackType, KeyframeManager> keyframeManagers;
+    private SimpleDoubleProperty totalVolumeProperty;
 
 
     public PlayerManager(MergedTrack mergedTrack, ArrayList<KeyframeManager> keyframeManagers){
@@ -29,6 +32,8 @@ public class PlayerManager {
         for(AudioTrack t : mergedTrack.getAudioTracks()){
             player.put(t.getAudioTrackType(), new TrackPlayer(t, this.keyframeManagers.get(t.getAudioTrackType())));
         }
+
+        this.totalVolumeProperty = new SimpleDoubleProperty(1);
 
     }
 
@@ -52,7 +57,9 @@ public class PlayerManager {
 
     public void setTrackVolume(AudioTrackType trackType, float gain){
         if(player.containsKey(trackType) && player.get(trackType)!=null){
-            player.get(trackType).setVolume(gain);
+            float totalVolumeModifier = (float) ((TrackPlayer.MIN_GAIN + ((TrackPlayer.MAX_GAIN - TrackPlayer.MIN_GAIN) / (1 - 0)) * (totalVolumeProperty.get() - 0)) - TrackPlayer.MAX_GAIN);
+            System.out.println(trackType.name()+" | Gain: "+gain+" | modifier: "+totalVolumeModifier+" | setGain: "+(gain-Math.abs(totalVolumeModifier)));
+            player.get(trackType).setVolume(gain-Math.abs(totalVolumeModifier));
         }
     }
 
@@ -94,6 +101,10 @@ public class PlayerManager {
             }
         }
         return false;
+    }
+
+    public SimpleDoubleProperty totalVolumeProperty(){
+        return this.totalVolumeProperty;
     }
 
     public TrackPlayer getTrackPlayer(AudioTrackType audioTrackType){

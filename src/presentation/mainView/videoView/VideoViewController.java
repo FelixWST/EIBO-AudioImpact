@@ -115,7 +115,10 @@ public class VideoViewController {
             videoControl.getPlayButton().setId("play-button");
         });
 
-
+        mediaPlayer.setVolume(playerManager.totalVolumeProperty().doubleValue());
+        playerManager.totalVolumeProperty().addListener(((observableValue, number, t1) -> {
+            mediaPlayer.setVolume(t1.doubleValue());
+        }));
 
 
     }

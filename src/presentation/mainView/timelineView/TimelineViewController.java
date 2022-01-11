@@ -5,15 +5,10 @@ import business.editing.KeyframeManager;
 import business.managing.PlayerManager;
 import business.managing.Project;
 import business.managing.TrackManager;
-import business.tracks.AudioTrackType;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
+import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import javafx.util.StringConverter;
 import presentation.mainView.EditingViewController;
@@ -46,7 +41,8 @@ public class TimelineViewController {
         timelineTracksController.getRoot().prefWidthProperty().bind(root.widthProperty().multiply(0.7));
 
         root.getChildren().addAll(timelineTrackSettingsController.getRoot(), timelineTracksController.getRoot());
-
+        HBox.setMargin(timelineTrackSettingsController.getRoot(), new Insets(10,0,10,10));
+        HBox.setMargin(timelineTracksController.getRoot(), new Insets(10,10,10,0));
 
         videoViewController.getMediaPlayer().setOnReady(()->{
             timelineTracksController.getRoot().timelineSlider.setMax(videoViewController.getMediaPlayer().getTotalDuration().toMillis());
@@ -80,14 +76,7 @@ public class TimelineViewController {
                 return null;
             }
         });
-
-
-
-
-
-
     }
-
 
     public Slider getTimelineSlider(){
         return this.timelineTracksController.getRoot().timelineSlider;
