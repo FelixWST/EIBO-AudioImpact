@@ -13,12 +13,16 @@ public class WaveData {
     private long sampleLength;
     private double [] sampleArray;
     private KeyframeManager keyframeManager;
+    private int tracklengthInMs;
+    private int videoLengthInMs;
 
-    public WaveData(KeyframeManager keyframeManager){
+    public WaveData(KeyframeManager keyframeManager, int trackLengthInMs, int videoLengthInMs){
         format = null;
         sampleLength = 0;
         sampleArray = null;
         this.keyframeManager = keyframeManager;
+        this.tracklengthInMs = trackLengthInMs;
+        this.videoLengthInMs = videoLengthInMs;
     }
 
     public AudioFormat getFormat() {
@@ -43,12 +47,12 @@ public class WaveData {
 
         for(int i = 0; i < sampleLength; i++) {
 
-            if(i > ((sampleLength/84000)*18230)){
+            if(i > ((sampleLength/tracklengthInMs)*videoLengthInMs)){
                 //End of Video
                 return byteArray;
             }
 
-            if(i % (sampleLength/84000) == 0){ //84000 ist länge von Track in ms -> Muss angepasst werden an Track!
+            if(i % (sampleLength/tracklengthInMs) == 0){
                 millisecondCounter++;
             }
 
@@ -87,8 +91,10 @@ public class WaveData {
     public void readFile(String filePath){
         try{
             File file = new File(filePath);
+            System.out.println(file.toString());
             AudioInputStream in = AudioSystem.getAudioInputStream(file);
             this.format = in.getFormat();
+            System.out.println("Format"+format);
             this.sampleLength = in.getFrameLength();
             BufferedInputStream bis = new BufferedInputStream(in);
             int channelNo = 0;
@@ -102,7 +108,7 @@ public class WaveData {
         try{
             byte [] byteArray = convertSampleToByteArray();
             ByteArrayInputStream bis = new ByteArrayInputStream(byteArray);
-            AudioInputStream ais = new AudioInputStream(bis, format, (sampleLength/84000)*18230); //<-- video length instead of sampleLength
+            AudioInputStream ais = new AudioInputStream(bis, format, (sampleLength/tracklengthInMs)*videoLengthInMs);
             File file = new File(filePath);
             AudioSystem.write(ais, Type.WAVE, file);
             ais.close();

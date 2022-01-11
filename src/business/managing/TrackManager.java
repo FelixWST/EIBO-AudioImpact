@@ -32,11 +32,11 @@ public class TrackManager {
     }*/
 
     public void loadTestTrack(){
-        AudioTrack testAtmoTrack = new AudioTrack("src/data/testData/exampleTrack/atmosphere.mp3", AudioTrackType.ATMOSPHERE);
-        AudioTrack testDepthTrack = new AudioTrack("src/data/testData/exampleTrack/depth.mp3", AudioTrackType.DEPTH);
-        AudioTrack testIntensityTrack = new AudioTrack("src/data/testData/exampleTrack/intensity.mp3", AudioTrackType.INTENSITY);
+        AudioTrack testAtmoTrack = new AudioTrack("src/data/testData/exampleTrack/atmosphere.mp3","src/data/testData/exampleTrack/atmosphere.wav", AudioTrackType.ATMOSPHERE);
+        AudioTrack testDepthTrack = new AudioTrack("src/data/testData/exampleTrack/depth.mp3","src/data/testData/exampleTrack/depth.wav", AudioTrackType.DEPTH);
+        AudioTrack testIntensityTrack = new AudioTrack("src/data/testData/exampleTrack/intensity.mp3","src/data/testData/exampleTrack/intensity.wav", AudioTrackType.INTENSITY);
 
-        MergedTrack firstMergedTrack = new MergedTrack("Test", 200, Genre.CINEMATIC);
+        MergedTrack firstMergedTrack = new MergedTrack("Test", 84000, Genre.CINEMATIC);
         firstMergedTrack.addTrack(testAtmoTrack);
         firstMergedTrack.addTrack(testDepthTrack);
         firstMergedTrack.addTrack(testIntensityTrack);
@@ -66,11 +66,11 @@ public class TrackManager {
                         duration = mp3File.getLengthInSeconds();
 
                        if(getAudioTrackType(line).equals(AudioTrackType.ATMOSPHERE)) {
-                           AtmosphereTrack = new AudioTrack(line, AudioTrackType.ATMOSPHERE);
+                           AtmosphereTrack = new AudioTrack(line,"", AudioTrackType.ATMOSPHERE);
                        } else if(getAudioTrackType(line).equals(AudioTrackType.DEPTH)) {
-                           DepthTrack = new AudioTrack(line, AudioTrackType.DEPTH);
+                           DepthTrack = new AudioTrack(line,"", AudioTrackType.DEPTH);
                        } else {
-                           IntensityTrack = new AudioTrack(line, AudioTrackType.INTENSITY);
+                           IntensityTrack = new AudioTrack(line,"", AudioTrackType.INTENSITY);
                        }
                     }
                 }

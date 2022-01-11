@@ -60,9 +60,8 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-
-        WaveExporter wf = new WaveExporter(project.getKeyframeManager(AudioTrackType.ATMOSPHERE));
-        wf.export();
+        //WaveExporter wf = new WaveExporter(project.getKeyframeManagers(), (int)project.getMergedTrack().getDuration(), 19000, project.getMergedTrack());
+        //wf.export();
 
     }
 
