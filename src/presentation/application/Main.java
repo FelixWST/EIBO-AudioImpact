@@ -41,7 +41,8 @@ public class Main extends Application {
 
         playerManager = new PlayerManager(project.getMergedTrack(), project.getKeyframeManagers());
         project.getKeyframeManager(AudioTrackType.ATMOSPHERE).addKeyframe(new Keyframe(10,-80));
-        project.getKeyframeManager(AudioTrackType.ATMOSPHERE).addKeyframe(new Keyframe(8000,-60));
+        project.getKeyframeManager(AudioTrackType.ATMOSPHERE).addKeyframe(new Keyframe(7999,-80));
+        project.getKeyframeManager(AudioTrackType.ATMOSPHERE).addKeyframe(new Keyframe(8000,0));
         project.getKeyframeManager(AudioTrackType.ATMOSPHERE).addKeyframe(new Keyframe(15000,6));
 
         /*project.getKeyframeManager(AudioTrackType.DEPTH).addKeyframe(new Keyframe(4500,3));

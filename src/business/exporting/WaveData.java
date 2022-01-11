@@ -43,6 +43,11 @@ public class WaveData {
 
         for(int i = 0; i < sampleLength; i++) {
 
+            if(i > ((sampleLength/84000)*18230)){
+                //End of Video
+                return byteArray;
+            }
+
             if(i % (sampleLength/84000) == 0){ //84000 ist länge von Track in ms -> Muss angepasst werden an Track!
                 millisecondCounter++;
             }
@@ -97,7 +102,7 @@ public class WaveData {
         try{
             byte [] byteArray = convertSampleToByteArray();
             ByteArrayInputStream bis = new ByteArrayInputStream(byteArray);
-            AudioInputStream ais = new AudioInputStream(bis, format, sampleLength);
+            AudioInputStream ais = new AudioInputStream(bis, format, (sampleLength/84000)*18230); //<-- video length instead of sampleLength
             File file = new File(filePath);
             AudioSystem.write(ais, Type.WAVE, file);
             ais.close();
