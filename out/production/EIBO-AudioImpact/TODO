@@ -24,11 +24,11 @@ Nice to have:
 -button hover mousepointer
 -wenn shift gedrückt nur horizontal dragbar
 
+
 Bugs:
 -button text springt
--timeline scrubben error
+-timeline scrubben error (Mac)
 -textfield context menu
--Volume Sliders set Keyframes way to often when being dragged
 
 
 Fragen:
@@ -38,8 +38,6 @@ Fragen:
 -Binding für Gui komponenten (width height) in Controller oder View?
 
 
-
-
 Erledigt:
 -Make Keyframes dragable
 -hover on line add keyframe with plus icon?
@@ -47,3 +45,4 @@ Erledigt:
 -popup change keyframe value on double Click
 -Timeline ticks nach fps
 -Rechtsklick Context Menu -> Alle Keyframes in Spur löschen
+-Volume Sliders set Keyframes way to often when being dragged

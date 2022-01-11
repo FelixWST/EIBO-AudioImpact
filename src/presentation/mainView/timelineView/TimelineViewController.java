@@ -39,7 +39,7 @@ public class TimelineViewController {
         this.trackManager = trackManager;
         this.videoViewController = editingViewController.getVideoViewController();
         this.timelineTracksController = new TimelineTracksController(project);
-        this.timelineTrackSettingsController = new TimelineTrackSettingsController(project, playerManager);
+        this.timelineTrackSettingsController = new TimelineTrackSettingsController(project, playerManager, videoViewController);
 
         this.root = new TimeLineView();
         timelineTrackSettingsController.getRoot().prefWidthProperty().bind(root.widthProperty().multiply(0.3));
