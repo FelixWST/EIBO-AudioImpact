@@ -21,10 +21,9 @@ public class TrackManager {
     private long duration;
     private String genre;
     private String mergedTrackTitle;
-    private int count;
-    private String title;
-    private PlayerManager playerManager;
-
+    private AudioTrack AtmosphereTrack;
+    private AudioTrack DepthTrack;
+    private AudioTrack IntensityTrack;
 
     public TrackManager(){
         trackList = new ArrayList<>();
@@ -50,8 +49,6 @@ public class TrackManager {
     }
 
     public void loadLibrary() {
-        count = 1;
-        title = "mergedTrack"+count;
 
         try {
             reader = new BufferedReader(new FileReader("src/data/LibraryTrackList"));
@@ -61,24 +58,15 @@ public class TrackManager {
                     if(line.contains(".mp3")) {
                         Mp3File mp3File = new Mp3File(line);
                         duration = mp3File.getLengthInSeconds();
-                        MergedTrack title = new MergedTrack(getMergedTrackTitle(line), duration, getGenre(line));
 
                        if(getAudtioTrackType(line).equals(AudioTrackType.ATMOSPHERE)) {
-                               AudioTrack AtmosphereTrack = new AudioTrack(line, AudioTrackType.ATMOSPHERE);
-                               title.addTrack(AtmosphereTrack);
+                           AtmosphereTrack = new AudioTrack(line, AudioTrackType.ATMOSPHERE);
                        } else if(getAudtioTrackType(line).equals(AudioTrackType.DEPTH)) {
-                           AudioTrack DepthTrack = new AudioTrack(line, AudioTrackType.DEPTH);
-                           title.addTrack(DepthTrack);
+                           DepthTrack = new AudioTrack(line, AudioTrackType.DEPTH);
                        } else {
-                           AudioTrack IntensityTrack = new AudioTrack(line, AudioTrackType.INTENSITY);
-                           title.addTrack(IntensityTrack);
+                           IntensityTrack = new AudioTrack(line, AudioTrackType.INTENSITY);
                        }
-                        addMergedTrack(title);
-                        //playerManager = new PlayerManager(title);
                     }
-
-
-
                 }
             } catch(IOException | UnsupportedTagException | InvalidDataException e) {
                 e.printStackTrace();
@@ -86,7 +74,13 @@ public class TrackManager {
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         }
+        MergedTrack mergedTrack = new MergedTrack(getMergedTrackTitle(line), duration, getGenre(line));
 
+        mergedTrack.addTrack(AtmosphereTrack);
+        mergedTrack.addTrack(DepthTrack);
+        mergedTrack.addTrack(IntensityTrack);
+
+        addMergedTrack(mergedTrack);
     }
 
     private Genre getGenre(String line) {
