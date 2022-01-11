@@ -23,6 +23,7 @@ public class TrackManager {
     private AudioTrack DepthTrack;
     private AudioTrack IntensityTrack;
     private String mergedTrackName;
+
     public TrackManager(){
         trackList = new ArrayList<>();
     }
@@ -79,7 +80,6 @@ public class TrackManager {
         mergedTrack.addTrack(DepthTrack);
         mergedTrack.addTrack(IntensityTrack);
 
-       //addMergedTrack(mergedTrack);
         this.trackList.add(mergedTrack);
         System.out.println("Merged Track added");
     }
