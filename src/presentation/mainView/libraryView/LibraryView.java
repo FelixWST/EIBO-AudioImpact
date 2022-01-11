@@ -16,7 +16,7 @@ public class LibraryView extends VBox {
         this.getStyleClass().add("view-element");
         this.getChildren().add(new Label("Library"));
 
-        listView = new ListView<MergedTrack>();
+       listView = new ListView<MergedTrack>();
 
 
        // listView.setPrefSize(130,250);

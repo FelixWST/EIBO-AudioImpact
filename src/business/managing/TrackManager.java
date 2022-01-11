@@ -126,5 +126,8 @@ public class TrackManager {
         return this.trackList.get(index);
     }
 
+    public ArrayList<MergedTrack> getTrackList() {
+        return this.trackList;
+    }
 
 }

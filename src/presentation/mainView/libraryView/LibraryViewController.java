@@ -16,7 +16,8 @@ public class LibraryViewController {
         trackManager = new TrackManager();
         root = new LibraryView();
         //root.listView.getItems().addAll(trackManager.getMergedTrack(0));
-        ObservableList<MergedTrack> selected = root.listView.getSelectionModel().getSelectedItems();
+        ObservableList<MergedTrack> content = FXCollections.observableArrayList();
+        content.setAll(trackManager.getTrackList());
         //root.listView.setItems(items);
     }
 
