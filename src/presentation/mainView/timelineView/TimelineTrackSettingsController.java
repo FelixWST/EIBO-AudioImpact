@@ -117,7 +117,7 @@ public class TimelineTrackSettingsController {
         }
 
         root.totalVolume.valueProperty().addListener(((observableValue, aBoolean, t1) -> {
-            playerManager.totalVolumeProperty().set(t1.doubleValue());
+            playerManager.setTotalVolumeProperty(t1.doubleValue());
         }));
     }
 

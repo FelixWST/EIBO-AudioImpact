@@ -24,6 +24,7 @@ public class TrackPlayer {
     private SimpleBooleanProperty soloProperty;
     private Thread playerThread;
     private int lastStoppedPosition = 0;
+    private float totalVolumeModifier = 0;
     public static final float MIN_GAIN = -80;
     public static final float MAX_GAIN = 6;
     public static final float DEFAULT_GAIN = 6;
@@ -72,18 +73,19 @@ public class TrackPlayer {
     }
 
     public void setVolume(float gain) {
+        float trackGain = gain;
+        gain -= totalVolumeModifier;
         if(simpleAudioPlayer!=null){
             if(!muteProperty.get()){
                 if(gain>=MIN_GAIN && gain<=MAX_GAIN){
                     simpleAudioPlayer.setGain(gain);
-                    volumeProperty.set(gain);
+                    volumeProperty.set(trackGain);
                 }else if(gain<MIN_GAIN){
-                    System.out.println("LOWER THAN MIN");
                     simpleAudioPlayer.setGain(MIN_GAIN);
-                    volumeProperty.set(MIN_GAIN);
+                    volumeProperty.set(trackGain);
                 }else if(gain>MAX_GAIN){
                     simpleAudioPlayer.setGain(MAX_GAIN);
-                    volumeProperty.set(MAX_GAIN);
+                    volumeProperty.set(trackGain);
                 }
             }else{
                 simpleAudioPlayer.setGain(MIN_GAIN);
@@ -114,6 +116,10 @@ public class TrackPlayer {
 
     public SimpleBooleanProperty soloProperty(){
         return this.soloProperty;
+    }
+
+    public void setTotalVolumeModifier(float totalVolumeModifier){
+        this.totalVolumeModifier = totalVolumeModifier;
     }
 
     private class VolumeModifierThread extends Thread{

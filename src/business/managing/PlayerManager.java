@@ -57,9 +57,7 @@ public class PlayerManager {
 
     public void setTrackVolume(AudioTrackType trackType, float gain){
         if(player.containsKey(trackType) && player.get(trackType)!=null){
-            float totalVolumeModifier = (float) ((TrackPlayer.MIN_GAIN + ((TrackPlayer.MAX_GAIN - TrackPlayer.MIN_GAIN) / (1 - 0)) * (totalVolumeProperty.get() - 0)) - TrackPlayer.MAX_GAIN);
-            System.out.println(trackType.name()+" | Gain: "+gain+" | modifier: "+totalVolumeModifier+" | setGain: "+(gain-Math.abs(totalVolumeModifier)));
-            player.get(trackType).setVolume(gain-Math.abs(totalVolumeModifier));
+            player.get(trackType).setVolume(gain);
         }
     }
 
@@ -101,6 +99,14 @@ public class PlayerManager {
             }
         }
         return false;
+    }
+
+    public void setTotalVolumeProperty(double volumeProperty){
+        this.totalVolumeProperty.set(volumeProperty);
+        for(Map.Entry<AudioTrackType, TrackPlayer> entry : player.entrySet()){
+            float totalVolumeModifier = (float) ((TrackPlayer.MIN_GAIN + ((TrackPlayer.MAX_GAIN - TrackPlayer.MIN_GAIN) / (1 - 0)) * (totalVolumeProperty.get() - 0)) - TrackPlayer.MAX_GAIN);
+            entry.getValue().setTotalVolumeModifier(Math.abs(totalVolumeModifier));
+        }
     }
 
     public SimpleDoubleProperty totalVolumeProperty(){
