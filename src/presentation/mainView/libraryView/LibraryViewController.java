@@ -3,6 +3,8 @@ package presentation.mainView.libraryView;
 import business.managing.TrackManager;
 import business.tracks.MergedTrack;
 import com.sun.scenario.effect.Merge;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
@@ -27,10 +29,21 @@ public class LibraryViewController {
         root.listView.setCellFactory(new Callback<ListView<MergedTrack>, ListCell<MergedTrack>>() {
             @Override
             public ListCell<MergedTrack> call(ListView<MergedTrack> mergedTrackListView) {
-                return new ListViewCell();
+                return new MergedTrackListCell();
             }
         });
 
+        root.listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MergedTrack>() {
+            @Override
+            public void changed(ObservableValue<? extends MergedTrack> observableValue, MergedTrack mergedTrack, MergedTrack t1) {
+                if(t1 == null){
+                    System.out.println("Empty Cell");
+                }else {
+                    System.out.println(t1);
+                }
+
+            }
+        });
     }
 
     public LibraryView getRoot(){

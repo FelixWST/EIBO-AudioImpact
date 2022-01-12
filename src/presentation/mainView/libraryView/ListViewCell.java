@@ -20,20 +20,4 @@ public class ListViewCell extends ListCell<MergedTrack> {
         duration = new Label();
         trackInfo.getChildren().addAll(title, genre, duration);
     }
-
-    @Override
-    protected void updateItem(MergedTrack item, boolean empty) {
-        super.updateItem(item,empty);
-
-        if(!empty){
-            title.setText(item.getTitle());
-            genre.setText(item.getGenre());
-            duration.setText(String.valueOf(item.getDuration()));
-
-            this.setGraphic(trackInfo);
-        } else {
-            this.setGraphic(null);
-        }
-
-    }
 }
