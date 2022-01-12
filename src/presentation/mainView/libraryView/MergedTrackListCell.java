@@ -12,7 +12,6 @@ public class MergedTrackListCell extends ListCell<MergedTrack> {
 
     public MergedTrackListCell() {
         view = new ListViewCell();
-
         this.setGraphic(view);
     }
 

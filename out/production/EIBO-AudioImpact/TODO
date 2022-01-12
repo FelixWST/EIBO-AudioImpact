@@ -26,12 +26,11 @@ Nice to have:
 Bugs:
 (-button text springt)
 (-timeline scrubben error (Mac))
--textfield context menu
+-textfield context menu <- Schriftfarbe schwarz machen
 -wenn volumeproperty nicht ändert && Player erneut von vorne beginnt ist Tracksettingslider auf falschem Wert
-
+    -> Keframe am Anfang und Ende automatisch setzten
 
 Fragen:
-
 
 
 Erledigt:

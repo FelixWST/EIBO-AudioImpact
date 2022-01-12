@@ -22,12 +22,13 @@ public class ListViewCell extends ListCell<MergedTrack> {
     public ListViewCell() {
        // cover = new Label();
         //cover.setId("mergedTrack-cover");
+        trackInfo = new VBox();
         cell = new HBox();
         title = new Label();
         genre = new Label();
         duration = new Label();
 
         trackInfo.getChildren().addAll(title,genre,duration);
-        //cell.getChildren().addAll(trackInfo);
+        cell.getChildren().addAll(trackInfo);
     }
 }
