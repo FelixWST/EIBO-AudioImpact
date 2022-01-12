@@ -131,8 +131,10 @@ public class TrackPlayer {
         public void run(){
             while(!isInterrupted()){
                 try{
-                    setVolume(keyframeManager.getVolumeAtTime(simpleAudioPlayer.position()));
-                    Thread.sleep(50); // Wie oft pro sekunde soll aktualisiert werden?
+                    if(simpleAudioPlayer!=null){
+                        setVolume(keyframeManager.getVolumeAtTime(simpleAudioPlayer.position()));
+                    }
+                    Thread.sleep(100); // Wie oft pro sekunde soll aktualisiert werden?
                 }catch (InterruptedException e){
                     interrupt();
                 }
