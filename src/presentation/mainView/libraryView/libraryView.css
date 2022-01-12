@@ -1,5 +1,6 @@
 .list-view {
     -fx-text-fill: black;
+
 }
 
 .list-view:showing {
@@ -10,6 +11,9 @@
     -fx-text-fill: black;
 }
 
-#mergedTrack-cover {
-    -fx-background-image: url(/data/assets/defaultcover.jpeg);
+.track-Info {
+    -fx-content-display: true;
+    -fx-text-fill: black;
+    -fx-cell-size: 10;
 }
+
