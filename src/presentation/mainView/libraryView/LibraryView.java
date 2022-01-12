@@ -16,7 +16,7 @@ public class LibraryView extends VBox {
     TrackManager trackManager;
 
     public LibraryView(){
-        this.getStylesheets().add("/presentation/mainView/editingView.css");
+        this.getStylesheets().add("/presentation/mainView/libraryView/libraryView.css");
         this.getStyleClass().add("view-element");
         this.getChildren().add(new Label("Library"));
 
