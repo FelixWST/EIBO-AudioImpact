@@ -2,6 +2,9 @@ ToDo:
 -Property loading
 -WindowTitle
 -Kommentieren, für Prüfung sinnvoll
+-Drag and Drop
+-Projekt laden
+
 
 In arbeit:
 -timeline mouse eventhandler aufräumen
@@ -10,7 +13,6 @@ In arbeit:
 Nice to have:
 -Slider vielleicht nicht linear, damit wirkung deutlicher?
 -get framerate von video für Timecode
--Waveform in Tracks
 -load project button
 -Thread für import
 -timeline horizontal scrollpane
@@ -18,22 +20,17 @@ Nice to have:
 -Keyboard steuerung(Play Pause next kF prv kf)
 -popup mit progressbar bei import
 -Make Up for Non linearity of Gain (dB)
--delete all Keyframes on one track
-- Keyboard l, ll j,jj fw ffw... (setRate)
 -button hover mousepointer
 -wenn shift gedrückt nur horizontal dragbar
--totalvolume video lineare lautstärke an gain von player anpassen?
-
 
 Bugs:
--button text springt
--timeline scrubben error (Mac)
--textfield context menu
+(-button text springt)
+(-timeline scrubben error (Mac))
+-textfield context menu <- Schriftfarbe schwarz machen
 -wenn volumeproperty nicht ändert && Player erneut von vorne beginnt ist Tracksettingslider auf falschem Wert
-
+    -> Keframe am Anfang und Ende automatisch setzten
 
 Fragen:
-
 
 
 Erledigt:
@@ -45,3 +42,5 @@ Erledigt:
 -Rechtsklick Context Menu -> Alle Keyframes in Spur löschen
 -Volume Sliders set Keyframes way to often when being dragged
 -Slider für spuren keyframes erzeugen , wie? intervall?
+-delete all Keyframes on one track
+-totalvolume video lineare lautstärke an gain von player anpassen?
