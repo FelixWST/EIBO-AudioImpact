@@ -9,3 +9,7 @@
 .list-view:hover {
     -fx-text-fill: black;
 }
+
+#mergedTrack-cover {
+    -fx-background-image: url(/data/assets/defaultcover.jpeg);
+}

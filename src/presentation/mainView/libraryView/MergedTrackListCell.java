@@ -26,7 +26,7 @@ public class MergedTrackListCell extends ListCell<MergedTrack> {
             view.genre.setText(item.getGenre());
             view.duration.setText(String.valueOf(item.getDuration()));
 
-            this.setGraphic(view.trackInfo);
+            this.setGraphic(view.cell);
         } else {
             this.setGraphic(null);
         }

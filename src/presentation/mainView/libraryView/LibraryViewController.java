@@ -25,13 +25,15 @@ public class LibraryViewController {
         ObservableList<MergedTrack> content = FXCollections.observableArrayList();
         content.setAll(trackManager.getTrackList());
         root.listView.setItems(content);
-
+/*
         root.listView.setCellFactory(new Callback<ListView<MergedTrack>, ListCell<MergedTrack>>() {
             @Override
             public ListCell<MergedTrack> call(ListView<MergedTrack> mergedTrackListView) {
                 return new MergedTrackListCell();
             }
         });
+*/
+/*
 
         root.listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MergedTrack>() {
             @Override
@@ -43,7 +45,7 @@ public class LibraryViewController {
                 }
 
             }
-        });
+        });*/
     }
 
     public LibraryView getRoot(){
