@@ -12,8 +12,13 @@
 }
 
 .track-Info {
-    -fx-content-display: true;
     -fx-text-fill: black;
-    -fx-cell-size: 10;
+    -fx-cell-size: 1;
+    -fx-background-color: black;
 }
 
+.cover {
+    -fx-background-color: black;
+    -fx-cell-size: 30;
+    -fx-background-size: 10;
+}
