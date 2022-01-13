@@ -29,6 +29,7 @@ Bugs:
 -textfield context menu <- Schriftfarbe schwarz machen
 -wenn volumeproperty nicht ändert && Player erneut von vorne beginnt ist Tracksettingslider auf falschem Wert
     -> Keframe am Anfang und Ende automatisch setzten
+-Slider springen immer einmal auf 100% bei restart
 
 Fragen:
 

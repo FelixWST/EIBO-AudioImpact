@@ -56,6 +56,7 @@ public class Main extends Application {
 
         editingViewController = new EditingViewController(primaryStage, project, playerManager, trackManager);
         Scene scene = new Scene(editingViewController.getRoot(), 1920, 1080);
+        //Wenn keine Properties d
         scene.getStylesheets().add("/presentation/application/application.css");
         primaryStage.setScene(scene);
         primaryStage.show();
