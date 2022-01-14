@@ -25,7 +25,7 @@ public class ListViewCell extends ListCell<MergedTrack> {
         this.getStylesheets().add("/presentation/mainView/libraryView/libraryView.css");
 
         cover = new ImageView();
-
+        cover.getStyleClass().addAll("cover");
         trackInfo = new VBox();
         this.getStyleClass().addAll("list-cell");
         trackInfo.getStyleClass().addAll("track-Info");
