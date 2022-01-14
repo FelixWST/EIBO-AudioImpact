@@ -15,8 +15,20 @@
     -fx-text-fill: black;
     -fx-cell-size: 1;
     -fx-background-color: black;
+    -fx-background-position: center;
+    -fx-border-width: 2px;
+    -fx-border-style: hidden solid hidden hidden;
+
 }
 
 .cover {
+    -fx-padding: 10;
+    -fx-border-width: 20px;
+
+}
+.list-cell {
+    -fx-background-color: #393939;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: sans-serif;
 
 }

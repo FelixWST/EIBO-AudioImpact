@@ -33,6 +33,7 @@ public class MergedTrackListCell extends ListCell<MergedTrack> {
                 view.cover.setImage(new Image(new FileInputStream(item.getCoverPath())));
                 view.cover.setFitHeight(50);
                 view.cover.setFitWidth(50);
+          
             }catch(FileNotFoundException e){
                 e.printStackTrace();
             }
