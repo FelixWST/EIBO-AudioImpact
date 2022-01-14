@@ -22,6 +22,7 @@ public class TrackManager {
     private AudioTrack DepthTrack;
     private AudioTrack IntensityTrack;
     private File f;
+    private String path;
 
     public TrackManager(){
         trackList = new ArrayList<>();
