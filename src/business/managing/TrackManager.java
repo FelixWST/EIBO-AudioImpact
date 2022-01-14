@@ -33,16 +33,7 @@ public class TrackManager {
         this.trackNumber = trackNumber;
     }*/
 
-    public void scanFiles() {
-        f = new File("src/data/");
-        File[] fileArray = f.listFiles();
-        for(int i = 0; i < fileArray.length;i++){
-            if(fileArray[i].isFile()){
-                System.out.println(fileArray[i]);
-            }
 
-        }
-    }
 
     public void loadTestTrack(){
         AudioTrack testAtmoTrack = new AudioTrack("src/data/testData/exampleTrack/atmosphere.mp3","src/data/testData/exampleTrack/atmosphere.wav", AudioTrackType.ATMOSPHERE);
@@ -56,16 +47,25 @@ public class TrackManager {
 
         this.trackList.add(firstMergedTrack);
     }
+    public void scanFiles() {
+        f = new File("src/data/audio/trackLists");
+        File[] fileArray = f.listFiles();
+        for(int i = 0; i < fileArray.length;i++){
+            if(fileArray[i].isFile()){
+                path = String.valueOf(fileArray[i]);
+                System.out.println(fileArray[i]);
+                loadMergedTrack(path);
+            }
+        }
+    }
 
-    public void loadLibrary() {
+    public void loadMergedTrack(String path) {
         AudioTrackType audioTrackType;
         String mergedTrackName ="defualt Name";
         Genre genre = null;
 
-        scanFiles();
-
         try {
-            reader = new BufferedReader(new FileReader("src/data/LibraryTrackList"));
+            reader = new BufferedReader(new FileReader(path));
             try {
                 while((line = reader.readLine()) != null) {
                     if(line.contains("NAME")){

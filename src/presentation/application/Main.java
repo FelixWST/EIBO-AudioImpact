@@ -32,7 +32,7 @@ public class Main extends Application {
 
         trackManager = new TrackManager();
         //trackManager.loadTestTrack();
-        trackManager.loadLibrary();
+        trackManager.scanFiles();
 
         this.primaryStage = primaryStage;
 
