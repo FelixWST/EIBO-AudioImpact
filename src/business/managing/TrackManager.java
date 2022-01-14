@@ -21,6 +21,7 @@ public class TrackManager {
     private AudioTrack AtmosphereTrack;
     private AudioTrack DepthTrack;
     private AudioTrack IntensityTrack;
+    private File f;
 
     public TrackManager(){
         trackList = new ArrayList<>();
@@ -30,6 +31,17 @@ public class TrackManager {
         this.trackList = trackList;
         this.trackNumber = trackNumber;
     }*/
+
+    public void scanFiles() {
+        f = new File("src/data/");
+        File[] fileArray = f.listFiles();
+        for(int i = 0; i < fileArray.length;i++){
+            if(fileArray[i].isFile()){
+                System.out.println(fileArray[i]);
+            }
+
+        }
+    }
 
     public void loadTestTrack(){
         AudioTrack testAtmoTrack = new AudioTrack("src/data/testData/exampleTrack/atmosphere.mp3","src/data/testData/exampleTrack/atmosphere.wav", AudioTrackType.ATMOSPHERE);
@@ -48,6 +60,8 @@ public class TrackManager {
         AudioTrackType audioTrackType;
         String mergedTrackName ="defualt Name";
         Genre genre = null;
+
+        scanFiles();
 
         try {
             reader = new BufferedReader(new FileReader("src/data/LibraryTrackList"));
