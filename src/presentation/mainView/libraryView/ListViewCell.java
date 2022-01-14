@@ -3,8 +3,10 @@ package presentation.mainView.libraryView;
 import business.tracks.MergedTrack;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
 
 import java.awt.*;
 import java.util.List;
@@ -16,14 +18,14 @@ public class ListViewCell extends ListCell<MergedTrack> {
     Label title;
     Label genre;
     Label duration;
-    Label cover;
+    ImageView cover;
 
 
     public ListViewCell() {
         this.getStylesheets().add("/presentation/mainView/libraryView/libraryView.css");
-        cover = new Label("I am a cover");
-        cover.getStyleClass().addAll("cover");
-        //cover.setId("mergedTrack-cover");
+
+        cover = new ImageView();
+
         trackInfo = new VBox();
         this.getStyleClass().addAll("list-cell");
         trackInfo.getStyleClass().addAll("track-Info");

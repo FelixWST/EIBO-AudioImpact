@@ -2,8 +2,12 @@ package presentation.mainView.libraryView;
 
 import business.tracks.MergedTrack;
 import javafx.scene.control.ListCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class MergedTrackListCell extends ListCell<MergedTrack> {
@@ -24,6 +28,13 @@ public class MergedTrackListCell extends ListCell<MergedTrack> {
             view.title.setText(item.getTitle());
             view.genre.setText(item.getGenre());
             view.duration.setText(String.valueOf(item.getDuration()));
+            try{
+                view.cover = new ImageView();
+                view.cover.setImage(new Image(new FileInputStream(item.getCoverPath())));
+            }catch(FileNotFoundException e){
+                e.printStackTrace();
+            }
+
 
             this.setGraphic(view.cell);
         } else {

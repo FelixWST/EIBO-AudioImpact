@@ -1,6 +1,7 @@
 #EXTM3U
 #EXTINF NAME:TestTrackTitle
 #EXTINF GENRE:CINEMATIC
+#EXTINF COVER:src/data/audio/covers/defaultcover.jpeg
 src/data/audio/audioFiles/atmosphere.mp3
 src/data/audio/audioFiles/depth.mp3
 src/data/audio/audioFiles/intensity.mp3

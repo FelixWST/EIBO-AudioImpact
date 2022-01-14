@@ -1,5 +1,7 @@
 package business.tracks;
 
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 
 public class MergedTrack {
@@ -8,22 +10,24 @@ public class MergedTrack {
     private ArrayList<Genre> genres;
     private long duration;
     private ArrayList<AudioTrack> audioTracks;
-    //Cover IMAGE oder Dateipfad
+    private String coverPath;
 
-    public MergedTrack(String title, long duration, Genre ... genres){
-        this(title, duration, new ArrayList<AudioTrack>(), genres);
+    public MergedTrack(String title, long duration,String coverPath, Genre ... genres){
+        this(title, duration, new ArrayList<AudioTrack>(),coverPath, genres);
     }
 
-    public MergedTrack(String title, long duration, ArrayList<AudioTrack> audioTracks, Genre... genres){
+    public MergedTrack(String title, long duration, ArrayList<AudioTrack> audioTracks, String coverPath,Genre... genres){
         this.title = title;
         this.duration = duration;
         this.audioTracks = audioTracks;
+        this.coverPath = coverPath;
 
         this.genres = new ArrayList<>();
         for(Genre g : genres){
             this.genres.add(g);
         }
     }
+    public String getCoverPath(){return this.coverPath;}
 
     public String getTitle(){
         return this.title;

@@ -40,12 +40,13 @@ public class TrackManager {
         AudioTrack testDepthTrack = new AudioTrack("src/data/testData/exampleTrack/depth.mp3","src/data/testData/exampleTrack/depth.wav", AudioTrackType.DEPTH);
         AudioTrack testIntensityTrack = new AudioTrack("src/data/testData/exampleTrack/intensity.mp3","src/data/testData/exampleTrack/intensity.wav", AudioTrackType.INTENSITY);
 
-        MergedTrack firstMergedTrack = new MergedTrack("Test", 84000, Genre.CINEMATIC);
+       /* MergedTrack firstMergedTrack = new MergedTrack("Test", 84000, Genre.CINEMATIC);
         firstMergedTrack.addTrack(testAtmoTrack);
         firstMergedTrack.addTrack(testDepthTrack);
         firstMergedTrack.addTrack(testIntensityTrack);
 
         this.trackList.add(firstMergedTrack);
+        */
     }
     public void scanFiles() {
         f = new File("src/data/audio/trackLists");
@@ -62,7 +63,9 @@ public class TrackManager {
     public void loadMergedTrack(String path) {
         AudioTrackType audioTrackType;
         String mergedTrackName ="defualt Name";
+        String coverPath = "defautl";
         Genre genre = null;
+
 
         try {
             reader = new BufferedReader(new FileReader(path));
@@ -73,7 +76,10 @@ public class TrackManager {
                     }
                     if(line.contains("GENRE")){
                         genre = getGenre(line);
+                    }
 
+                    if(line.contains("COVER")){
+                        coverPath = (String) getCoverPath(line);
                     }
 
                     if(line.contains(".mp3")) {
@@ -97,7 +103,7 @@ public class TrackManager {
             e.printStackTrace();
         }
 
-        MergedTrack mergedTrack = new MergedTrack(mergedTrackName, duration, genre);
+        MergedTrack mergedTrack = new MergedTrack(mergedTrackName, duration,coverPath, genre);
 
         mergedTrack.addTrack(AtmosphereTrack);
         mergedTrack.addTrack(DepthTrack);
@@ -105,6 +111,10 @@ public class TrackManager {
 
         this.trackList.add(mergedTrack);
         System.out.println("Merged Track added");
+    }
+
+    private Object getCoverPath(String line) {
+        return line.substring(line.indexOf(":")+1, line.length());
     }
 
     private Genre getGenre(String line) {
