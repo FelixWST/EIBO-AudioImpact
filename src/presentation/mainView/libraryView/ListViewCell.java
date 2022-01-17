@@ -13,14 +13,14 @@ import java.awt.*;
 import java.util.List;
 
 public class ListViewCell extends ListCell<MergedTrack> {
-    HBox cell;
-    VBox trackInfo;
+    private HBox cell;
+    private VBox trackInfo;
 
-    Label title;
-    Label genre;
-    Label duration;
-    ImageView cover;
-    Button selectTrack;
+    private Label title;
+    private Label genre;
+    private Label duration;
+    private ImageView cover;
+    private Button selectTrack;
 
 
     public ListViewCell() {
@@ -48,4 +48,12 @@ public class ListViewCell extends ListCell<MergedTrack> {
         trackInfo.getChildren().addAll(title,genre,duration);
         cell.getChildren().addAll(cover, trackInfo,selectTrack);
     }
+
+    public HBox getCell(){return this.cell;}
+    public Label getTitle(){return this.title;}
+    public Label getGenre(){return this.genre;}
+    public Label getDuration(){return this.duration;}
+    public ImageView getCover(){return this.cover;}
+    public Button getSelectTrack(){return this.selectTrack;}
+
 }

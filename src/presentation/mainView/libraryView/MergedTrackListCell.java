@@ -13,6 +13,7 @@ import java.util.List;
 public class MergedTrackListCell extends ListCell<MergedTrack> {
 
     private ListViewCell view;
+    private MergedTrack mergedTrack;
 
     public MergedTrackListCell() {
         view = new ListViewCell();
@@ -25,21 +26,24 @@ public class MergedTrackListCell extends ListCell<MergedTrack> {
         super.updateItem(item, empty);
 
         if (!empty) {
-            view.title.setText(item.getTitle());
-            view.genre.setText(item.getGenre());
-            view.duration.setText(String.valueOf(item.getDuration())+"sec");
+            view.getTitle().setText(item.getTitle());
+            view.getGenre().setText(item.getGenre());
+            view.getDuration().setText(String.valueOf(item.getDuration())+"sec");
             try{
                 System.out.println("Cover Path: "+ item.getCoverPath());
-                view.cover.setImage(new Image(new FileInputStream(item.getCoverPath())));
-                view.cover.setFitHeight(50);
-                view.cover.setFitWidth(50);
+                view.getCover().setImage(new Image(new FileInputStream(item.getCoverPath())));
+                view.getCover().setFitHeight(50);
+                view.getCover().setFitWidth(50);
           
             }catch(FileNotFoundException e){
                 e.printStackTrace();
             }
 
 
-            this.setGraphic(view.cell);
+            this.setGraphic(view.getCell());
+            view.getSelectTrack().setOnAction((event)->{
+                System.out.println("TEST Select Track");
+            });
         } else {
             this.setGraphic(null);
         }
