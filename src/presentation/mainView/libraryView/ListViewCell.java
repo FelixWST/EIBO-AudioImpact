@@ -23,16 +23,23 @@ public class ListViewCell extends ListCell<MergedTrack> {
 
     public ListViewCell() {
         this.getStylesheets().add("/presentation/mainView/libraryView/libraryView.css");
+        this.getStyleClass().addAll("list-cell");
 
         cover = new ImageView();
         cover.getStyleClass().addAll("cover");
         trackInfo = new VBox();
-        this.getStyleClass().addAll("list-cell");
         trackInfo.getStyleClass().addAll("track-Info");
+
+
+
         cell = new HBox();
+
         title = new Label();
+        title.setId("title-label");
         genre = new Label();
+        genre.setId("genre-label");
         duration = new Label();
+        duration.setId("duration-label");
 
         trackInfo.getChildren().addAll(title,genre,duration);
         cell.getChildren().addAll(cover, trackInfo);

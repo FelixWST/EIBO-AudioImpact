@@ -39,8 +39,8 @@ public class LibraryViewController {
                 return new MergedTrackListCell();
             }
         });
+*/
 
-/*
 
         root.listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MergedTrack>() {
             @Override
@@ -52,7 +52,7 @@ public class LibraryViewController {
                 }
 
             }
-        });*/
+        });
     }
 
     public LibraryView getRoot(){

@@ -12,13 +12,7 @@
 }
 
 .track-Info {
-    -fx-text-fill: black;
-    -fx-cell-size: 1;
-    -fx-background-color: black;
-    -fx-background-position: center;
-    -fx-border-width: 2px;
-    -fx-border-style: hidden solid hidden hidden;
-
+    -fx-alignment: center;
 }
 
 .cover {
@@ -30,5 +24,12 @@
     -fx-background-color: #393939;
     -fx-text-fill: #ffffff;
     -fx-font-family: sans-serif;
+    -fx-border-color: white;
 
+}
+
+#title-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 16;
+    -fx-text-alignment: center;
 }

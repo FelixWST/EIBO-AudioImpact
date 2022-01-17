@@ -27,7 +27,7 @@ public class MergedTrackListCell extends ListCell<MergedTrack> {
         if (!empty) {
             view.title.setText(item.getTitle());
             view.genre.setText(item.getGenre());
-            view.duration.setText(String.valueOf(item.getDuration()));
+            view.duration.setText(String.valueOf(item.getDuration())+"sec");
             try{
                 System.out.println("Cover Path: "+ item.getCoverPath());
                 view.cover.setImage(new Image(new FileInputStream(item.getCoverPath())));
