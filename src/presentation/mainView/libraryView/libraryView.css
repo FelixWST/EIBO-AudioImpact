@@ -15,16 +15,13 @@
     -fx-alignment: center;
 }
 
-.cover {
-    -fx-padding: 10;
-    -fx-border-width: 20px;
-
-}
 .list-cell {
     -fx-background-color: #393939;
     -fx-text-fill: #ffffff;
     -fx-font-family: sans-serif;
     -fx-border-color: white;
+    -fx-background-radius: 10px 10px 10px 10px;
+    -fx-padding: 0px 0px 0px 100px;
 
 }
 
@@ -32,4 +29,15 @@
     -fx-font-weight: bold;
     -fx-font-size: 16;
     -fx-text-alignment: center;
+}
+
+#select-Track-Button {
+    -fx-font-family: sans-serif;
+    -fx-text-fill: black;
+    -fx-background-radius: 10px 10px 10px 10px;
+    -fx-background-color: #50c976;
+    -fx-border-color: black;
+    -fx-border-radius: 10px 10px 10px 10px;
+    -fx-border-width: 2px;
+
 }
