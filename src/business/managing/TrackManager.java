@@ -138,9 +138,10 @@ public class TrackManager {
            return AudioTrackType.ATMOSPHERE;
         } else if(line.contains("depth")) {
             return AudioTrackType.DEPTH;
-        } else {
+        } else if(line.contains("intensity")){
             return AudioTrackType.INTENSITY;
         }
+        return null;
     }
 
     public void addMergedTrack(MergedTrack mergedTrack){
