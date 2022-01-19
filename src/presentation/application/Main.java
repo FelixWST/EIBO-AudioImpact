@@ -1,15 +1,9 @@
 package presentation.application;
 
-import business.editing.Keyframe;
-import business.exporting.WaveExporter;
 import business.managing.PlayerManager;
 import business.managing.Project;
 import business.managing.TrackManager;
 import business.managing.VideoFile;
-import business.tracks.AudioTrack;
-import business.tracks.AudioTrackType;
-import business.tracks.Genre;
-import business.tracks.MergedTrack;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
