@@ -44,25 +44,10 @@ public class TimelineViewController {
         HBox.setMargin(timelineTrackSettingsController.getRoot(), new Insets(10,0,10,10));
         HBox.setMargin(timelineTracksController.getRoot(), new Insets(10,10,10,0));
 
-        videoViewController.getMediaPlayer().setOnReady(()->{
-            timelineTracksController.getRoot().timelineSlider.setMax(videoViewController.getMediaPlayer().getTotalDuration().toMillis());
-            timelineTracksController.repaint();
-        });
+        if(project.getVideoFile()!=null){
+            initializeVideoControls();
+        }
 
-        timelineTracksController.getRoot().timelineSlider.valueChangingProperty().addListener(((observableValue, aBoolean, t1) -> {
-            if(!t1){
-                Duration dt = Duration.millis(timelineTracksController.getRoot().timelineSlider.getValue());
-                new Thread(()->{
-                    Platform.runLater(()->{
-                        System.out.println("StartTime"+videoViewController.getMediaPlayer().getStartTime());
-                        System.out.println("EndTime"+videoViewController.getMediaPlayer().getStopTime());
-                        System.out.println("seeked duration"+dt);
-
-                        videoViewController.getMediaPlayer().seek(dt);
-                    });
-                }).start();
-            }
-        }));
 
 
         timelineTracksController.getRoot().timelineSlider.setLabelFormatter(new StringConverter<Double>() {
@@ -76,6 +61,24 @@ public class TimelineViewController {
                 return null;
             }
         });
+    }
+
+    public void initializeVideoControls(){
+        videoViewController.getMediaPlayer().setOnReady(()->{
+            timelineTracksController.getRoot().timelineSlider.setMax(videoViewController.getMediaPlayer().getTotalDuration().toMillis());
+            timelineTracksController.repaint();
+        });
+
+        timelineTracksController.getRoot().timelineSlider.valueChangingProperty().addListener(((observableValue, aBoolean, t1) -> {
+            if(!t1){
+                Duration dt = Duration.millis(timelineTracksController.getRoot().timelineSlider.getValue());
+                new Thread(()->{
+                    Platform.runLater(()->{
+                        videoViewController.getMediaPlayer().seek(dt);
+                    });
+                }).start();
+            }
+        }));
     }
 
     public Slider getTimelineSlider(){

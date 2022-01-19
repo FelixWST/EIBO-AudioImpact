@@ -127,4 +127,12 @@ public class Project {
         return closest.getTime();
     }
 
+    public void saveProject(){
+
+    }
+
+    public void loadFromProject(){
+
+    }
+
 }

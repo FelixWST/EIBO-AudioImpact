@@ -38,8 +38,9 @@
 }
 
 .scroll-pane {
-    -fx-background: #393939;
+    -fx-background: #333333;
     -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
     -fx-border-width: 0;
     -fx-padding: 0;
 }

@@ -68,6 +68,8 @@ public class ExportView extends ScrollPane {
         VBox.setMargin(exportVideo, new Insets(10));
         VBox.setMargin(saveProject, new Insets(10));
 
+        mainContainer.prefHeightProperty().bind(this.heightProperty());
+
 
 
         this.getStylesheets().add("/presentation/mainView/editingView.css");

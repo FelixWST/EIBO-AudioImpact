@@ -118,11 +118,6 @@ public class PlayerManager {
         return player.get(audioTrackType);
     }
 
-    public void chnageMergedTrack(MergedTrack newMergedTrack){
-        if(newMergedTrack != null){
-            this.mergedTrack = newMergedTrack;
-        }
-    }
 
 
 
