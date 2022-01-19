@@ -21,6 +21,10 @@ public class Project {
         this("unnamed Project", "unnamedProject.prj", "path/to/proj", null);
     }
 
+    public Project(String projectTitle, String fileName, String path) {
+        this(projectTitle, fileName, path, null, null);
+    }
+
     public Project(String projectTitle, String fileName, String path, MergedTrack mergedTrack) {
         this(projectTitle, fileName, path, mergedTrack, null);
     }

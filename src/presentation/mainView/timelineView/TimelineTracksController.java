@@ -61,12 +61,14 @@ public class TimelineTracksController {
 
 
         root.widthProperty().addListener(((observableValue, number, t1) -> {
-            repaint();
+            if(project.getVideoFile()!=null){
+                repaint();
+            }
         }));
 
-
-        repaint();
-        //Listener auf Keyframes anmelden (Observable list)?
+        if(project.getVideoFile()!=null){
+            repaint();
+        }
     }
 
     public TimelineTracks getRoot() {
@@ -74,11 +76,6 @@ public class TimelineTracksController {
     }
 
     public void repaint(){
-        System.out.println();
-        //TODO: Keyframes must be drawn over shapes to make them fully clickable
-        // Dann lines per binding connecten und nicht fest programmieren
-        //Line set on mouse clicked auslagern und nicht 4 mal
-        //MAP VOLUME TO -80 to +6
         int mapVolumeToPositiveRange = 80;
 
         long totalDuration = project.getVideoFile().getDuration();
@@ -89,7 +86,6 @@ public class TimelineTracksController {
             Polygon subGraphFill = new Polygon();
             subGraphFill.setFill(keyframeManager.getAudioTrackType().getRGBColor());
             subGraphFill.getPoints().addAll(0.0,selectedTrackLayer.getHeight());
-            //selectedTrackLayer.getChildren().addAll(subGraphFill); --> bind all points to Circles
             double pxPerGainVer = selectedTrackLayer.getHeight() / 86;
 
             Circle lastKeyframeCircle = null;
@@ -184,14 +180,6 @@ public class TimelineTracksController {
                     repaint();
                 }));
 
-
-               /* keyframeCircle.addEventHandler(MouseEvent.ANY, event -> {
-                    if(event.getEventType() == MouseEvent.MOUSE_PRESSED && event.getButton() == MouseButton.SECONDARY){
-                        keyframeManager.removeKeyframe(kf);
-                        repaint();
-                    }
-                });
-*/
                 selectedTrackLayer.getChildren().add(keyframeCircle);
 
                 if(lastKeyframeCircle==null){

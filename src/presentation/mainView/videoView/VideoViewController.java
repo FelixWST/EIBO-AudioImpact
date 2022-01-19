@@ -41,11 +41,20 @@ public class VideoViewController {
 
         this.root = new VideoView(videoPlayer, videoDropZoneController.getRoot(), videoControl);
 
-        mediaPlayer = new MediaPlayer(project.getVideoFile().getVideoMedia());
-        mediaView = new MediaView(mediaPlayer);
-        videoPlayer.setMediaView(mediaView);
+        if(project.getVideoFile()!=null){
+            root.toVideoViewLayout();
+            mediaPlayer = new MediaPlayer(project.getVideoFile().getVideoMedia());
+            mediaView = new MediaView(mediaPlayer);
+            videoPlayer.setMediaView(mediaView);
+            initializeVideoControls();
+        }else{
+            root.toDropZoneLayout();
+        }
 
 
+    }
+
+    public void initializeVideoControls(){
         videoControl.getPlayButton().setOnAction((event)->{
             MediaPlayer.Status status = mediaPlayer.getStatus();
 
@@ -120,8 +129,6 @@ public class VideoViewController {
             double logToLinearVolume = Math.pow(10.0, t1.doubleValue()/20.0);
             mediaPlayer.setVolume(logToLinearVolume);
         }));
-
-
     }
 
     public String millisToTimecode(long millis){

@@ -29,8 +29,10 @@ public class PlayerManager {
         }
 
         player = new HashMap<>();
-        for(AudioTrack t : mergedTrack.getAudioTracks()){
-            player.put(t.getAudioTrackType(), new TrackPlayer(t, this.keyframeManagers.get(t.getAudioTrackType())));
+        if(mergedTrack!=null){
+            for(AudioTrack t : mergedTrack.getAudioTracks()){
+                player.put(t.getAudioTrackType(), new TrackPlayer(t, this.keyframeManagers.get(t.getAudioTrackType())));
+            }
         }
 
         this.totalVolumeProperty = new SimpleDoubleProperty(1);
@@ -114,6 +116,12 @@ public class PlayerManager {
 
     public TrackPlayer getTrackPlayer(AudioTrackType audioTrackType){
         return player.get(audioTrackType);
+    }
+
+    public void chnageMergedTrack(MergedTrack newMergedTrack){
+        if(newMergedTrack != null){
+            this.mergedTrack = newMergedTrack;
+        }
     }
 
 

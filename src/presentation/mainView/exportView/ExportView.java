@@ -11,11 +11,11 @@ import javafx.scene.layout.VBox;
 
 public class ExportView extends ScrollPane {
 
-    Label titleLabel, projectSubLabel, fileSubLabel, pathSubLabel;
-    TextField projectName, fileName, path;
-    Button directory, exportAudio, exportVideo, saveProject;
-    HBox directoryContainer;
-    VBox mainContainer;
+    private Label titleLabel, projectSubLabel, fileSubLabel, pathSubLabel;
+    private TextField projectName, fileName, path;
+    private Button directory, exportAudio, exportVideo, saveProject;
+    private HBox directoryContainer;
+    private VBox mainContainer;
 
     public ExportView(){
         mainContainer = new VBox();
@@ -39,15 +39,15 @@ public class ExportView extends ScrollPane {
         path.prefWidthProperty().bind(directoryContainer.widthProperty().subtract(directory.widthProperty()));
         HBox.setMargin(path, new Insets(0,20,0,0));
 
-        exportAudio = new Button("Audio exportieren");
+        exportAudio = new Button("Export Audiotracks");
         exportAudio.getStyleClass().addAll("big-btn");
         exportAudio.prefWidthProperty().bind(mainContainer.widthProperty());
 
-        exportVideo = new Button("Fertiges Video exportieren");
+        exportVideo = new Button("Save Project");
         exportVideo.getStyleClass().addAll("big-btn");
         exportVideo.prefWidthProperty().bind(mainContainer.widthProperty());
 
-        saveProject = new Button("Projekt speichern");
+        saveProject = new Button("Open Project");
         saveProject.getStyleClass().addAll("big-btn");
         saveProject.prefWidthProperty().bind(mainContainer.widthProperty());
 

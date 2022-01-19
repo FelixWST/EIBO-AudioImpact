@@ -12,8 +12,15 @@ public class VideoView extends VBox {
 
     ProgressBar videoProgressBar;
     StackPane progressBarContainer;
+    private VideoPlayer videoPlayer;
+    private VideoControl videoControl;
+    private VideoDropZone videoDropZone;
 
     public VideoView(VideoPlayer videoPlayer, VideoDropZone videoDropZone, VideoControl videoControl){
+        this.videoPlayer = videoPlayer;
+        this.videoControl = videoControl;
+        this.videoDropZone = videoDropZone;
+
         videoPlayer.prefHeightProperty().bind(this.heightProperty());
         videoDropZone.prefHeightProperty().bind(this.heightProperty());
 
@@ -25,8 +32,15 @@ public class VideoView extends VBox {
         videoProgressBar.prefWidthProperty().bind(progressBarContainer.widthProperty());
 
         progressBarContainer.getChildren().addAll(videoProgressBar, new Label());
+    }
 
+    public void toDropZoneLayout(){
+        this.getChildren().clear();
+        this.getChildren().addAll(videoDropZone);
+    }
 
+    public void toVideoViewLayout(){
+        this.getChildren().clear();
         this.getChildren().addAll(videoPlayer, progressBarContainer, videoControl);
     }
 
