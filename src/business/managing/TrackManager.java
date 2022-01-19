@@ -118,6 +118,7 @@ public class TrackManager {
     }
 
     private Genre getGenre(String line) {
+        //Checken, ob Enum zu String existiert, statt jeden Fall abzufangen?
         if(line.contains("CINEMATIC")) {
             return Genre.CINEMATIC;
         } else if(line.contains("ACTION")) {
@@ -134,6 +135,7 @@ public class TrackManager {
     }
 
     private AudioTrackType getAudioTrackType(String line) {
+        //Checken, ob Enum zu String existiert, statt jeden Fall abzufangen?
         if(line.contains("atmosphere")) {
            return AudioTrackType.ATMOSPHERE;
         } else if(line.contains("depth")) {
