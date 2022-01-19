@@ -8,7 +8,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
-import presentation.application.Main;
 import presentation.mainView.EditingViewController;
 import presentation.mainView.uicomponents.VideoControl;
 
@@ -37,19 +36,29 @@ public class VideoViewController {
 
         this.videoControl = new VideoControl();
         this.videoPlayer = new VideoPlayer();
-        this.videoDropZoneController = new VideoDropZoneController();
+        this.videoDropZoneController = new VideoDropZoneController(project);
 
         this.root = new VideoView(videoPlayer, videoDropZoneController.getRoot(), videoControl);
 
-        if(project.getVideoFile()!=null){
+        if(project.videoFileProperty().get()!=null){
             root.toVideoViewLayout();
-            mediaPlayer = new MediaPlayer(project.getVideoFile().getVideoMedia());
+            mediaPlayer = new MediaPlayer(project.videoFileProperty().get().getVideoMedia());
             mediaView = new MediaView(mediaPlayer);
             videoPlayer.setMediaView(mediaView);
             initializeVideoControls();
         }else{
             root.toDropZoneLayout();
         }
+
+        project.videoFileProperty().addListener(((observableValue, videoFile, t1) -> {
+            if(t1!=null){
+                root.toVideoViewLayout();
+                mediaPlayer = new MediaPlayer(t1.getVideoMedia());
+                mediaView = new MediaView(mediaPlayer);
+                videoPlayer.setMediaView(mediaView);
+                initializeVideoControls();
+            }
+        }));
 
 
     }

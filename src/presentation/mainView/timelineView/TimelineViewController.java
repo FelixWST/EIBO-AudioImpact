@@ -1,7 +1,5 @@
 package presentation.mainView.timelineView;
 
-import business.editing.Keyframe;
-import business.editing.KeyframeManager;
 import business.managing.PlayerManager;
 import business.managing.Project;
 import business.managing.TrackManager;
@@ -44,7 +42,7 @@ public class TimelineViewController {
         HBox.setMargin(timelineTrackSettingsController.getRoot(), new Insets(10,0,10,10));
         HBox.setMargin(timelineTracksController.getRoot(), new Insets(10,10,10,0));
 
-        if(project.getVideoFile()!=null){
+        if(project.videoFileProperty().get()!=null){
             initializeVideoControls();
         }
 

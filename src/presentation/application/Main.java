@@ -38,7 +38,7 @@ public class Main extends Application {
 
         //Else: Create new empty project
         project = new Project("defaultproject", "defaultproject.prj", "path", trackManager.getMergedTrack(0));
-        //project.setVideoFile(new VideoFile(new File("src/data/video/videoPlayback.mp4")));
+        project.setVideoFile(new VideoFile(new File("src/data/video/videoPlayback.mp4")));
         playerManager = new PlayerManager(project.getMergedTrack(), project.getKeyframeManagers());
 
 

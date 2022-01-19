@@ -1,5 +1,7 @@
 package presentation.mainView.videoView;
 
+import business.managing.Project;
+import business.managing.VideoFile;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.stage.DirectoryChooser;
@@ -10,9 +12,11 @@ import java.util.List;
 
 public class VideoDropZoneController {
 
-    VideoDropZone root;
+    private VideoDropZone root;
+    private Project project;
 
-    public VideoDropZoneController(){
+    public VideoDropZoneController(Project project){
+        this.project = project;
         root = new VideoDropZone();
 
         root.getAddLabel().setOnMouseClicked((event -> {
@@ -22,7 +26,7 @@ public class VideoDropZoneController {
 
             if(loadedFile!=null){
                 if(loadedFile.isFile()){
-                    //Update VideoFile in Project
+                    project.setVideoFile(new VideoFile(loadedFile));
                 }
             }
         }));
@@ -41,8 +45,8 @@ public class VideoDropZoneController {
                 List<File> droppedFiles = db.getFiles();
                 if(droppedFiles.size()==1){
                     success = true;
-                    System.out.println(droppedFiles.get(0));
-                    //Check Filetype & Update VideoFile in Project
+                    System.out.println(droppedFiles.get(0)+"CHECK DATATYPE");
+                    project.setVideoFile(new VideoFile(droppedFiles.get(0)));
                 }
             }
             dragEvent.setDropCompleted(success);

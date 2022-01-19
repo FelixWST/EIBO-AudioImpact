@@ -5,6 +5,7 @@ import business.editing.KeyframeManager;
 import business.tracks.AudioTrack;
 import business.tracks.AudioTrackType;
 import business.tracks.MergedTrack;
+import javafx.beans.property.SimpleObjectProperty;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,8 @@ public class Project {
     private String path;
     private ArrayList<KeyframeManager> keyframeManagers;
     private MergedTrack mergedTrack;
-    private VideoFile videoFile;
+    private SimpleObjectProperty<VideoFile> videoFileProperty;
+
 
     public Project(){
         this("unnamed Project", "unnamedProject.prj", "path/to/proj", null);
@@ -35,7 +37,7 @@ public class Project {
         this.path = path;
         this.mergedTrack = mergedTrack;
         this.keyframeManagers = new ArrayList<>();
-        this.videoFile = videoFile;
+        this.videoFileProperty = new SimpleObjectProperty<>(videoFile);
         createKeyframeManagers();
     }
 
@@ -80,13 +82,13 @@ public class Project {
     }
 
     public void setVideoFile(VideoFile videoFile){
-        if(this.videoFile == null && videoFile != null){
-            this.videoFile = videoFile;
+        if(this.videoFileProperty.get() == null && videoFile != null){
+            this.videoFileProperty.set(videoFile);
         }
     }
 
-    public VideoFile getVideoFile(){
-        return this.videoFile;
+    public SimpleObjectProperty<VideoFile> videoFileProperty(){
+        return this.videoFileProperty;
     }
 
     public String getProjectTitle(){
@@ -112,7 +114,7 @@ public class Project {
 
     public int findNextKeyframeTime(int millis){
         int timeDelta = Integer.MAX_VALUE;
-        Keyframe closest = new Keyframe((int)videoFile.getDuration(), 0);
+        Keyframe closest = new Keyframe((int) videoFileProperty.get().getDuration(), 0);
 
         for(KeyframeManager kfm : keyframeManagers){
             for(int i = 0; i<kfm.getKeyframes().size(); i++){

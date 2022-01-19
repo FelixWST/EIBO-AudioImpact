@@ -9,28 +9,20 @@ import business.tracks.AudioTrackType;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.ListChangeListener;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import presentation.mainView.uicomponents.TrackLayer;
 
-import java.awt.*;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 public class TimelineTracksController {
@@ -61,12 +53,12 @@ public class TimelineTracksController {
 
 
         root.widthProperty().addListener(((observableValue, number, t1) -> {
-            if(project.getVideoFile()!=null){
+            if(project.videoFileProperty().get()!=null){
                 repaint();
             }
         }));
 
-        if(project.getVideoFile()!=null){
+        if(project.videoFileProperty().get()!=null){
             repaint();
         }
     }
@@ -78,7 +70,7 @@ public class TimelineTracksController {
     public void repaint(){
         int mapVolumeToPositiveRange = 80;
 
-        long totalDuration = project.getVideoFile().getDuration();
+        long totalDuration = project.videoFileProperty().get().getDuration();
         for(KeyframeManager keyframeManager : project.getKeyframeManagers()){
             TrackLayer selectedTrackLayer = trackLayers.get(keyframeManager.getAudioTrackType());
             selectedTrackLayer.getChildren().clear();
