@@ -10,18 +10,31 @@
     -fx-border-style: hidden hidden solid hidden;
 }
 
+#no-focus:focused{
+    -fx-border-color: transparent;
+    -fx-border-style: hidden hidden solid hidden;
+}
+
+#error{
+    -fx-border-color: red;
+    -fx-border-style: hidden hidden solid hidden;
+}
+
 .label-sub-input{
     -fx-text-fill: #7B7A7A;
 }
 
 .directory-btn{
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: transparent;
     -fx-background-image: url(../../../data/assets/folder.png);
     -fx-background-repeat: no-repeat no-repeat;
     -fx-background-size: contain;
     -fx-background-position:center;
-    -fx-pref-height: 25;
-    -fx-pref-width: 25;
+}
+
+.directory-btn:hover{
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
 }
 
 .big-btn{
@@ -33,7 +46,6 @@
 
 .big-btn:hover{
     -fx-background-color: #bababa;
-    -fx-text-alignment: center;
     -fx-cursor: hand;
 }
 

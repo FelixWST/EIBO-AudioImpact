@@ -26,4 +26,8 @@ public class VideoFile {
     public long getDuration(){
         return (long)this.videoMedia.getDuration().toMillis();
     }
+
+    public File getVideoFile(){
+        return this.videoFile;
+    }
 }

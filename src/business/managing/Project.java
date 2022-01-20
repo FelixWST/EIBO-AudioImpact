@@ -7,13 +7,17 @@ import business.tracks.AudioTrackType;
 import business.tracks.MergedTrack;
 import javafx.beans.property.SimpleObjectProperty;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Project {
 
     private String projectTitle;
     private String fileName;
-    private String path;
+    private String exportPath;
     private ArrayList<KeyframeManager> keyframeManagers;
     private MergedTrack mergedTrack;
     private SimpleObjectProperty<VideoFile> videoFileProperty;
@@ -23,18 +27,18 @@ public class Project {
         this("unnamed Project", "unnamedProject.prj", "path/to/proj", null);
     }
 
-    public Project(String projectTitle, String fileName, String path) {
-        this(projectTitle, fileName, path, null, null);
+    public Project(String projectTitle, String fileName, String exportPath) {
+        this(projectTitle, fileName, exportPath, null, null);
     }
 
-    public Project(String projectTitle, String fileName, String path, MergedTrack mergedTrack) {
-        this(projectTitle, fileName, path, mergedTrack, null);
+    public Project(String projectTitle, String fileName, String exportPath, MergedTrack mergedTrack) {
+        this(projectTitle, fileName, exportPath, mergedTrack, null);
     }
 
-    public Project(String projectTitle, String fileName, String path, MergedTrack mergedTrack, VideoFile videoFile) {
+    public Project(String projectTitle, String fileName, String exportPath, MergedTrack mergedTrack, VideoFile videoFile) {
         this.projectTitle = projectTitle;
         this.fileName = fileName;
-        this.path = path;
+        this.exportPath = exportPath;
         this.mergedTrack = mergedTrack;
         this.keyframeManagers = new ArrayList<>();
         this.videoFileProperty = new SimpleObjectProperty<>(videoFile);
@@ -43,6 +47,7 @@ public class Project {
 
     private void createKeyframeManagers(){
         if(mergedTrack!=null){
+            keyframeManagers = new ArrayList<>();
             for(AudioTrack audioTrack : mergedTrack.getAudioTracks()){
                 if(audioTrack!=null){
                     keyframeManagers.add(new KeyframeManager(audioTrack.getAudioTrackType()));
@@ -129,12 +134,53 @@ public class Project {
         return closest.getTime();
     }
 
-    public void saveProject(){
+    public void saveProject(File directory) throws IOException {
+        String fileHeader, fileBody;
+        if(directory!=null){
 
+            BufferedWriter writer = new BufferedWriter(new FileWriter(directory));
+
+
+
+            fileHeader =  "projectTitle="+projectTitle+"\n";
+            fileHeader += "fileName="+fileName+"\n";
+            fileHeader += "path="+directory+"\n";
+            if(mergedTrack!=null){
+                fileHeader += "mergedTrack="+mergedTrack.getTitle()+"\n";
+            }
+            if(videoFileProperty.get()!=null){
+                fileHeader += "videoFile="+videoFileProperty.get().getVideoFile()+"\n";
+            }
+            fileHeader += "\n\n";
+
+
+            fileBody = "#BODY\n";
+            if(keyframeManagers!=null){
+                for(KeyframeManager kfm : keyframeManagers){
+                    if(kfm!=null){
+                        fileBody += "audioTrackType="+kfm.getAudioTrackType()+"\n";
+                        fileBody += "#BEGINKF\n";
+                        if(kfm.getKeyframes()!=null){
+                            for(Keyframe kf : kfm.getKeyframes()){
+                                fileBody += kf.getTime()+"|"+kf.getVolume()+";";
+                            }
+                        }
+                        fileBody += "\n#ENDKF\n";
+                    }
+                }
+            }
+
+            writer.write(fileHeader+fileBody);
+            writer.close();
+
+        }
     }
 
     public void loadFromProject(){
 
     }
 
+    public void setExportPath(String exportPath) {
+        this.exportPath = exportPath;
+    }
 }

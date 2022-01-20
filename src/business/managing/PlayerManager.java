@@ -20,7 +20,31 @@ public class PlayerManager {
     private SimpleDoubleProperty totalVolumeProperty;
 
 
+    public PlayerManager(){
+        this(null,null);
+    }
+
     public PlayerManager(MergedTrack mergedTrack, ArrayList<KeyframeManager> keyframeManagers){
+        if(mergedTrack!=null && keyframeManagers != null){
+            this.mergedTrack = mergedTrack;
+
+            this.keyframeManagers = new HashMap<>();
+            for(KeyframeManager kfm : keyframeManagers){
+                this.keyframeManagers.put(kfm.getAudioTrackType(), kfm);
+            }
+
+            player = new HashMap<>();
+            if(mergedTrack!=null){
+                for(AudioTrack t : mergedTrack.getAudioTracks()){
+                    player.put(t.getAudioTrackType(), new TrackPlayer(t, this.keyframeManagers.get(t.getAudioTrackType())));
+                }
+            }
+        }
+        this.totalVolumeProperty = new SimpleDoubleProperty(1);
+
+    }
+
+    public void changeMergedTrack(MergedTrack mergedTrack, ArrayList<KeyframeManager> keyframeManagers){
         this.mergedTrack = mergedTrack;
 
         this.keyframeManagers = new HashMap<>();
@@ -34,9 +58,6 @@ public class PlayerManager {
                 player.put(t.getAudioTrackType(), new TrackPlayer(t, this.keyframeManagers.get(t.getAudioTrackType())));
             }
         }
-
-        this.totalVolumeProperty = new SimpleDoubleProperty(1);
-
     }
 
     public void startPlaying(){

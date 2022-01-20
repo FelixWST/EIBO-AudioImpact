@@ -1,5 +1,7 @@
 package presentation.mainView.libraryView;
 
+import business.managing.PlayerManager;
+import business.managing.Project;
 import business.managing.TrackManager;
 import business.tracks.MergedTrack;
 import com.sun.scenario.effect.Merge;
@@ -17,9 +19,13 @@ public class LibraryViewController {
     MergedTrack mergedTrack;
     TrackManager trackManager;
     ListViewCell listViewCell;
+    Project project;
+    PlayerManager playerManager;
 
-    public LibraryViewController(TrackManager trackManager) {
+    public LibraryViewController(TrackManager trackManager, Project project, PlayerManager playerManager) {
         this.trackManager = trackManager;
+        this.project = project;
+        this.playerManager = playerManager;
         root = new LibraryView();
 
         ObservableList<MergedTrack> content = FXCollections.observableArrayList();
@@ -39,8 +45,16 @@ public class LibraryViewController {
                 return new MergedTrackListCell();
             }
         });
+
 */
 
+        root.listView.setOnMouseClicked((mouseEvent)->{
+            if(mouseEvent.getClickCount()==2){
+                System.out.println(root.listView.getSelectionModel().getSelectedItem());
+                project.setMergedTrack(root.listView.getSelectionModel().getSelectedItem());
+                playerManager.changeMergedTrack(root.listView.getSelectionModel().getSelectedItem(), project.getKeyframeManagers());
+            }
+        });
 
         root.listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MergedTrack>() {
             @Override

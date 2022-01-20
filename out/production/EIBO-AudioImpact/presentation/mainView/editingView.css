@@ -17,7 +17,7 @@
 }
 
 .track-layer-setting{
-    -fx-background-radius: 10px 0px 0px 10px;
+    -fx-background-radius: 12px 0px 0px 12px;
     -fx-border-color: #393939;
     -fx-border-width: 2px;
 
@@ -144,7 +144,7 @@
     -fx-control-inner-background: transparent;
     -fx-background-color: transparent;
     -fx-background-insets: 0 0 0 0, 0, 0;
-    -fx-background-radius: 0, 0, 0;
+    -fx-background-radius: 5;
     -fx-padding: 0;
 }
 
@@ -164,6 +164,24 @@
 
 .totalVolumeSlider .axis{
     -fx-tick-label-fill: #FFFFFF;
+}
+
+.totalVolumeSlider .thumb{
+    -fx-background-color: #4c4c4c;
+}
+
+#hybrid-volume-slider .progress-bar .track{
+    -fx-background-color: #333333;
+    -fx-border-radius: 0;
+    -fx-background-radius: 5;
+}
+
+#hybrid-volume-slider .progress-bar .bar{
+    -fx-background-radius: 2;
+    -fx-background-insets: 0 0 0 0;
+    -fx-border-radius: 0;
+    -fx-padding: 0.25em;
+    -fx-background-color: #0685E2;
 }
 
 #tracklayer-setting-container .slider .track{

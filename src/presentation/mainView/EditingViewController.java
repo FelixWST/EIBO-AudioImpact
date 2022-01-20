@@ -34,9 +34,9 @@ public class EditingViewController {
         //Hier Zentral auf Objekte hören und bei Videofile / Projekt änderung etc die jeweiligen Views neu laden
 
         this.root = new EditingView();
-        this.exportViewController = new ExportViewController();
+        this.exportViewController = new ExportViewController(project);
         this.videoViewController = new VideoViewController(this, project, playerManager, trackManager);
-        this.libraryViewController = new LibraryViewController(trackManager);
+        this.libraryViewController = new LibraryViewController(trackManager, project, playerManager);
         this.titleViewController = new TitleViewController(project);
         this.timelineViewController = new TimelineViewController(this, project, playerManager, trackManager);
 

@@ -13,7 +13,7 @@ public class ExportView extends ScrollPane {
 
     private Label titleLabel, projectSubLabel, fileSubLabel, pathSubLabel;
     private TextField projectName, fileName, path;
-    private Button directory, exportAudio, exportVideo, saveProject;
+    private Button directory, exportAudio, saveProject, openProject;
     private HBox directoryContainer;
     private VBox mainContainer;
 
@@ -21,19 +21,23 @@ public class ExportView extends ScrollPane {
         mainContainer = new VBox();
         titleLabel = new Label("Export");
         titleLabel.getStyleClass().addAll("title-label");
-        projectName = new TextField("Project name");
-        projectSubLabel = new Label("Project name");
+        projectName = new TextField();
+        projectSubLabel = new Label("Project Title");
         projectSubLabel.getStyleClass().addAll("label-sub-input");
-        fileName = new TextField("Dateiname");
+        fileName = new TextField();
         fileSubLabel = new Label("Filename");
         fileSubLabel.getStyleClass().addAll("label-sub-input");
 
 
-        path = new TextField("Pfad zu projekt");
-        pathSubLabel = new Label("Filepath");
+        path = new TextField();
+        path.setEditable(false);
+        path.setFocusTraversable(false);
+        path.setId("no-focus");
+        pathSubLabel = new Label("Export Directory");
         pathSubLabel.getStyleClass().addAll("label-sub-input");
         directory = new Button("");
         directory.getStyleClass().addAll("directory-btn");
+        directory.setPrefWidth(50);
 
         directoryContainer = new HBox(path, directory);
         path.prefWidthProperty().bind(directoryContainer.widthProperty().subtract(directory.widthProperty()));
@@ -43,15 +47,15 @@ public class ExportView extends ScrollPane {
         exportAudio.getStyleClass().addAll("big-btn");
         exportAudio.prefWidthProperty().bind(mainContainer.widthProperty());
 
-        exportVideo = new Button("Save Project");
-        exportVideo.getStyleClass().addAll("big-btn");
-        exportVideo.prefWidthProperty().bind(mainContainer.widthProperty());
-
-        saveProject = new Button("Open Project");
+        saveProject = new Button("Save Project");
         saveProject.getStyleClass().addAll("big-btn");
         saveProject.prefWidthProperty().bind(mainContainer.widthProperty());
 
-        saveProject.setAlignment(Pos.BOTTOM_CENTER);
+        openProject = new Button("Open Project");
+        openProject.getStyleClass().addAll("big-btn");
+        openProject.prefWidthProperty().bind(mainContainer.widthProperty());
+
+        openProject.setAlignment(Pos.BOTTOM_CENTER);
 
         Insets titleInset = new Insets(10);
         Insets sublabelInsets = new Insets(2,10,5,10);
@@ -65,8 +69,8 @@ public class ExportView extends ScrollPane {
         VBox.setMargin(directoryContainer, textFieldInsets);
         VBox.setMargin(pathSubLabel, sublabelInsets);
         VBox.setMargin(exportAudio, new Insets(10));
-        VBox.setMargin(exportVideo, new Insets(10));
         VBox.setMargin(saveProject, new Insets(10));
+        VBox.setMargin(openProject, new Insets(10));
 
         mainContainer.prefHeightProperty().bind(this.heightProperty());
 
@@ -75,9 +79,37 @@ public class ExportView extends ScrollPane {
         this.getStylesheets().add("/presentation/mainView/editingView.css");
         this.getStylesheets().add("/presentation/mainView/exportView/exportView.css");
         mainContainer.getStyleClass().add("view-element");
-        mainContainer.getChildren().addAll(titleLabel, projectName,projectSubLabel, fileName, fileSubLabel, directoryContainer, pathSubLabel, exportAudio, exportVideo, saveProject);
+        mainContainer.getChildren().addAll(titleLabel, projectName,projectSubLabel, fileName, fileSubLabel, directoryContainer, pathSubLabel, exportAudio, saveProject, openProject);
         this.fitToWidthProperty().set(true);
         this.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
         this.setContent(mainContainer);
+    }
+
+    public TextField getProjectNameTextField(){
+        return this.projectName;
+    }
+
+    public TextField getFileNameTextField(){
+        return this.fileName;
+    }
+
+    public Button getOpenProject() {
+        return openProject;
+    }
+
+    public Button getSaveProject() {
+        return saveProject;
+    }
+
+    public Button getExportAudio() {
+        return exportAudio;
+    }
+
+    public Button getDirectory() {
+        return directory;
+    }
+
+    public TextField getPath(){
+        return this.path;
     }
 }

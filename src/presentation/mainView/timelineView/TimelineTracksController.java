@@ -252,4 +252,8 @@ public class TimelineTracksController {
         }
         return false;
     }
+
+    public HashMap<AudioTrackType, TrackLayer> getTrackLayers() {
+        return trackLayers;
+    }
 }

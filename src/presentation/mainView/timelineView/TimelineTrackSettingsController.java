@@ -11,6 +11,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.StringConverter;
 import presentation.mainView.videoView.VideoViewController;
 
 
@@ -23,13 +24,38 @@ public class TimelineTrackSettingsController {
     private HashMap<AudioTrackType, TrackLayerSettings> trackLayers;
     private Project project;
     private PlayerManager playerManager;
+    private VideoViewController videoViewController;
+    private TimelineTracksController timelineTracksController;
 
-    public TimelineTrackSettingsController(Project project, PlayerManager playerManager, VideoViewController videoViewController){
+    public TimelineTrackSettingsController(Project project, PlayerManager playerManager, VideoViewController videoViewController, TimelineTracksController timelineTracksController){
         this.root = new TimelineTrackSettings();
         this.project = project;
         this.playerManager = playerManager;
-        trackLayers = new HashMap<>();
+        this.videoViewController = videoViewController;
+        this.timelineTracksController = timelineTracksController;
 
+
+        initializeTrackSettings();
+
+        project.videoFileProperty().addListener(((observableValue, videoFile, t1) -> {
+            initializeTrackSettings();
+        }));
+
+        root.getVolumeProgress().setProgress((root.getTotalVolume().getValue()+80)/80);
+        root.getTotalVolume().valueProperty().addListener(((observableValue, aBoolean, t1) -> {
+            playerManager.setTotalVolumeProperty(t1.doubleValue());
+            root.getVolumeProgress().setProgress((t1.doubleValue()+80)/80);
+        }));
+    }
+
+    public TimelineTrackSettings getRoot() {
+        return root;
+    }
+
+    public void initializeTrackSettings(){
+        root.resetToDefaultLayout();
+        trackLayers = new HashMap<>();
+        System.out.println(trackLayers);
         for(AudioTrack audioTrack : project.getMergedTrack().getAudioTracks()){
             trackLayers.put(audioTrack.getAudioTrackType(), new TrackLayerSettings(audioTrack.getAudioTrackType()));
             String id = "";
@@ -41,7 +67,8 @@ public class TimelineTrackSettingsController {
             trackLayers.get(audioTrack.getAudioTrackType()).volumeProgress.setId(id);
             trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setId(id);
 
-            trackLayers.get(audioTrack.getAudioTrackType()).prefHeightProperty().bind(root.heightProperty().divide(project.getMergedTrack().getAudioTracks().size()));
+            //trackLayers.get(audioTrack.getAudioTrackType()).prefHeightProperty().bind(root.heightProperty().divide(project.getMergedTrack().getAudioTracks().size()));
+            trackLayers.get(audioTrack.getAudioTrackType()).prefHeightProperty().bind(timelineTracksController.getTrackLayers().get(audioTrack.getAudioTrackType()).heightProperty());
             VBox.setMargin(trackLayers.get(audioTrack.getAudioTrackType()), new Insets(10,0,5,10));
             root.getChildren().add(trackLayers.get(audioTrack.getAudioTrackType()));
 
@@ -63,22 +90,26 @@ public class TimelineTrackSettingsController {
             AtomicLong lastMilliTime = new AtomicLong(System.currentTimeMillis());
             trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.valueProperty().addListener(((observableValue, number, t1) -> {
                 playerManager.setTrackVolume(audioTrack.getAudioTrackType(), t1.floatValue());
-                if(trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.valueChangingProperty().get()){
-                    Platform.runLater(()->{
-                        if(videoViewController.getMediaPlayer().statusProperty().get() == MediaPlayer.Status.PLAYING){
-                            if(System.currentTimeMillis()- lastMilliTime.get() > 500){
+                if (trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.valueChangingProperty().get()) {
+                    Platform.runLater(() -> {
+                        if (videoViewController.getMediaPlayer().statusProperty().get() == MediaPlayer.Status.PLAYING) {
+                            if (System.currentTimeMillis() - lastMilliTime.get() > 500) {
                                 project.getKeyframeManager(audioTrack.getAudioTrackType()).addKeyframe(new Keyframe(playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).getPosition(), t1.doubleValue()));
                                 lastMilliTime.set(System.currentTimeMillis());
                             }
-                        }else{
+                        } else {
                             project.getKeyframeManager(audioTrack.getAudioTrackType()).addKeyframe(new Keyframe(playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).getPosition(), t1.doubleValue()));
                         }
 
                     });
                 }
                 //property von -80 bis +6
-                trackLayers.get(audioTrack.getAudioTrackType()).volumeProgress.setProgress((t1.doubleValue()+80)/86);
+                trackLayers.get(audioTrack.getAudioTrackType()).volumeProgress.setProgress((t1.doubleValue() + 80) / 86);
             }));
+
+            if(playerManager == null || videoViewController.getMediaPlayer() == null){
+                trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setDisable(true); //Boolean binding?
+            }
 
             trackLayers.get(audioTrack.getAudioTrackType()).mute.setOnAction((event)->{
                 playerManager.toggleMuteOnTrack(audioTrack.getAudioTrackType());
@@ -108,20 +139,12 @@ public class TimelineTrackSettingsController {
 
             playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).volumeProperty().addListener(((observableValue, number, t1) -> {
 
-            if(!trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.valueChangingProperty().get()){
-                Platform.runLater(()->{
-                    trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setValue(t1.doubleValue());
-                });
-            }
+                if(!trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.valueChangingProperty().get()){
+                    Platform.runLater(()->{
+                        trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setValue(t1.doubleValue());
+                    });
+                }
             }));
         }
-
-        root.totalVolume.valueProperty().addListener(((observableValue, aBoolean, t1) -> {
-            playerManager.setTotalVolumeProperty(t1.doubleValue());
-        }));
-    }
-
-    public TimelineTrackSettings getRoot() {
-        return root;
     }
 }

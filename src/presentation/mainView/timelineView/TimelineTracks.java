@@ -4,7 +4,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 
 public class TimelineTracks extends VBox {
-    Slider timelineSlider;
+    private Slider timelineSlider;
 
     public TimelineTracks(){
 
@@ -18,5 +18,9 @@ public class TimelineTracks extends VBox {
         timelineSlider.setSnapToTicks(true);
 
         this.getChildren().addAll(timelineSlider);
+    }
+
+    public Slider getTimelineSlider(){
+        return this.timelineSlider;
     }
 }

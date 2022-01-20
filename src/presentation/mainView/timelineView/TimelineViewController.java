@@ -32,11 +32,13 @@ public class TimelineViewController {
         this.trackManager = trackManager;
         this.videoViewController = editingViewController.getVideoViewController();
         this.timelineTracksController = new TimelineTracksController(project);
-        this.timelineTrackSettingsController = new TimelineTrackSettingsController(project, playerManager, videoViewController);
+        this.timelineTrackSettingsController = new TimelineTrackSettingsController(project, playerManager, videoViewController, timelineTracksController);
 
         this.root = new TimeLineView();
         timelineTrackSettingsController.getRoot().prefWidthProperty().bind(root.widthProperty().multiply(0.3));
         timelineTracksController.getRoot().prefWidthProperty().bind(root.widthProperty().multiply(0.7));
+
+        timelineTrackSettingsController.getRoot().getHybridSlider().prefHeightProperty().bind(timelineTracksController.getRoot().getTimelineSlider().heightProperty());
 
         root.getChildren().addAll(timelineTrackSettingsController.getRoot(), timelineTracksController.getRoot());
         HBox.setMargin(timelineTrackSettingsController.getRoot(), new Insets(10,0,10,10));
@@ -46,9 +48,15 @@ public class TimelineViewController {
             initializeVideoControls();
         }
 
+        project.videoFileProperty().addListener(((observableValue, videoFile, t1) -> {
+            if(t1!=null){
+                initializeVideoControls();
+            }
+        }));
 
 
-        timelineTracksController.getRoot().timelineSlider.setLabelFormatter(new StringConverter<Double>() {
+
+        timelineTracksController.getRoot().getTimelineSlider().setLabelFormatter(new StringConverter<Double>() {
             @Override
             public String toString(Double aDouble) {
                 return millisToTimecode(aDouble.longValue());
@@ -63,13 +71,13 @@ public class TimelineViewController {
 
     public void initializeVideoControls(){
         videoViewController.getMediaPlayer().setOnReady(()->{
-            timelineTracksController.getRoot().timelineSlider.setMax(videoViewController.getMediaPlayer().getTotalDuration().toMillis());
+            timelineTracksController.getRoot().getTimelineSlider().setMax(videoViewController.getMediaPlayer().getTotalDuration().toMillis());
             timelineTracksController.repaint();
         });
 
-        timelineTracksController.getRoot().timelineSlider.valueChangingProperty().addListener(((observableValue, aBoolean, t1) -> {
+        timelineTracksController.getRoot().getTimelineSlider().valueChangingProperty().addListener(((observableValue, aBoolean, t1) -> {
             if(!t1){
-                Duration dt = Duration.millis(timelineTracksController.getRoot().timelineSlider.getValue());
+                Duration dt = Duration.millis(timelineTracksController.getRoot().getTimelineSlider().getValue());
                 new Thread(()->{
                     Platform.runLater(()->{
                         videoViewController.getMediaPlayer().seek(dt);
@@ -80,7 +88,7 @@ public class TimelineViewController {
     }
 
     public Slider getTimelineSlider(){
-        return this.timelineTracksController.getRoot().timelineSlider;
+        return this.timelineTracksController.getRoot().getTimelineSlider();
     }
 
     public TimeLineView getRoot(){

@@ -33,23 +33,23 @@ public class TrackLayerSettings extends VBox {
         mergedProgress = new StackPane();
 
         volumeSettingSlider = new Slider(-80, 6, 0);
-        volumeSettingSlider.prefWidthProperty().bind(controlContainer.widthProperty().multiply(0.8));
+        volumeSettingSlider.prefWidthProperty().bind(controlContainer.widthProperty().multiply(0.7));
 
         volumeProgress = new ProgressBar();
         volumeProgress.prefWidthProperty().bind(volumeSettingSlider.widthProperty());
 
 
         mute = new Button("M");
-        mute.prefWidthProperty().bind(controlContainer.widthProperty().multiply(0.1));
+        mute.setPrefWidth(50);
         solo = new Button("S");
-        solo.prefWidthProperty().bind(controlContainer.widthProperty().multiply(0.1));
+        solo.setPrefWidth(50);
 
         mergedProgress.getChildren().addAll(volumeProgress,volumeSettingSlider);
 
         controlContainer.setAlignment(Pos.CENTER_LEFT);
         this.setAlignment(Pos.CENTER_LEFT);
-        HBox.setMargin(volumeSettingSlider, new Insets(10,10,10,5));
-        HBox.setMargin(mute, new Insets(10,10,10,5));
+        HBox.setMargin(volumeSettingSlider, new Insets(10,10,10,15));
+        HBox.setMargin(mute, new Insets(10,10,10,20));
         HBox.setMargin(solo, new Insets(10, 10, 10, 5));
 
         this.setStyle("-fx-background-color: rgba("+r+","+g+","+b+",0.2)");
@@ -59,7 +59,8 @@ public class TrackLayerSettings extends VBox {
         trackTypeLabel = new Label(trackType.name());
         trackTypeLabel.getStyleClass().addAll("tracktype-label");
         trackTypeLabel.setStyle("-fx-text-fill: "+colorHex);
-        VBox.setMargin(trackTypeLabel, new Insets(10));
+        VBox.setMargin(trackTypeLabel, new Insets(10,10,10,20));
+        VBox.setMargin(controlContainer, new Insets(0,10,10,20));
         this.getChildren().addAll(trackTypeLabel, controlContainer);
     }
 }
