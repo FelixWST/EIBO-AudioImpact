@@ -1,6 +1,8 @@
 package presentation.mainView.libraryView;
 
 import business.tracks.MergedTrack;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -28,6 +30,7 @@ public class ListViewCell extends ListCell<MergedTrack> {
         this.getStyleClass().addAll("list-cell");
 
         cell = new HBox();
+        cell.setAlignment(Pos.CENTER_LEFT);
 
         cover = new ImageView();
         trackInfo = new VBox();
@@ -36,14 +39,18 @@ public class ListViewCell extends ListCell<MergedTrack> {
         selectTrack=new Button("select");
         selectTrack.setId("select-Track-Button");
 
-
-
         title = new Label();
         title.setId("title-label");
         genre = new Label();
         genre.setId("genre-label");
         duration = new Label();
         duration.setId("duration-label");
+
+        Insets coverInsets = new Insets(10);
+        Insets trackInfoInsets = new Insets(10,10,10,20);
+
+        HBox.setMargin(cover,coverInsets);
+        HBox.setMargin(trackInfo, trackInfoInsets);
 
         trackInfo.getChildren().addAll(title,genre,duration);
         cell.getChildren().addAll(cover, trackInfo,selectTrack);

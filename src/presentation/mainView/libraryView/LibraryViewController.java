@@ -3,6 +3,9 @@ package presentation.mainView.libraryView;
 import business.managing.PlayerManager;
 import business.managing.Project;
 import business.managing.TrackManager;
+import business.tracks.AudioTrack;
+import business.tracks.AudioTrackType;
+import business.tracks.Genre;
 import business.tracks.MergedTrack;
 import com.sun.scenario.effect.Merge;
 import javafx.beans.value.ChangeListener;
@@ -12,6 +15,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
+
+import java.util.ArrayList;
 
 public class LibraryViewController {
 
@@ -27,9 +32,33 @@ public class LibraryViewController {
         this.project = project;
         this.playerManager = playerManager;
         root = new LibraryView();
+        /*
+        AudioTrack testAtmoTrack = new AudioTrack("src/data/testData/exampleTrack/atmosphere.mp3","src/data/testData/exampleTrack/atmosphere.wav", AudioTrackType.ATMOSPHERE);
+        AudioTrack testDepthTrack = new AudioTrack("src/data/testData/exampleTrack/depth.mp3","src/data/testData/exampleTrack/depth.wav", AudioTrackType.DEPTH);
+        AudioTrack testIntensityTrack = new AudioTrack("src/data/testData/exampleTrack/intensity.mp3","src/data/testData/exampleTrack/intensity.wav", AudioTrackType.INTENSITY);
+
+        MergedTrack firstMergedTrack = new MergedTrack("Test", 84000, "src/data/audio/covers/defaultcover.png",Genre.CINEMATIC);
+        firstMergedTrack.addTrack(testAtmoTrack);
+        firstMergedTrack.addTrack(testDepthTrack);
+        firstMergedTrack.addTrack(testIntensityTrack);
+
+        ArrayList<MergedTrack> testList = new ArrayList<>();
+        testList.add(firstMergedTrack);
+        testList.add(firstMergedTrack);
+        testList.add(firstMergedTrack);
+        testList.add(firstMergedTrack);
+        testList.add(firstMergedTrack);
+        testList.add(firstMergedTrack);
+        testList.add(firstMergedTrack);
+        testList.add(firstMergedTrack);
+        testList.add(firstMergedTrack);
+        testList.add(firstMergedTrack);
+        testList.add(firstMergedTrack);
+        */
 
         ObservableList<MergedTrack> content = FXCollections.observableArrayList();
         content.setAll(trackManager.getTrackList());
+        //content.setAll(testList);
         root.listView.setItems(content);
 
         root.listView.setCellFactory(new Callback<ListView<MergedTrack>, ListCell<MergedTrack>>() {

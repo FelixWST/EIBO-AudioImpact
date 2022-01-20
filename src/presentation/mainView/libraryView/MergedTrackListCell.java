@@ -1,6 +1,7 @@
 package presentation.mainView.libraryView;
 
 import business.tracks.MergedTrack;
+import javafx.geometry.Pos;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
