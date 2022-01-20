@@ -3,14 +3,20 @@ package presentation.mainView.videoView;
 import business.managing.PlayerManager;
 import business.managing.Project;
 import business.managing.TrackManager;
+import business.managing.VideoFile;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 import presentation.mainView.EditingViewController;
 import presentation.mainView.uicomponents.VideoControl;
 
+import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class VideoViewController {
@@ -41,23 +47,45 @@ public class VideoViewController {
         this.root = new VideoView(videoPlayer, videoDropZoneController.getRoot(), videoControl);
 
         if(project.videoFileProperty().get()!=null){
-            root.toVideoViewLayout();
-            mediaPlayer = new MediaPlayer(project.videoFileProperty().get().getVideoMedia());
-            mediaView = new MediaView(mediaPlayer);
-            videoPlayer.setMediaView(mediaView);
-            initializeVideoControls();
+                root.toVideoViewLayout();
+                mediaPlayer = new MediaPlayer(project.videoFileProperty().get().getVideoMedia());
+                mediaView = new MediaView(mediaPlayer);
+                videoPlayer.setMediaView(mediaView);
+                initializeVideoControls();
         }else{
             root.toDropZoneLayout();
         }
 
         project.videoFileProperty().addListener(((observableValue, videoFile, t1) -> {
             if(t1!=null){
-                root.toVideoViewLayout();
-                mediaPlayer = new MediaPlayer(t1.getVideoMedia());
-                mediaView = new MediaView(mediaPlayer);
-                videoPlayer.setMediaView(mediaView);
-                initializeVideoControls();
+                    root.toVideoViewLayout();
+                    mediaPlayer = new MediaPlayer(t1.getVideoMedia());
+                    mediaView = new MediaView(mediaPlayer);
+                    videoPlayer.setMediaView(mediaView);
+                    initializeVideoControls();
             }
+        }));
+
+        root.setOnDragOver((dragEvent -> {
+            if(dragEvent.getGestureSource() != root && dragEvent.getDragboard().hasFiles()){
+                dragEvent.acceptTransferModes(TransferMode.LINK);
+            }
+        }));
+
+        root.setOnDragDropped((dragEvent -> {
+            Dragboard db = dragEvent.getDragboard();
+            boolean success = false;
+
+            if(db.hasFiles()){
+                List<File> droppedFiles = db.getFiles();
+                if(droppedFiles.size()==1){
+                    success = true;
+                    System.out.println(droppedFiles.get(0)+"CHECK DATATYPE");
+                    project.setVideoFile(new VideoFile(droppedFiles.get(0)));
+                }
+            }
+            dragEvent.setDropCompleted(success);
+            dragEvent.consume();
         }));
 
 
@@ -138,6 +166,8 @@ public class VideoViewController {
             double logToLinearVolume = Math.pow(10.0, t1.doubleValue()/20.0);
             mediaPlayer.setVolume(logToLinearVolume);
         }));
+
+        mediaPlayer.seek(new Duration(0));
     }
 
     public String millisToTimecode(long millis){

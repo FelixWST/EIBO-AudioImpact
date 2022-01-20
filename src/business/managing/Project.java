@@ -87,7 +87,7 @@ public class Project {
     }
 
     public void setVideoFile(VideoFile videoFile){
-        if(this.videoFileProperty.get() == null && videoFile != null){
+        if(videoFile != null){
             this.videoFileProperty.set(videoFile);
         }
     }

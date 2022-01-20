@@ -35,10 +35,14 @@ public class TimelineTrackSettingsController {
         this.timelineTracksController = timelineTracksController;
 
 
-        initializeTrackSettings();
+        Platform.runLater(()->{
+            initializeTrackSettings();
+        });
 
         project.videoFileProperty().addListener(((observableValue, videoFile, t1) -> {
-            initializeTrackSettings();
+            Platform.runLater(()->{
+                initializeTrackSettings();
+            });
         }));
 
         root.getVolumeProgress().setProgress((root.getTotalVolume().getValue()+80)/80);
