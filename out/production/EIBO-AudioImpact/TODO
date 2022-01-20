@@ -1,5 +1,4 @@
 ToDo:
--Property loading
 -WindowTitle
 -Kommentieren, für Prüfung sinnvoll
 -Projekt laden
@@ -10,6 +9,7 @@ In arbeit:
 -library View
 
 Nice to have:
+-top in main borderpane weglassen?
 -Slider vielleicht nicht linear, damit wirkung deutlicher?
 -timeline horizontal scrollpane
 -playhead line in timeline
@@ -19,6 +19,7 @@ Nice to have:
 -wenn shift gedrückt nur horizontal dragbar
 
 Bugs:
+-bei MergedTrackChange funtkioniert automation nicht mehr!
 (-button text springt)
 (-timeline scrubben error (Mac))
 -textfield context menu <- Schriftfarbe schwarz machen
@@ -42,3 +43,4 @@ Erledigt:
 -delete all Keyframes on one track
 -totalvolume video lineare lautstärke an gain von player anpassen?
 -Drag and Drop
+-Property loading

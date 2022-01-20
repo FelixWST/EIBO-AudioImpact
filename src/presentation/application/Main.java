@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import presentation.mainView.EditingViewController;
 
+import java.awt.*;
 import java.io.*;
 import java.util.Properties;
 
@@ -20,32 +21,45 @@ public class Main extends Application {
     private TrackManager trackManager;
     private PlayerManager playerManager;
     private Project project;
-
+    private double[] windowSize = {1920,1080};
+    private double[] windowPos;
 
     @Override
     public void start(Stage primaryStage){
         this.primaryStage = primaryStage;
+
+        primaryStage.setTitle("AudioImpact");
         primaryStage.setMinWidth(1280);
         primaryStage.setMinHeight(900);
 
+
         trackManager = new TrackManager();
-
-        //If Property: load last Project
-
         //Else: Create new empty project
         project = new Project("defaultproject", "defaultproject.prj", "path", trackManager.getMergedTrack(0));
         //project.setVideoFile(new VideoFile(new File("src/data/video/videoPlayback.mp4")));
         playerManager = new PlayerManager(project.getMergedTrack(), project.getKeyframeManagers()); //default immer ersten Merged Track wählen?
 
+        loadProperties();
 
+
+
+        //If Property: load last Project
 
         editingViewController = new EditingViewController(primaryStage, project, playerManager, trackManager);
-        Scene scene = new Scene(editingViewController.getRoot(), 1920, 1080);
+        Scene scene = new Scene(editingViewController.getRoot(), windowSize[0], windowSize[1]);
 
         scene.getStylesheets().add("/presentation/application/application.css");
         primaryStage.setScene(scene);
-        primaryStage.setTitle("AudioImpact");
         primaryStage.show();
+
+        if(windowPos!=null){
+            if(windowPos[0] < Toolkit.getDefaultToolkit().getScreenSize().getWidth()){
+                primaryStage.getScene().getWindow().setX(windowPos[0]);
+            }
+            if(windowPos[1] < Toolkit.getDefaultToolkit().getScreenSize().getWidth()){
+                primaryStage.getScene().getWindow().setY(windowPos[1]);
+            }
+        }
 
         //WaveExporter wf = new WaveExporter(project.getKeyframeManagers(), (int)project.getMergedTrack().getDuration(), 19000, project.getMergedTrack());
         //wf.export();
@@ -66,8 +80,8 @@ public class Main extends Application {
             Properties properties = new Properties();
 
             //Stage Size
-            properties.setProperty("stage.lastWidth",""+primaryStage.getWidth());
-            properties.setProperty("stage.lastHeight",""+primaryStage.getHeight());
+            properties.setProperty("stage.lastWidth",""+primaryStage.getScene().getWidth());
+            properties.setProperty("stage.lastHeight",""+primaryStage.getScene().getHeight());
 
             //Window Position
             properties.setProperty("window.lastX",""+primaryStage.getScene().getWindow().getX());
@@ -88,9 +102,27 @@ public class Main extends Application {
     public void loadProperties(){
         try {
             InputStream input = new FileInputStream("./user.properties");
+            Properties properties = new Properties();
+            properties.load(input);
 
+            if(properties.containsKey("stage.lastWidth") && properties.containsKey("stage.lastHeight")){
+                windowSize[0] = Double.parseDouble(properties.getProperty("stage.lastWidth"));
+                windowSize[1] = Double.parseDouble(properties.getProperty("stage.lastHeight"));
+            }
 
+            if(properties.containsKey("window.lastX") && properties.containsKey("window.lastY")){
+                windowPos = new double[2];
+                windowPos[0] = Double.parseDouble(properties.getProperty("window.lastX"));
+                windowPos[1] = Double.parseDouble(properties.getProperty("window.lastY"));
+            }
 
+            if(properties.containsKey("project.last")){
+                project.loadFromProject(new File(properties.getProperty("project.last")));
+            }
+
+            if(properties.containsKey("project.lastTotalVolume")){
+                playerManager.setTotalVolumeProperty(Double.parseDouble(properties.getProperty("project.lastTotalVolume")));
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

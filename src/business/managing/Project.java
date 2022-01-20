@@ -176,8 +176,8 @@ public class Project {
         }
     }
 
-    public void loadFromProject(){
-
+    public void loadFromProject(File project){
+        System.out.println("Implementation of loading missing...");
     }
 
     public void setExportPath(String exportPath) {

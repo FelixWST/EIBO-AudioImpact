@@ -45,6 +45,7 @@ public class TimelineTrackSettingsController {
             });
         }));
 
+        root.getTotalVolume().setValue(playerManager.totalVolumeProperty().getValue());
         root.getVolumeProgress().setProgress((root.getTotalVolume().getValue()+80)/80);
         root.getTotalVolume().valueProperty().addListener(((observableValue, aBoolean, t1) -> {
             playerManager.setTotalVolumeProperty(t1.doubleValue());
