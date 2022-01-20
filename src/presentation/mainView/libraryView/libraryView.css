@@ -11,10 +11,13 @@
     -fx-text-fill: black;
 }
 
-.list-cell:filled:selected:focused, .list-cell:filled:selected {
+.list-cell:filled:selected:focused, .list-cell:filled:selected{
     -fx-background-color: #454545;
 }
 
+.list-cell:filled:selected:focused #title-label, .list-cell:filled:selected #title-label{
+    -fx-text-fill: #0685E2;
+}
 
 .track-Info {
     -fx-text-alignment: left;

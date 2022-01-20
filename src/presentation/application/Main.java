@@ -9,7 +9,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import presentation.mainView.EditingViewController;
 
-import java.io.File;
+import java.io.*;
+import java.util.Properties;
 
 public class Main extends Application {
 
@@ -43,6 +44,7 @@ public class Main extends Application {
 
         scene.getStylesheets().add("/presentation/application/application.css");
         primaryStage.setScene(scene);
+        primaryStage.setTitle("AudioImpact");
         primaryStage.show();
 
         //WaveExporter wf = new WaveExporter(project.getKeyframeManagers(), (int)project.getMergedTrack().getDuration(), 19000, project.getMergedTrack());
@@ -55,6 +57,43 @@ public class Main extends Application {
     }
 
     public void stop(){
+        saveProperties();
         System.exit(0);
+    }
+
+    public void saveProperties(){
+        try(OutputStream output = new FileOutputStream("./user.properties")){
+            Properties properties = new Properties();
+
+            //Stage Size
+            properties.setProperty("stage.lastWidth",""+primaryStage.getWidth());
+            properties.setProperty("stage.lastHeight",""+primaryStage.getHeight());
+
+            //Window Position
+            properties.setProperty("window.lastX",""+primaryStage.getScene().getWindow().getX());
+            properties.setProperty("window.lastY",""+primaryStage.getScene().getWindow().getY());
+
+            //Project related Properties
+            project.saveProject(new File("./last.aiprj"));
+            properties.setProperty("project.last","./last.aiprj");
+            properties.setProperty("project.lastTotalVolume",""+playerManager.totalVolumeProperty().get());
+
+            properties.store(output, null);
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void loadProperties(){
+        try {
+            InputStream input = new FileInputStream("./user.properties");
+
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

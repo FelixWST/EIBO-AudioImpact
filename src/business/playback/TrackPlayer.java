@@ -61,10 +61,12 @@ public class TrackPlayer {
     }
 
     public void pause() {
-        simpleAudioPlayer.pause();
-        lastStoppedPosition = simpleAudioPlayer.position();
-        playerThread.interrupt();
-        volumeModifierThread.interrupt();
+        if(simpleAudioPlayer!=null){
+            simpleAudioPlayer.pause();
+            lastStoppedPosition = simpleAudioPlayer.position();
+            playerThread.interrupt();
+            volumeModifierThread.interrupt();
+        }
     }
 
     public void playFrom(int timeInMillis){

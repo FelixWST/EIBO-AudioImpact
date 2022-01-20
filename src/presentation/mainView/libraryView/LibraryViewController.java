@@ -55,22 +55,18 @@ public class LibraryViewController {
 */
 
         root.listView.setOnMouseClicked((mouseEvent)->{
-            if(mouseEvent.getClickCount()==2){
-                System.out.println(root.listView.getSelectionModel().getSelectedItem());
-                project.setMergedTrack(root.listView.getSelectionModel().getSelectedItem());
-                playerManager.changeMergedTrack(root.listView.getSelectionModel().getSelectedItem(), project.getKeyframeManagers());
-            }
+            System.out.println(root.listView.getSelectionModel().getSelectedItem());
+            project.setMergedTrack(root.listView.getSelectionModel().getSelectedItem());
+            playerManager.changeMergedTrack(root.listView.getSelectionModel().getSelectedItem(), project.getKeyframeManagers());
+            //Stop video playback?
         });
 
         root.listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MergedTrack>() {
             @Override
             public void changed(ObservableValue<? extends MergedTrack> observableValue, MergedTrack mergedTrack, MergedTrack t1) {
-                if(t1 == null){
-                    System.out.println("Empty Cell");
-                }else {
+                if(t1 != null){
                     System.out.println(t1);
                 }
-
             }
         });
     }

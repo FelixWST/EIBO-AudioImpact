@@ -45,6 +45,7 @@ public class PlayerManager {
     }
 
     public void changeMergedTrack(MergedTrack mergedTrack, ArrayList<KeyframeManager> keyframeManagers){
+        pausePlaying();
         this.mergedTrack = mergedTrack;
 
         this.keyframeManagers = new HashMap<>();

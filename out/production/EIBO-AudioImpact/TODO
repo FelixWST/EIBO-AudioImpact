@@ -2,7 +2,6 @@ ToDo:
 -Property loading
 -WindowTitle
 -Kommentieren, für Prüfung sinnvoll
--Drag and Drop
 -Projekt laden
 
 
@@ -12,12 +11,9 @@ In arbeit:
 
 Nice to have:
 -Slider vielleicht nicht linear, damit wirkung deutlicher?
--get framerate von video für Timecode
--Thread für import
 -timeline horizontal scrollpane
 -playhead line in timeline
 -Keyboard steuerung(Play Pause next kF prv kf)
--popup mit progressbar bei import
 -Make Up for Non linearity of Gain (dB)
 -button hover mousepointer
 -wenn shift gedrückt nur horizontal dragbar
@@ -30,8 +26,8 @@ Bugs:
     -> Keframe am Anfang und Ende automatisch setzten
 -Slider springen immer einmal auf 100% bei restart
 -irgendwas stimmt nicht mit größe und border der Track Settings controller
+-Mute / Solo funzt nicht mehr nach Track Wechsel?
 
-Fragen:
 
 
 Erledigt:
@@ -45,3 +41,4 @@ Erledigt:
 -Slider für spuren keyframes erzeugen , wie? intervall?
 -delete all Keyframes on one track
 -totalvolume video lineare lautstärke an gain von player anpassen?
+-Drag and Drop
