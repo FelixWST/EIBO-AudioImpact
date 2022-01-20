@@ -26,28 +26,9 @@ public class TrackManager {
 
     public TrackManager(){
         trackList = new ArrayList<>();
+        scanFiles();
     }
 
-   /* public TrackManager(ArrayList<MergedTrack> trackList, int trackNumber) {
-        this.trackList = trackList;
-        this.trackNumber = trackNumber;
-    }*/
-
-
-
-    public void loadTestTrack(){
-        AudioTrack testAtmoTrack = new AudioTrack("src/data/testData/exampleTrack/atmosphere.mp3","src/data/testData/exampleTrack/atmosphere.wav", AudioTrackType.ATMOSPHERE);
-        AudioTrack testDepthTrack = new AudioTrack("src/data/testData/exampleTrack/depth.mp3","src/data/testData/exampleTrack/depth.wav", AudioTrackType.DEPTH);
-        AudioTrack testIntensityTrack = new AudioTrack("src/data/testData/exampleTrack/intensity.mp3","src/data/testData/exampleTrack/intensity.wav", AudioTrackType.INTENSITY);
-
-       /* MergedTrack firstMergedTrack = new MergedTrack("Test", 84000, Genre.CINEMATIC);
-        firstMergedTrack.addTrack(testAtmoTrack);
-        firstMergedTrack.addTrack(testDepthTrack);
-        firstMergedTrack.addTrack(testIntensityTrack);
-
-        this.trackList.add(firstMergedTrack);
-        */
-    }
     public void scanFiles() {
         f = new File("src/data/audio/trackLists");
         File[] fileArray = f.listFiles();
@@ -57,6 +38,9 @@ public class TrackManager {
                 System.out.println(fileArray[i]);
                 loadMergedTrack(path);
             }
+        }
+        if(trackList!=null && trackList.size()>1){
+            trackList.sort((MergedTrack m1, MergedTrack m2) -> m1.getTitle().compareTo(m2.getTitle()));
         }
     }
 

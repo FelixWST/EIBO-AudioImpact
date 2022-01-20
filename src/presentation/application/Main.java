@@ -28,7 +28,6 @@ public class Main extends Application {
         primaryStage.setMinHeight(900);
 
         trackManager = new TrackManager();
-        trackManager.scanFiles();
 
         //If Property: load last Project
 

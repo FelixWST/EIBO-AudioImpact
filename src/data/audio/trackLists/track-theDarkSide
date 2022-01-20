@@ -1,0 +1,7 @@
+#EXTM3U
+#EXTINF NAME:The Dark Side
+#EXTINF GENRE:CINEMATIC
+#EXTINF COVER:src/data/audio/audioFiles/theDarkSide/cover.png
+src/data/audio/audioFiles/theDarkSide/atmosphere.mp3
+src/data/audio/audioFiles/theDarkSide/depth.mp3
+src/data/audio/audioFiles/theDarkSide/intensity.mp3

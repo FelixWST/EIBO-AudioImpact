@@ -1,0 +1,7 @@
+#EXTM3U
+#EXTINF NAME:Mountain of Gods
+#EXTINF GENRE:CINEMATIC
+#EXTINF COVER:src/data/audio/audioFiles/mountainOfGods/cover.png
+src/data/audio/audioFiles/mountainOfGods/atmosphere.mp3
+src/data/audio/audioFiles/mountainOfGods/depth.mp3
+src/data/audio/audioFiles/mountainOfGods/intensity.mp3

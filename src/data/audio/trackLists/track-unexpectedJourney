@@ -1,0 +1,7 @@
+#EXTM3U
+#EXTINF NAME:An Unexpected Journey
+#EXTINF GENRE:CINEMATIC
+#EXTINF COVER:src/data/audio/audioFiles/unexpectedJourney/cover.png
+src/data/audio/audioFiles/unexpectedJourney/atmosphere.mp3
+src/data/audio/audioFiles/unexpectedJourney/depth.mp3
+src/data/audio/audioFiles/unexpectedJourney/intensity.mp3

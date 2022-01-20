@@ -1,0 +1,7 @@
+#EXTM3U
+#EXTINF NAME:Death Trap
+#EXTINF GENRE:CINEMATIC
+#EXTINF COVER:src/data/audio/audioFiles/deathTrap/cover.png
+src/data/audio/audioFiles/deathTrap/atmosphere.mp3
+src/data/audio/audioFiles/deathTrap/depth.mp3
+src/data/audio/audioFiles/deathTrap/intensity.mp3

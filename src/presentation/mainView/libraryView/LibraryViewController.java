@@ -32,29 +32,6 @@ public class LibraryViewController {
         this.project = project;
         this.playerManager = playerManager;
         root = new LibraryView();
-        /*
-        AudioTrack testAtmoTrack = new AudioTrack("src/data/testData/exampleTrack/atmosphere.mp3","src/data/testData/exampleTrack/atmosphere.wav", AudioTrackType.ATMOSPHERE);
-        AudioTrack testDepthTrack = new AudioTrack("src/data/testData/exampleTrack/depth.mp3","src/data/testData/exampleTrack/depth.wav", AudioTrackType.DEPTH);
-        AudioTrack testIntensityTrack = new AudioTrack("src/data/testData/exampleTrack/intensity.mp3","src/data/testData/exampleTrack/intensity.wav", AudioTrackType.INTENSITY);
-
-        MergedTrack firstMergedTrack = new MergedTrack("Test", 84000, "src/data/audio/covers/defaultcover.png",Genre.CINEMATIC);
-        firstMergedTrack.addTrack(testAtmoTrack);
-        firstMergedTrack.addTrack(testDepthTrack);
-        firstMergedTrack.addTrack(testIntensityTrack);
-
-        ArrayList<MergedTrack> testList = new ArrayList<>();
-        testList.add(firstMergedTrack);
-        testList.add(firstMergedTrack);
-        testList.add(firstMergedTrack);
-        testList.add(firstMergedTrack);
-        testList.add(firstMergedTrack);
-        testList.add(firstMergedTrack);
-        testList.add(firstMergedTrack);
-        testList.add(firstMergedTrack);
-        testList.add(firstMergedTrack);
-        testList.add(firstMergedTrack);
-        testList.add(firstMergedTrack);
-        */
 
         ObservableList<MergedTrack> content = FXCollections.observableArrayList();
         content.setAll(trackManager.getTrackList());
