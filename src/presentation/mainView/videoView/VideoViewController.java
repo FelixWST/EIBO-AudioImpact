@@ -8,6 +8,8 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -87,7 +89,6 @@ public class VideoViewController {
             dragEvent.setDropCompleted(success);
             dragEvent.consume();
         }));
-
 
     }
 

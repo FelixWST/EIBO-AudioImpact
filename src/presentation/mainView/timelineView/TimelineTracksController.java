@@ -19,7 +19,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
 import presentation.mainView.uicomponents.TrackLayer;
 
 import java.util.HashMap;
@@ -75,9 +74,6 @@ public class TimelineTracksController {
             TrackLayer selectedTrackLayer = trackLayers.get(keyframeManager.getAudioTrackType());
             selectedTrackLayer.getChildren().clear();
             double pxPerMsHor = selectedTrackLayer.getWidth() / totalDuration;
-            Polygon subGraphFill = new Polygon();
-            subGraphFill.setFill(keyframeManager.getAudioTrackType().getRGBColor());
-            subGraphFill.getPoints().addAll(0.0,selectedTrackLayer.getHeight());
             double pxPerGainVer = selectedTrackLayer.getHeight() / 86;
 
             Circle lastKeyframeCircle = null;
@@ -94,7 +90,6 @@ public class TimelineTracksController {
                     repaint();
                 }));
                 selectedTrackLayer.getChildren().add(onlyLine);
-                subGraphFill.getPoints().addAll(0.0,selectedTrackLayer.getHeight(), 0.0, selectedTrackLayer.getHeight()- (TrackPlayer.DEFAULT_GAIN *pxPerGainVer+mapVolumeToPositiveRange), selectedTrackLayer.getWidth(), selectedTrackLayer.getHeight()-(TrackPlayer.DEFAULT_GAIN*pxPerGainVer+mapVolumeToPositiveRange), selectedTrackLayer.getWidth(), selectedTrackLayer.getHeight());
             }
 
 
@@ -186,10 +181,7 @@ public class TimelineTracksController {
                         repaint();
                     }));
                     selectedTrackLayer.getChildren().add(firstLine);
-                    subGraphFill.getPoints().addAll(0.0,keyframeCircle.getCenterY());
                 }
-
-                subGraphFill.getPoints().addAll(pxPerMsHor * kf.getTime(),selectedTrackLayer.getHeight()-pxPerGainVer * (kf.getVolume()+mapVolumeToPositiveRange));
 
                 if(lastKeyframeCircle!=null){
                     Line keyFrameConnect = connect(lastKeyframeCircle, keyframeCircle, keyframeManager.getAudioTrackType());
@@ -217,7 +209,6 @@ public class TimelineTracksController {
                     keyframeManager.addKeyframe(new Keyframe(newKfTime, newKfValue));
                     repaint();
                 }));
-                subGraphFill.getPoints().addAll(selectedTrackLayer.getWidth(), lastKeyframeCircle.getCenterY(), selectedTrackLayer.getWidth(), selectedTrackLayer.getHeight());
                 selectedTrackLayer.getChildren().addAll(lineToVoid);
             }
         }
