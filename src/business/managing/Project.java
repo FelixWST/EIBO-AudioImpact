@@ -6,6 +6,7 @@ import business.tracks.AudioTrack;
 import business.tracks.AudioTrackType;
 import business.tracks.MergedTrack;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.regex.Pattern;
 
 public class Project{
 
-    private String projectTitle;
+    private SimpleStringProperty projectTitle;
     private String fileName;
     private String exportPath;
     private ArrayList<KeyframeManager> keyframeManagers;
@@ -34,7 +35,7 @@ public class Project{
     }
 
     public Project(String projectTitle, String fileName, String exportPath, MergedTrack mergedTrack, VideoFile videoFile) {
-        this.projectTitle = projectTitle;
+        this.projectTitle = new SimpleStringProperty(projectTitle);
         this.fileName = fileName;
         this.exportPath = exportPath;
         this.mergedTrack = mergedTrack;
@@ -94,7 +95,7 @@ public class Project{
         return this.videoFileProperty;
     }
 
-    public String getProjectTitle(){
+    public SimpleStringProperty getProjectTitleProperty(){
         return this.projectTitle;
     }
 
@@ -137,7 +138,7 @@ public class Project{
         if(directory!=null){
             BufferedWriter writer = new BufferedWriter(new FileWriter(directory));
 
-            fileHeader =  "projectTitle="+projectTitle+"\n";
+            fileHeader =  "projectTitle="+projectTitle.get()+"\n";
             fileHeader += "fileName="+fileName+"\n";
             fileHeader += "path="+directory+"\n";
             if(mergedTrack!=null){
@@ -176,7 +177,7 @@ public class Project{
             String line = reader.readLine();
             while(line!=null){
                 if(line.startsWith("projectTitle")){
-                    this.projectTitle = line.split("=")[1];
+                    this.projectTitle.set(line.split("=")[1]);
                 }else if(line.startsWith("fileName")){
                     this.fileName = line.split("=")[1];
                 }else if(line.startsWith("mergedTrack")){

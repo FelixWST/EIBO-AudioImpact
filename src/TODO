@@ -1,5 +1,4 @@
 ToDo:
--WindowTitle, dafür BorderPane Top raus
 -Kommentieren, für Prüfung sinnvoll
 -Projekt laden
 -Keyboard steuerung(Play Pause next kF prv kf)
@@ -49,3 +48,5 @@ Erledigt:
 -totalvolume video lineare lautstärke an gain von player anpassen?
 -Drag and Drop
 -Property loading
+-BorderPane Top raus
+-WindowTitle

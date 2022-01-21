@@ -1,10 +1,12 @@
 ToDo:
--WindowTitle, dafür BorderPane Top raus
+-WindowTitle
 -Kommentieren, für Prüfung sinnvoll
 -Projekt laden
 -Keyboard steuerung(Play Pause next kF prv kf)
--Library Buttons Mousepointer
+-LibraryView Select button entfernen
 -export
+-beim laden aktiven MergedTrack in listview selected markieren
+-LibraryView ListViewItems nach Links rücken
 
 
 In arbeit:
@@ -47,3 +49,4 @@ Erledigt:
 -totalvolume video lineare lautstärke an gain von player anpassen?
 -Drag and Drop
 -Property loading
+-BorderPane Top raus

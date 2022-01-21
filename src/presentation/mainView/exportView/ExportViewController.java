@@ -18,15 +18,14 @@ public class ExportViewController {
         this.project = project;
         this.root = new ExportView();
 
-        root.getProjectNameTextField().setText(project.getProjectTitle());
-        root.getFileNameTextField().setText(project.getProjectTitle()+"-export.wav");
+        root.getProjectNameTextField().setText(project.getProjectTitleProperty().get());
+        root.getFileNameTextField().setText(project.getProjectTitleProperty().get()+"-export.wav");
 
         root.getProjectNameTextField().focusedProperty().addListener(((observableValue, aBoolean, newValue) -> {
-            if(newValue){
-                System.out.println("Focused");
-            }else{
-                if(root.getProjectNameTextField().textProperty().get()!=""){
+            if(!newValue){ //Focus left
+                if(root.getProjectNameTextField().getText()!=""){
                     root.getProjectNameTextField().setId("");
+                    project.getProjectTitleProperty().set(root.getProjectNameTextField().getText());
                 }else{
                     root.getProjectNameTextField().setId("error");
                 }
