@@ -1,7 +1,12 @@
 ToDo:
--WindowTitle
+-WindowTitle, dafür BorderPane Top raus
 -Kommentieren, für Prüfung sinnvoll
 -Projekt laden
+-Keyboard steuerung(Play Pause next kF prv kf)
+-LibraryView Select button entfernen
+-export
+-beim laden aktiven MergedTrack in listview selected markieren
+-LibraryView ListViewItems nach Links rücken
 
 
 In arbeit:
@@ -9,26 +14,25 @@ In arbeit:
 -library View
 
 Nice to have:
--top in main borderpane weglassen?
--Slider vielleicht nicht linear, damit wirkung deutlicher?
--timeline horizontal scrollpane
--playhead line in timeline
--Keyboard steuerung(Play Pause next kF prv kf)
--Make Up for Non linearity of Gain (dB)
--button hover mousepointer
--wenn shift gedrückt nur horizontal dragbar
--Easter Egg
+(-Slider vielleicht nicht linear, damit wirkung deutlicher?)
+(-timeline horizontal scrollpane)
+(-playhead line in timeline)
+(-wenn shift gedrückt nur horizontal dragbar)
+(-Easter Egg)
 
 Bugs:
 -bei MergedTrackChange funtkioniert automation nicht mehr!
-(-button text springt)
-(-timeline scrubben error (Mac))
 -textfield context menu <- Schriftfarbe schwarz machen
 -wenn volumeproperty nicht ändert && Player erneut von vorne beginnt ist Tracksettingslider auf falschem Wert
-    -> Keframe am Anfang und Ende automatisch setzten
 -Slider springen immer einmal auf 100% bei restart
--irgendwas stimmt nicht mit größe und border der Track Settings controller
+-Größe Lautstärkeslider & Timelineslider angleichen
 -Mute / Solo funzt nicht mehr nach Track Wechsel?
+
+(-button text springt)
+(-timeline scrubben error (Mac))
+
+
+
 
 
 
