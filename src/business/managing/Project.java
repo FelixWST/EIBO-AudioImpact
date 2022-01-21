@@ -7,13 +7,11 @@ import business.tracks.AudioTrackType;
 import business.tracks.MergedTrack;
 import javafx.beans.property.SimpleObjectProperty;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
-public class Project {
+public class Project{
 
     private String projectTitle;
     private String fileName;
@@ -137,10 +135,7 @@ public class Project {
     public void saveProject(File directory) throws IOException {
         String fileHeader, fileBody;
         if(directory!=null){
-
             BufferedWriter writer = new BufferedWriter(new FileWriter(directory));
-
-
 
             fileHeader =  "projectTitle="+projectTitle+"\n";
             fileHeader += "fileName="+fileName+"\n";
@@ -152,8 +147,6 @@ public class Project {
                 fileHeader += "videoFile="+videoFileProperty.get().getVideoFile()+"\n";
             }
             fileHeader += "\n\n";
-
-
             fileBody = "#BODY\n";
             if(keyframeManagers!=null){
                 for(KeyframeManager kfm : keyframeManagers){
@@ -169,15 +162,48 @@ public class Project {
                     }
                 }
             }
-
             writer.write(fileHeader+fileBody);
             writer.close();
-
         }
     }
 
-    public void loadFromProject(File project){
-        System.out.println("Implementation of loading missing...");
+    public void loadFromProject(File project) throws IOException {
+        System.out.println("Loading MergedTrack missing");
+        if(project.exists()){
+            createKeyframeManagers();
+            BufferedReader reader = new BufferedReader(new FileReader(project));
+
+            String line = reader.readLine();
+            while(line!=null){
+                if(line.startsWith("projectTitle")){
+                    this.projectTitle = line.split("=")[1];
+                }else if(line.startsWith("fileName")){
+                    this.fileName = line.split("=")[1];
+                }else if(line.startsWith("mergedTrack")){
+
+                }else if(line.startsWith("videoFile")){
+                    this.videoFileProperty.set(new VideoFile(new File(line.split("=")[1])));
+                }else if(line.startsWith("audioTrackType")){
+                    String type = line.split("=")[1];
+                    line = reader.readLine();
+                    line = reader.readLine();
+                    while(line != null && !line.equals("#ENDKF")){
+                        for(KeyframeManager kfm : keyframeManagers){
+                            if(kfm.getAudioTrackType().name().equals(type)){
+                                String keyframes [] = line.split(";");
+                                for(String s : keyframes){
+                                    int time = Integer.parseInt(s.split(Pattern.quote("|"))[0]);
+                                    double vol = Double.parseDouble(s.split(Pattern.quote("|"))[1]);
+                                    kfm.addKeyframe(new Keyframe(time, vol));
+                                }
+                            }
+                        }
+                        line = reader.readLine();
+                    }
+                }
+                line = reader.readLine();
+            }
+        }
     }
 
     public void setExportPath(String exportPath) {

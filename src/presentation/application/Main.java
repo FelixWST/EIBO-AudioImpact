@@ -117,7 +117,13 @@ public class Main extends Application {
             }
 
             if(properties.containsKey("project.last")){
-                project.loadFromProject(new File(properties.getProperty("project.last")));
+                try{
+                    project.loadFromProject(new File(properties.getProperty("project.last")));
+                }catch (IOException e){
+
+                }
+
+                System.out.println("Open last Project?");
             }
 
             if(properties.containsKey("project.lastTotalVolume")){

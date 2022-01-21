@@ -6,10 +6,11 @@ import business.tracks.AudioTrackType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.Serializable;
 import java.security.Key;
 import java.util.ArrayList;
 
-public class KeyframeManager {
+public class KeyframeManager{
 
     AudioTrackType audioTrackType;
     ObservableList<Keyframe> keyframes;
