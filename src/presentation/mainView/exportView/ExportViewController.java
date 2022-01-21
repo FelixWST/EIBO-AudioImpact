@@ -43,7 +43,11 @@ public class ExportViewController {
 
             if(loadedFile!=null){
                 if(loadedFile.isFile()){
-                    System.out.println(loadedFile);
+                    try {
+                        project.loadFromProject(loadedFile);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }));
