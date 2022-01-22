@@ -4,6 +4,7 @@ import business.managing.PlayerManager;
 import business.managing.Project;
 import business.managing.TrackManager;
 import business.managing.VideoFile;
+import business.tracks.MergedTrack;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -92,6 +93,8 @@ public class Main extends Application {
             properties.setProperty("project.last","./last.aiprj");
             properties.setProperty("project.lastTotalVolume",""+playerManager.totalVolumeProperty().get());
 
+            properties.setProperty("project.lastSelectedMergedTrack",""+project.getMergedTrack());
+
             properties.store(output, null);
 
         }catch (IOException e){
@@ -128,6 +131,10 @@ public class Main extends Application {
 
             if(properties.containsKey("project.lastTotalVolume")){
                 playerManager.setTotalVolumeProperty(Double.parseDouble(properties.getProperty("project.lastTotalVolume")));
+            }
+
+            if(properties.containsKey("project.lastSelectedMergedTrack")){
+                project.setMergedTrack((MergedTrack) properties.get("project.lastSelectedMergedTrack"));
             }
 
         } catch (IOException e) {

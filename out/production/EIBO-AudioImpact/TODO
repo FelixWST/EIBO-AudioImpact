@@ -1,11 +1,10 @@
 ToDo:
 -Kommentieren, für Prüfung sinnvoll
 -Projekt laden
--LibraryView Select button entfernen
 -export
 -beim laden aktiven MergedTrack in listview selected markieren
--LibraryView ListViewItems nach Links rücken
 -library View
+-Projekt aufräumen, nicht mehr benötigten Codefragemente entfernen
 
 Nice to have:
 (-Slider vielleicht nicht linear, damit wirkung deutlicher?)
@@ -47,3 +46,5 @@ Erledigt:
 -BorderPane Top raus
 -WindowTitle
 -timeline mouse eventhandler aufräumen
+-LibraryView ListViewItems nach Links rücken
+-LibraryView Select button entfernen

@@ -35,6 +35,7 @@ public class LibraryViewController {
         content.setAll(trackManager.getTrackList());
         root.listView.setItems(content);
 
+
         root.listView.setCellFactory(new Callback<ListView<MergedTrack>, ListCell<MergedTrack>>() {
             @Override
             public ListCell<MergedTrack> call(ListView<MergedTrack>  v) {
