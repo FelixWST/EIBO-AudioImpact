@@ -1,7 +1,6 @@
 ToDo:
 -Kommentieren, für Prüfung sinnvoll
 -Projekt laden
--Keyboard steuerung(Play Pause next kF prv kf)
 -LibraryView Select button entfernen
 -export
 -beim laden aktiven MergedTrack in listview selected markieren
@@ -14,6 +13,7 @@ Nice to have:
 (-playhead line in timeline)
 (-wenn shift gedrückt nur horizontal dragbar)
 (-Easter Egg)
+(-Keyboard steuerung(Play Pause next kF prv kf))
 
 Bugs:
 -bei MergedTrackChange funtkioniert automation nicht mehr!

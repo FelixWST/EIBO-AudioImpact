@@ -14,13 +14,11 @@ import java.util.List;
 public class MergedTrackListCell extends ListCell<MergedTrack> {
 
     private ListViewCell view;
-    private MergedTrack mergedTrack;
 
     public MergedTrackListCell() {
         view = new ListViewCell();
         this.setGraphic(view);
     }
-
 
     @Override
     protected void updateItem(MergedTrack item, boolean empty) {
@@ -35,19 +33,12 @@ public class MergedTrackListCell extends ListCell<MergedTrack> {
                 view.getCover().setImage(new Image(new FileInputStream(item.getCoverPath())));
                 view.getCover().setFitHeight(50);
                 view.getCover().setFitWidth(50);
-          
             }catch(FileNotFoundException e){
                 e.printStackTrace();
             }
-
-
             this.setGraphic(view.getCell());
-            view.getSelectTrack().setOnAction((event)->{
-                System.out.println("TEST Select Track");
-            });
         } else {
             this.setGraphic(null);
         }
-
     }
 }

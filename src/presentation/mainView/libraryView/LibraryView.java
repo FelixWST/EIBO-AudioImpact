@@ -30,7 +30,6 @@ public class LibraryView extends VBox {
 
         VBox.setMargin(titleLabel, titleInset);
 
-        this.setStyle("-fx-text-fill: black");
         this.getChildren().addAll(titleLabel, listView);
 
     }

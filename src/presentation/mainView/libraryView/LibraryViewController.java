@@ -21,9 +21,7 @@ import java.util.ArrayList;
 public class LibraryViewController {
 
     LibraryView root;
-    MergedTrack mergedTrack;
     TrackManager trackManager;
-    ListViewCell listViewCell;
     Project project;
     PlayerManager playerManager;
 
@@ -35,7 +33,6 @@ public class LibraryViewController {
 
         ObservableList<MergedTrack> content = FXCollections.observableArrayList();
         content.setAll(trackManager.getTrackList());
-        //content.setAll(testList);
         root.listView.setItems(content);
 
         root.listView.setCellFactory(new Callback<ListView<MergedTrack>, ListCell<MergedTrack>>() {
