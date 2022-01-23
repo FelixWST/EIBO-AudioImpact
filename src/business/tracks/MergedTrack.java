@@ -38,7 +38,11 @@ public class MergedTrack {
     }
 
     public String getGenre() {
-        return this.genres.toString();
+        String output ="";
+        for(Genre g : genres){
+            output += g.toString();
+        }
+        return output;
     }
 
     public ArrayList<AudioTrack> getAudioTracks() {

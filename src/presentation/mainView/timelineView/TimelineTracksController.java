@@ -54,7 +54,7 @@ public class TimelineTracksController {
         root.resetToDefaultLayout();
         for(AudioTrack audioTrack : project.mergedTrackProperty().get().getAudioTracks()){
             trackLayers.put(audioTrack.getAudioTrackType(), new TrackLayer(audioTrack.getAudioTrackType()));
-            trackLayers.get(audioTrack.getAudioTrackType()).prefHeightProperty().bind(root.heightProperty().divide(project.mergedTrackProperty().get().getAudioTracks().size()));
+            trackLayers.get(audioTrack.getAudioTrackType()).prefHeightProperty().bind((root.heightProperty().divide(project.mergedTrackProperty().get().getAudioTracks().size())));
             VBox.setMargin(trackLayers.get(audioTrack.getAudioTrackType()), new Insets(10,10,5,0));
             root.getChildren().add(trackLayers.get(audioTrack.getAudioTrackType()));
 

@@ -1,11 +1,10 @@
 ToDo:
 -Kommentieren, für Prüfung sinnvoll
 -export
--library View
 -Projekt aufräumen, nicht mehr benötigten Codefragemente entfernen
+-mergedTrack mit mehreren Genres?
 
 Bugs:
--Größe Lautstärkeslider & Timelineslider angleichen
 
 
 
@@ -51,3 +50,4 @@ Erledigt:
 -keyframes in observablelist wandeln & volumeproperty auf änderungen reagieren lassen
 -Nach Projekt laden werden Keyframes nicht mehr "gemalt"
 -Volumeslider laufen beim ersten Start nicht mit?
+-library View

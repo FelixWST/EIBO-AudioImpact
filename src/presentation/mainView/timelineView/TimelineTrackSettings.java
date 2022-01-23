@@ -46,10 +46,13 @@ public class TimelineTrackSettings extends VBox {
         volumeLabel.setGraphic(iv);
         volumeContainer = new HBox(volumeLabel, hybridSlider);
         volumeContainer.setAlignment(Pos.CENTER_LEFT);
+        volumeContainer.setMinHeight(38);
+        volumeContainer.setMaxHeight(38);
         HBox.setMargin(volumeLabel, new Insets(10));
 
 
         this.getChildren().addAll(volumeContainer);
+
     }
 
     public ProgressBar getVolumeProgress() {
@@ -68,4 +71,5 @@ public class TimelineTrackSettings extends VBox {
         this.getChildren().clear();
         this.getChildren().addAll(volumeContainer);
     }
+
 }

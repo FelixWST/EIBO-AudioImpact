@@ -26,6 +26,7 @@ public class TimelineTrackSettingsController {
     private PlayerManager playerManager;
     private VideoViewController videoViewController;
     private TimelineTracksController timelineTracksController;
+    private TimeLineView mainRoot;
 
     public TimelineTrackSettingsController(Project project, PlayerManager playerManager, VideoViewController videoViewController, TimelineTracksController timelineTracksController){
         this.root = new TimelineTrackSettings();
@@ -78,7 +79,7 @@ public class TimelineTrackSettingsController {
             trackLayers.get(audioTrack.getAudioTrackType()).volumeProgress.setId(id);
             trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setId(id);
 
-            trackLayers.get(audioTrack.getAudioTrackType()).prefHeightProperty().bind(timelineTracksController.getTrackLayers().get(audioTrack.getAudioTrackType()).heightProperty());
+            trackLayers.get(audioTrack.getAudioTrackType()).prefHeightProperty().bind((root.heightProperty().divide(project.mergedTrackProperty().get().getAudioTracks().size())));
             VBox.setMargin(trackLayers.get(audioTrack.getAudioTrackType()), new Insets(10,0,5,10));
             root.getChildren().add(trackLayers.get(audioTrack.getAudioTrackType()));
 
@@ -88,9 +89,7 @@ public class TimelineTrackSettingsController {
             deleteAll.setOnAction((actionEvent -> {
                 project.getKeyframeManager(audioTrack.getAudioTrackType()).clearAllKeyframes();
             }));
-
             deleteAllContext.autoHideProperty().set(true);
-            deleteAllContext.setStyle("-fx-background-color: #333333");
 
             trackLayers.get(audioTrack.getAudioTrackType()).setOnContextMenuRequested((contextMenuEvent -> {
                 deleteAllContext.show(trackLayers.get(audioTrack.getAudioTrackType()), contextMenuEvent.getScreenX(), contextMenuEvent.getScreenY());

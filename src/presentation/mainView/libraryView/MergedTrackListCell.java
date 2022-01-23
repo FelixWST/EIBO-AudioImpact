@@ -26,8 +26,8 @@ public class MergedTrackListCell extends ListCell<MergedTrack> {
 
         if (!empty) {
             view.getTitle().setText(item.getTitle());
-            view.getGenre().setText(item.getGenre());
-            view.getDuration().setText(String.valueOf(item.getDuration())+"sec");
+            view.getGenre().setText("Genre: "+item.getGenre());
+            view.getDuration().setText("Duration: "+secondsToFormatString(item.getDuration()));
             try{
                 System.out.println("Cover Path: "+ item.getCoverPath());
                 view.getCover().setImage(new Image(new FileInputStream(item.getCoverPath())));
@@ -40,5 +40,23 @@ public class MergedTrackListCell extends ListCell<MergedTrack> {
         } else {
             this.setGraphic(null);
         }
+    }
+
+    private String secondsToFormatString(long duration){
+        long minutes = duration / 60;
+        long seconds = duration % 60;
+        String outputString = "";
+        if(minutes<10){
+            outputString = "0"+minutes+":";
+        }else{
+            outputString = minutes+":";
+        }
+
+        if(seconds<10){
+            outputString+="0"+seconds;
+        }else{
+            outputString+=seconds;
+        }
+        return outputString;
     }
 }
