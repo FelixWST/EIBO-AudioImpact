@@ -2,7 +2,6 @@ package presentation.mainView.exportView;
 
 import business.exporting.WavExporter;
 import business.managing.Project;
-import business.managing.VideoFile;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 

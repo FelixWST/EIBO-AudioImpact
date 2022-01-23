@@ -15,17 +15,21 @@ public class WavManipulator {
     private KeyframeManager keyframeManager;
     private long tracklengthInMs;
     private long videoLengthInMs;
+    private boolean debug;
 
-    public WavManipulator(KeyframeManager keyframeManager, long trackLengthInMs, long videoLengthInMs){
+    public WavManipulator(KeyframeManager keyframeManager, long trackLengthInMs, long videoLengthInMs, boolean debug){
         format = null;
         sampleLength = 0;
         sampleArray = null;
         this.keyframeManager = keyframeManager;
         this.tracklengthInMs = trackLengthInMs;
         this.videoLengthInMs = videoLengthInMs;
+        this.debug = debug;
 
-        System.out.println("Track length: "+trackLengthInMs);
-        System.out.println("Video length: "+videoLengthInMs);
+        if(debug){
+            System.out.println("Track length: "+trackLengthInMs);
+            System.out.println("Video length: "+videoLengthInMs);
+        }
     }
 
     public AudioFormat getFormat() {
@@ -87,17 +91,21 @@ public class WavManipulator {
                 }
             }
         }
-        System.out.println("COunted "+millisecondCounter+" times");
+        if(debug){
+            System.out.println("Counted "+millisecondCounter+" times");
+        }
         return byteArray;
     }
 
     public void readFile(String filePath){
         try{
             File file = new File(filePath);
-            System.out.println(file.toString());
             AudioInputStream in = AudioSystem.getAudioInputStream(file);
             this.format = in.getFormat();
-            System.out.println("Format"+format);
+            if(debug){
+                System.out.println(file.toString());
+                System.out.println("Format"+format);
+            }
             this.sampleLength = in.getFrameLength();
             BufferedInputStream bis = new BufferedInputStream(in);
             int channelNo = 0;
@@ -108,7 +116,9 @@ public class WavManipulator {
     }
 
     public void writeFile(String filePath){
-        System.out.println("Writing to : "+filePath);
+        if(debug){
+            System.out.println("Writing to : "+filePath);
+        }
         try{
             byte [] byteArray = convertSampleToByteArray();
             ByteArrayInputStream bis = new ByteArrayInputStream(byteArray);
@@ -126,10 +136,12 @@ public class WavManipulator {
         boolean isBigEndian = format.isBigEndian();
         int sampleSizeInBytes = format.getSampleSizeInBits() / 8;
         byte []frameByteBuffer = new byte[format.getFrameSize()]; /* 1 Frame */
-        System.out.println("Framesize: "+format.getFrameSize());
-        System.out.println("Channels: "+format.getChannels());
-        System.out.println("SampleSize: "+sampleSizeInBytes);
-        System.out.println("Samplelen: "+sampleLength);
+        if(debug){
+            System.out.println("Framesize: "+format.getFrameSize());
+            System.out.println("Channels: "+format.getChannels());
+            System.out.println("SampleSize: "+sampleSizeInBytes);
+            System.out.println("Samplelen: "+sampleLength);
+        }
         int normalizingFactor = (0x80 << (8*(sampleSizeInBytes - 1)));
 
         //Framesize = bits per Chanel * channelNum

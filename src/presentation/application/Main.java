@@ -5,7 +5,9 @@ import business.managing.Project;
 import business.managing.TrackManager;
 import business.managing.VideoFile;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import presentation.mainView.EditingViewController;
 
@@ -34,7 +36,7 @@ public class Main extends Application {
 
 
         trackManager = new TrackManager();
-        project = new Project("defaultproject", "defaultproject.prj", "path", trackManager.getMergedTrack(0), trackManager);
+        project = new Project("Unnamed Project", "unnamed-export", "", trackManager.getMergedTrack(0), trackManager);
         playerManager = project.getPlayerManager();
 
         loadProperties();
@@ -58,10 +60,6 @@ public class Main extends Application {
                 primaryStage.getScene().getWindow().setY(windowPos[1]);
             }
         }
-
-        //WaveExporter wf = new WaveExporter(project.getKeyframeManagers(), (int)project.getMergedTrack().getDuration(), 19000, project.getMergedTrack());
-        //wf.export();
-
     }
 
     public void init(){
@@ -69,8 +67,13 @@ public class Main extends Application {
     }
 
     public void stop(){
+        if(project!=null){
+            try {
+                project.saveProject(new File("./last.aiprj"));
+            } catch (IOException e) {
+            }
+        }
         saveProperties();
-        System.out.println("Ask User to save Project");
         System.exit(0);
     }
 
