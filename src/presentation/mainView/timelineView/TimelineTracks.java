@@ -21,7 +21,6 @@ public class TimelineTracks extends VBox {
         timelineSlider.setMaxHeight(38);
 
         this.getChildren().addAll(timelineSlider);
-        System.out.println("TLSlider Height: "+timelineSlider.getHeight());
     }
 
     public Slider getTimelineSlider(){

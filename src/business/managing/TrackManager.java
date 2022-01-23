@@ -71,11 +71,11 @@ public class TrackManager {
                         duration = mp3File.getLengthInSeconds();
 
                        if(getAudioTrackType(line).equals(AudioTrackType.ATMOSPHERE)) {
-                           AtmosphereTrack = new AudioTrack(line,"", AudioTrackType.ATMOSPHERE);
+                           AtmosphereTrack = new AudioTrack(line, AudioTrackType.ATMOSPHERE);
                        } else if(getAudioTrackType(line).equals(AudioTrackType.DEPTH)) {
-                           DepthTrack = new AudioTrack(line,"", AudioTrackType.DEPTH);
+                           DepthTrack = new AudioTrack(line, AudioTrackType.DEPTH);
                        } else {
-                           IntensityTrack = new AudioTrack(line,"", AudioTrackType.INTENSITY);
+                           IntensityTrack = new AudioTrack(line, AudioTrackType.INTENSITY);
                        }
                     }
                 }

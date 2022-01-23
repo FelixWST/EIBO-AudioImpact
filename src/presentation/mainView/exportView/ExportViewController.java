@@ -1,5 +1,6 @@
 package presentation.mainView.exportView;
 
+import business.exporting.WavExporter;
 import business.managing.Project;
 import business.managing.VideoFile;
 import javafx.stage.DirectoryChooser;
@@ -19,7 +20,8 @@ public class ExportViewController {
         this.root = new ExportView();
 
         root.getProjectNameTextField().setText(project.getProjectTitleProperty().get());
-        root.getFileNameTextField().setText(project.getProjectTitleProperty().get()+"-export.wav");
+        root.getFileNameTextField().setText(project.getFileName());
+        root.getPath().setText(project.getExportPath());
 
         root.getProjectNameTextField().focusedProperty().addListener(((observableValue, aBoolean, newValue) -> {
             if(!newValue){ //Focus left
@@ -29,7 +31,17 @@ public class ExportViewController {
                 }else{
                     root.getProjectNameTextField().setId("error");
                 }
-                System.out.println("Focus left");
+            }
+        }));
+
+        root.getFileNameTextField().focusedProperty().addListener(((observableValue, aBoolean, t1) -> {
+            if(!t1){ //Focus left
+                if(root.getFileNameTextField().getText()!=""){
+                    root.getFileNameTextField().setId("");
+                    project.setFileName(root.getFileNameTextField().getText());
+                }else{
+                    root.getFileNameTextField().setId("error");
+                }
             }
         }));
 
@@ -44,6 +56,10 @@ public class ExportViewController {
                 if(loadedFile.isFile()){
                     try {
                         project.loadFromProject(loadedFile);
+                        root.getProjectNameTextField().setText(project.getProjectTitleProperty().get());
+                        root.getFileNameTextField().setText(project.getFileName());
+                        root.getPath().setText(project.getExportPath());
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -73,6 +89,7 @@ public class ExportViewController {
             if(saveDirectory != null){
                 if(saveDirectory.isDirectory() && saveDirectory.exists()){
                     root.getPath().setText(saveDirectory.getPath());
+                    root.getPath().setId("");
                     if(project!=null){
                         project.setExportPath(saveDirectory.getPath());
                     }
@@ -81,6 +98,33 @@ public class ExportViewController {
         }));
 
         root.getExportAudio().setOnMouseClicked((event -> {
+            if(root.getPath().getText()!="" && root.getFileNameTextField().getText()!=""){
+                root.getPath().setId("");
+                root.getFileNameTextField().setId("");
+                File exportDirectory = new File(root.getPath().getText());
+                if(exportDirectory.isDirectory()){
+                    root.getPath().setId("");
+
+                    if(project!=null && project.getKeyframeManagers() != null && project.videoFileProperty().get() != null && project.mergedTrackProperty().get() != null && project.getFileName() != ""){
+                        WavExporter wavExporter = new WavExporter(project, exportDirectory);
+                        wavExporter.export();
+                    }
+
+                }else{
+                    root.getPath().setId("error");
+                }
+            }else{
+                if(root.getPath().getText()==""){
+                    root.getPath().setId("error");
+                }else{
+                    root.getPath().setId("");
+                }
+                if(root.getFileNameTextField().getText()==""){
+                    root.getFileNameTextField().setId("error");
+                }else{
+                    root.getFileNameTextField().setId("");
+                }
+            }
             //Check ob überhaupt schon exportierbereit ist
         }));
     }

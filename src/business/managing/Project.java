@@ -149,6 +149,7 @@ public class Project{
             fileHeader =  "projectTitle="+projectTitle.get()+"\n";
             fileHeader += "fileName="+fileName+"\n";
             fileHeader += "path="+directory+"\n";
+            fileHeader += "exportPath="+exportPath+"\n";
             if(mergedTrackProperty.get() !=null){
                 fileHeader += "mergedTrack="+ mergedTrackProperty.get().getTitle()+"\n";
             }
@@ -187,6 +188,8 @@ public class Project{
                     this.projectTitle.set(line.split("=")[1]);
                 }else if(line.startsWith("fileName")){
                     this.fileName = line.split("=")[1];
+                }else if(line.startsWith("exportPath")){
+                    this.exportPath = line.split("=")[1];
                 }else if(line.startsWith("mergedTrack")){
                     for(MergedTrack mt : trackManager.getTrackList()){
                         if(mt.getTitle().equals(line.split("=")[1])){
@@ -225,7 +228,19 @@ public class Project{
         }
     }
 
+    public String getFileName(){
+        return this.fileName.split("\\.")[0];
+    }
+
+    public void setFileName(String fileName){
+        this.fileName = fileName;
+    }
+
     public void setExportPath(String exportPath) {
         this.exportPath = exportPath;
+    }
+
+    public String getExportPath() {
+        return exportPath;
     }
 }

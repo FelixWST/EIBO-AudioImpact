@@ -2,12 +2,10 @@ package business.tracks;
 
 public class AudioTrack {
     private String path;
-    private String wavPath;
     private AudioTrackType audioTrackType;
 
-    public AudioTrack(String path, String wavPath, AudioTrackType audioTrackType) {
+    public AudioTrack(String path, AudioTrackType audioTrackType) {
         this.path = path;
-        this.wavPath = wavPath;
         this.audioTrackType = audioTrackType;
     }
 
@@ -16,7 +14,7 @@ public class AudioTrack {
     }
 
     public String getWavPath(){
-        return this.wavPath;
+        return this.path.split("\\.")[0]+".wav";
     }
 
     public AudioTrackType getAudioTrackType(){

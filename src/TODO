@@ -1,8 +1,9 @@
 ToDo:
 -Kommentieren, für Prüfung sinnvoll
--export
 -Projekt aufräumen, nicht mehr benötigten Codefragemente entfernen
 -mergedTrack mit mehreren Genres?
+-add Missinbg Wav Files for Exporting all themes
+
 
 Bugs:
 
@@ -51,3 +52,6 @@ Erledigt:
 -Nach Projekt laden werden Keyframes nicht mehr "gemalt"
 -Volumeslider laufen beim ersten Start nicht mit?
 -library View
+-exportview updaten bei neuem Projekt laden
+-exportview directory aus projekt einfügen
+-export
