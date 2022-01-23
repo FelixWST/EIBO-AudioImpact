@@ -6,6 +6,7 @@ import business.managing.Project;
 import business.playback.TrackPlayer;
 import business.tracks.AudioTrack;
 import business.tracks.AudioTrackType;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.ListChangeListener;
@@ -36,9 +37,24 @@ public class TimelineTracksController {
         this.project = project;
         trackLayers = new HashMap<>();
 
-        for(AudioTrack audioTrack : project.getMergedTrack().getAudioTracks()){
+        initTimelineTracks();
+
+        project.mergedTrackProperty().addListener(((observableValue, mergedTrack, t1) -> {
+            initTimelineTracks();
+            if(project.videoFileProperty().get()!=null){
+            }
+        }));
+    }
+
+    public TimelineTracks getRoot() {
+        return root;
+    }
+
+    public void initTimelineTracks(){
+        root.resetToDefaultLayout();
+        for(AudioTrack audioTrack : project.mergedTrackProperty().get().getAudioTracks()){
             trackLayers.put(audioTrack.getAudioTrackType(), new TrackLayer(audioTrack.getAudioTrackType()));
-            trackLayers.get(audioTrack.getAudioTrackType()).prefHeightProperty().bind(root.heightProperty().divide(project.getMergedTrack().getAudioTracks().size()));
+            trackLayers.get(audioTrack.getAudioTrackType()).prefHeightProperty().bind(root.heightProperty().divide(project.mergedTrackProperty().get().getAudioTracks().size()));
             VBox.setMargin(trackLayers.get(audioTrack.getAudioTrackType()), new Insets(10,10,5,0));
             root.getChildren().add(trackLayers.get(audioTrack.getAudioTrackType()));
 
@@ -48,28 +64,20 @@ public class TimelineTracksController {
                     repaint();
                 }
             });
+
+            trackLayers.get(audioTrack.getAudioTrackType()).widthProperty().addListener(((observableValue, number, t1) -> {
+                if(project.videoFileProperty().get()!=null){
+                    repaint();
+                }
+            }));
         }
-
-
-        root.widthProperty().addListener(((observableValue, number, t1) -> {
-            if(project.videoFileProperty().get()!=null){
-                repaint();
-            }
-        }));
-
-        if(project.videoFileProperty().get()!=null){
-            repaint();
-        }
-    }
-
-    public TimelineTracks getRoot() {
-        return root;
     }
 
     public void repaint(){
         int mapVolumeToPositiveRange = 80;
 
         long totalDuration = project.videoFileProperty().get().getDuration();
+
         for(KeyframeManager keyframeManager : project.getKeyframeManagers()){
             TrackLayer selectedTrackLayer = trackLayers.get(keyframeManager.getAudioTrackType());
             selectedTrackLayer.getChildren().clear();

@@ -4,7 +4,6 @@ import business.managing.PlayerManager;
 import business.managing.Project;
 import business.managing.TrackManager;
 import business.managing.VideoFile;
-import business.tracks.MergedTrack;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -35,10 +34,8 @@ public class Main extends Application {
 
 
         trackManager = new TrackManager();
-        //Else: Create new empty project
-        project = new Project("defaultproject", "defaultproject.prj", "path", trackManager.getMergedTrack(0));
-        //project.setVideoFile(new VideoFile(new File("src/data/video/videoPlayback.mp4")));
-        playerManager = new PlayerManager(project.getMergedTrack(), project.getKeyframeManagers()); //default immer ersten Merged Track wählen?
+        project = new Project("defaultproject", "defaultproject.prj", "path", trackManager.getMergedTrack(0), trackManager);
+        playerManager = project.getPlayerManager();
 
         loadProperties();
 
@@ -73,6 +70,7 @@ public class Main extends Application {
 
     public void stop(){
         saveProperties();
+        System.out.println("Ask User to save Project");
         System.exit(0);
     }
 
@@ -89,11 +87,7 @@ public class Main extends Application {
             properties.setProperty("window.lastY",""+primaryStage.getScene().getWindow().getY());
 
             //Project related Properties
-            project.saveProject(new File("./last.aiprj"));
-            properties.setProperty("project.last","./last.aiprj");
             properties.setProperty("project.lastTotalVolume",""+playerManager.totalVolumeProperty().get());
-
-            properties.setProperty("project.lastSelectedMergedTrack",""+project.getMergedTrack());
 
             properties.store(output, null);
 
@@ -119,22 +113,8 @@ public class Main extends Application {
                 windowPos[1] = Double.parseDouble(properties.getProperty("window.lastY"));
             }
 
-            if(properties.containsKey("project.last")){
-                try{
-                    project.loadFromProject(new File(properties.getProperty("project.last")));
-                }catch (IOException e){
-
-                }
-
-                System.out.println("Open last Project?");
-            }
-
             if(properties.containsKey("project.lastTotalVolume")){
                 playerManager.setTotalVolumeProperty(Double.parseDouble(properties.getProperty("project.lastTotalVolume")));
-            }
-
-            if(properties.containsKey("project.lastSelectedMergedTrack")){
-                project.setMergedTrack((MergedTrack) properties.get("project.lastSelectedMergedTrack"));
             }
 
         } catch (IOException e) {

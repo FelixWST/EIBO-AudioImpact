@@ -17,42 +17,50 @@ public class Project{
     private SimpleStringProperty projectTitle;
     private String fileName;
     private String exportPath;
+    private TrackManager trackManager;
+    private PlayerManager playerManager;
     private ArrayList<KeyframeManager> keyframeManagers;
-    private MergedTrack mergedTrack;
+    private SimpleObjectProperty<MergedTrack> mergedTrackProperty;
     private SimpleObjectProperty<VideoFile> videoFileProperty;
 
 
-    public Project(){
-        this("unnamed Project", "unnamedProject.prj", "path/to/proj", null);
+    public Project(TrackManager trackManager){
+        this("unnamed Project", "unnamedProject.prj", "path/to/proj", null, trackManager);
     }
 
-    public Project(String projectTitle, String fileName, String exportPath) {
-        this(projectTitle, fileName, exportPath, null, null);
+    public Project(String projectTitle, String fileName, String exportPath, TrackManager trackManager) {
+        this(projectTitle, fileName, exportPath, null, null, trackManager);
     }
 
-    public Project(String projectTitle, String fileName, String exportPath, MergedTrack mergedTrack) {
-        this(projectTitle, fileName, exportPath, mergedTrack, null);
+    public Project(String projectTitle, String fileName, String exportPath, MergedTrack mergedTrackProperty, TrackManager trackManager) {
+        this(projectTitle, fileName, exportPath, mergedTrackProperty, null, trackManager);
     }
 
-    public Project(String projectTitle, String fileName, String exportPath, MergedTrack mergedTrack, VideoFile videoFile) {
+    public Project(String projectTitle, String fileName, String exportPath, MergedTrack mergedTrack, VideoFile videoFile, TrackManager trackManager) {
         this.projectTitle = new SimpleStringProperty(projectTitle);
         this.fileName = fileName;
         this.exportPath = exportPath;
-        this.mergedTrack = mergedTrack;
+        this.mergedTrackProperty = new SimpleObjectProperty<>(mergedTrack);
         this.keyframeManagers = new ArrayList<>();
         this.videoFileProperty = new SimpleObjectProperty<>(videoFile);
+        this.trackManager = trackManager;
         createKeyframeManagers();
+        this.playerManager = new PlayerManager(mergedTrackProperty.get(), keyframeManagers);
     }
 
     private void createKeyframeManagers(){
-        if(mergedTrack!=null){
+        if(mergedTrackProperty !=null){
             keyframeManagers = new ArrayList<>();
-            for(AudioTrack audioTrack : mergedTrack.getAudioTracks()){
+            for(AudioTrack audioTrack : mergedTrackProperty.get().getAudioTracks()){
                 if(audioTrack!=null){
                     keyframeManagers.add(new KeyframeManager(audioTrack.getAudioTrackType()));
                 }
             }
         }
+    }
+
+    public PlayerManager getPlayerManager(){
+        return this.playerManager;
     }
 
     public KeyframeManager getKeyframeManager(AudioTrackType audioTrackType){
@@ -68,21 +76,21 @@ public class Project{
         return this.keyframeManagers;
     }
 
-    public void setMergedTrack(MergedTrack newMergedTrack){
+    public void setMergedTrackProperty(MergedTrack newMergedTrack){
         if(newMergedTrack != null){
-            if(mergedTrack!=null){
-                if(!mergedTrack.equals(newMergedTrack)){
-                    mergedTrack = newMergedTrack;
+            if(mergedTrackProperty.get() !=null){
+                if(!mergedTrackProperty.get().equals(newMergedTrack)){
+                    mergedTrackProperty.set(newMergedTrack);
                 }
             }else{
-                mergedTrack = newMergedTrack;
+                mergedTrackProperty.set(newMergedTrack);
                 createKeyframeManagers();
             }
         }
     }
 
-    public MergedTrack getMergedTrack(){
-        return this.mergedTrack;
+    public SimpleObjectProperty<MergedTrack> mergedTrackProperty(){
+        return this.mergedTrackProperty;
     }
 
     public void setVideoFile(VideoFile videoFile){
@@ -141,8 +149,8 @@ public class Project{
             fileHeader =  "projectTitle="+projectTitle.get()+"\n";
             fileHeader += "fileName="+fileName+"\n";
             fileHeader += "path="+directory+"\n";
-            if(mergedTrack!=null){
-                fileHeader += "mergedTrack="+mergedTrack.getTitle()+"\n";
+            if(mergedTrackProperty.get() !=null){
+                fileHeader += "mergedTrack="+ mergedTrackProperty.get().getTitle()+"\n";
             }
             if(videoFileProperty.get()!=null){
                 fileHeader += "videoFile="+videoFileProperty.get().getVideoFile()+"\n";
@@ -169,7 +177,6 @@ public class Project{
     }
 
     public void loadFromProject(File project) throws IOException {
-        System.out.println("Loading MergedTrack missing");
         if(project.exists()){
             createKeyframeManagers();
             BufferedReader reader = new BufferedReader(new FileReader(project));
@@ -181,7 +188,12 @@ public class Project{
                 }else if(line.startsWith("fileName")){
                     this.fileName = line.split("=")[1];
                 }else if(line.startsWith("mergedTrack")){
-
+                    for(MergedTrack mt : trackManager.getTrackList()){
+                        if(mt.getTitle().equals(line.split("=")[1])){
+                            this.mergedTrackProperty.set(mt);
+                            this.playerManager.changeMergedTrack(mergedTrackProperty.get(), keyframeManagers);
+                        }
+                    }
                 }else if(line.startsWith("videoFile")){
                     this.videoFileProperty.set(new VideoFile(new File(line.split("=")[1])));
                 }else if(line.startsWith("audioTrackType")){
@@ -194,9 +206,13 @@ public class Project{
                                 String keyframes [] = line.split(";");
                                 for(String s : keyframes){
                                     if(s!=""){
-                                        int time = Integer.parseInt(s.split(Pattern.quote("|"))[0]);
-                                        double vol = Double.parseDouble(s.split(Pattern.quote("|"))[1]);
-                                        kfm.addKeyframe(new Keyframe(time, vol));
+                                        try{
+                                            int time = Integer.parseInt(s.split(Pattern.quote("|"))[0]);
+                                            double vol = Double.parseDouble(s.split(Pattern.quote("|"))[1]);
+                                            kfm.addKeyframe(new Keyframe(time, vol));
+                                        }catch (Exception e){
+
+                                        }
                                     }
                                 }
                             }

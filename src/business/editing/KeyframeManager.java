@@ -142,4 +142,14 @@ public class KeyframeManager{
         return TrackPlayer.DEFAULT_GAIN;
     }
 
+    public String toString(){
+        String keyframeString = "";
+        for(Keyframe kf : this.keyframes){
+            keyframeString += kf.toString();
+        }
+        return "KeyframeManager for Audiotrack "+audioTrackType+". Keyframes: "+keyframeString;
+    }
+
+
+
 }

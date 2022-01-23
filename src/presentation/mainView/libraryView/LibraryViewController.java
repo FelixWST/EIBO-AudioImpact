@@ -3,11 +3,7 @@ package presentation.mainView.libraryView;
 import business.managing.PlayerManager;
 import business.managing.Project;
 import business.managing.TrackManager;
-import business.tracks.AudioTrack;
-import business.tracks.AudioTrackType;
-import business.tracks.Genre;
 import business.tracks.MergedTrack;
-import com.sun.scenario.effect.Merge;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,8 +11,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
-
-import java.util.ArrayList;
 
 public class LibraryViewController {
 
@@ -53,16 +47,22 @@ public class LibraryViewController {
 */
 
         root.listView.setOnMouseClicked((mouseEvent)->{
-            System.out.println(root.listView.getSelectionModel().getSelectedItem());
-            project.setMergedTrack(root.listView.getSelectionModel().getSelectedItem());
+            project.setMergedTrackProperty(root.listView.getSelectionModel().getSelectedItem());
             playerManager.changeMergedTrack(root.listView.getSelectionModel().getSelectedItem(), project.getKeyframeManagers());
             //Stop video playback?
         });
 
-        if(project.getMergedTrack()!=null){
-            root.listView.getSelectionModel().select(project.getMergedTrack());
-            root.listView.scrollTo(project.getMergedTrack());
+        if(project.mergedTrackProperty().get()!=null){
+            root.listView.getSelectionModel().select(project.mergedTrackProperty().get());
+            root.listView.scrollTo(project.mergedTrackProperty().get());
         }
+
+        project.mergedTrackProperty().addListener(((observableValue, mergedTrack, t1) -> {
+            if(t1!=null){
+                root.listView.getSelectionModel().select(t1);
+                root.listView.scrollTo(t1);
+            }
+        }));
 
         root.listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MergedTrack>() {
             @Override

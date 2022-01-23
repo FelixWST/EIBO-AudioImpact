@@ -18,7 +18,6 @@ public class TrackPlayer {
     private SimpleAudioPlayer simpleAudioPlayer;
     private AudioTrack audioTrack;
     private KeyframeManager keyframeManager;
-    private int time;
     private SimpleFloatProperty volumeProperty;
     private SimpleBooleanProperty muteProperty;
     private SimpleBooleanProperty soloProperty;
@@ -124,6 +123,12 @@ public class TrackPlayer {
         this.totalVolumeModifier = totalVolumeModifier;
     }
 
+    public void updateVolumeAtCurrentTime(){
+        if(simpleAudioPlayer!=null){
+            setVolume(keyframeManager.getVolumeAtTime(simpleAudioPlayer.position()));
+        }
+    }
+
     private class VolumeModifierThread extends Thread{
         VolumeModifierThread(){
             setDaemon(true);
@@ -136,7 +141,7 @@ public class TrackPlayer {
                     if(simpleAudioPlayer!=null){
                         setVolume(keyframeManager.getVolumeAtTime(simpleAudioPlayer.position()));
                     }
-                    Thread.sleep(100); // Wie oft pro sekunde soll aktualisiert werden?
+                    Thread.sleep(100); // UpdateInterval for Volume while Playing
                 }catch (InterruptedException e){
                     interrupt();
                 }

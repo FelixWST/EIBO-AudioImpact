@@ -23,4 +23,9 @@ public class TimelineTracks extends VBox {
     public Slider getTimelineSlider(){
         return this.timelineSlider;
     }
+
+    public void resetToDefaultLayout(){
+        this.getChildren().clear();
+        this.getChildren().add(timelineSlider);
+    }
 }

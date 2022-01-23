@@ -1,16 +1,13 @@
 ToDo:
 -Kommentieren, für Prüfung sinnvoll
--Projekt laden
 -export
 -library View
 -Projekt aufräumen, nicht mehr benötigten Codefragemente entfernen
--keyframes in observablelist wandeln & volumeproperty auf änderungen reagieren lassen
-
 
 Bugs:
--bei MergedTrackChange funtkioniert automation nicht mehr!
 -Größe Lautstärkeslider & Timelineslider angleichen
--Mute / Solo funzt nicht mehr nach Track Wechsel?
+
+
 
 (-button text springt)
 (-timeline scrubben error (Mac))
@@ -48,3 +45,9 @@ Erledigt:
 -Auto Focus Textfield deaktivieren
 -wenn volumeproperty nicht ändert && Player erneut von vorne beginnt ist Tracksettingslider auf falschem Wert
 -beim laden aktiven MergedTrack in listview selected markieren
+-Mute / Solo funzt nicht mehr nach Track Wechsel?
+-bei MergedTrackChange funtkioniert automation nicht mehr!
+-Projekt laden
+-keyframes in observablelist wandeln & volumeproperty auf änderungen reagieren lassen
+-Nach Projekt laden werden Keyframes nicht mehr "gemalt"
+-Volumeslider laufen beim ersten Start nicht mit?
