@@ -2,9 +2,19 @@ ToDo:
 -Kommentieren, für Prüfung sinnvoll
 -Projekt laden
 -export
--beim laden aktiven MergedTrack in listview selected markieren
 -library View
 -Projekt aufräumen, nicht mehr benötigten Codefragemente entfernen
+-keyframes in observablelist wandeln & volumeproperty auf änderungen reagieren lassen
+
+
+Bugs:
+-bei MergedTrackChange funtkioniert automation nicht mehr!
+-Größe Lautstärkeslider & Timelineslider angleichen
+-Mute / Solo funzt nicht mehr nach Track Wechsel?
+
+(-button text springt)
+(-timeline scrubben error (Mac))
+
 
 Nice to have:
 (-Slider vielleicht nicht linear, damit wirkung deutlicher?)
@@ -13,21 +23,6 @@ Nice to have:
 (-wenn shift gedrückt nur horizontal dragbar)
 (-Easter Egg)
 (-Keyboard steuerung(Play Pause next kF prv kf))
-
-Bugs:
--bei MergedTrackChange funtkioniert automation nicht mehr!
--textfield context menu <- Schriftfarbe schwarz machen
--wenn volumeproperty nicht ändert && Player erneut von vorne beginnt ist Tracksettingslider auf falschem Wert
--Slider springen immer einmal auf 100% bei restart
--Größe Lautstärkeslider & Timelineslider angleichen
--Mute / Solo funzt nicht mehr nach Track Wechsel?
-
-(-button text springt)
-(-timeline scrubben error (Mac))
-
-
-
-
 
 
 Erledigt:
@@ -48,3 +43,8 @@ Erledigt:
 -timeline mouse eventhandler aufräumen
 -LibraryView ListViewItems nach Links rücken
 -LibraryView Select button entfernen
+-Slider springen immer einmal auf 100% bei restart
+-textfield context menu <- Hintergrundfarbe schwarz machen
+-Auto Focus Textfield deaktivieren
+-wenn volumeproperty nicht ändert && Player erneut von vorne beginnt ist Tracksettingslider auf falschem Wert
+-beim laden aktiven MergedTrack in listview selected markieren

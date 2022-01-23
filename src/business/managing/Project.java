@@ -193,9 +193,11 @@ public class Project{
                             if(kfm.getAudioTrackType().name().equals(type)){
                                 String keyframes [] = line.split(";");
                                 for(String s : keyframes){
-                                    int time = Integer.parseInt(s.split(Pattern.quote("|"))[0]);
-                                    double vol = Double.parseDouble(s.split(Pattern.quote("|"))[1]);
-                                    kfm.addKeyframe(new Keyframe(time, vol));
+                                    if(s!=""){
+                                        int time = Integer.parseInt(s.split(Pattern.quote("|"))[0]);
+                                        double vol = Double.parseDouble(s.split(Pattern.quote("|"))[1]);
+                                        kfm.addKeyframe(new Keyframe(time, vol));
+                                    }
                                 }
                             }
                         }

@@ -22,9 +22,11 @@ public class ExportView extends ScrollPane {
         titleLabel = new Label("Export");
         titleLabel.getStyleClass().addAll("title-label");
         projectName = new TextField();
+        projectName.setFocusTraversable(false);
         projectSubLabel = new Label("Project Title");
         projectSubLabel.getStyleClass().addAll("label-sub-input");
         fileName = new TextField();
+        fileName.setFocusTraversable(false);
         fileSubLabel = new Label("Filename");
         fileSubLabel.getStyleClass().addAll("label-sub-input");
 

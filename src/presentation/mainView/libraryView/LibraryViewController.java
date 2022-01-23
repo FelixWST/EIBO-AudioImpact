@@ -59,6 +59,11 @@ public class LibraryViewController {
             //Stop video playback?
         });
 
+        if(project.getMergedTrack()!=null){
+            root.listView.getSelectionModel().select(project.getMergedTrack());
+            root.listView.scrollTo(project.getMergedTrack());
+        }
+
         root.listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MergedTrack>() {
             @Override
             public void changed(ObservableValue<? extends MergedTrack> observableValue, MergedTrack mergedTrack, MergedTrack t1) {

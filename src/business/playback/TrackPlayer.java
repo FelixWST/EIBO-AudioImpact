@@ -49,7 +49,7 @@ public class TrackPlayer {
                     playerThread = new Thread(){
                         public void run(){
                             simpleAudioPlayer = minim.loadMP3File(audioTrack.getPath());
-                            setVolume(keyframeManager.getVolumeAtTime(simpleAudioPlayer.position()));
+                            setVolume(keyframeManager.getVolumeAtTime(lastStoppedPosition));
                             simpleAudioPlayer.play(lastStoppedPosition);
                         }
                     };
