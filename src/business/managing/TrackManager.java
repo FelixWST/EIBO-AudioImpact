@@ -119,7 +119,6 @@ public class TrackManager {
     }
 
     private AudioTrackType getAudioTrackType(String line) {
-        //Checken, ob Enum zu String existiert, statt jeden Fall abzufangen?
         if(line.contains("atmosphere")) {
            return AudioTrackType.ATMOSPHERE;
         } else if(line.contains("depth")) {
