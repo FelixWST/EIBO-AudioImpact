@@ -1,5 +1,6 @@
 package business.managing;
 
+import javafx.application.Platform;
 import javafx.scene.media.Media;
 
 import java.io.File;

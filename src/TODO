@@ -12,6 +12,7 @@ Bugs:
     Krypton (nur depth?)
     Dark Side (nur intensity)
 
+-Problem wenn VideoFile nicht mehr vorhanden
 (-button text springt)
 (-timeline scrubben error (Mac))
 
