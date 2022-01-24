@@ -55,7 +55,7 @@ public class WavExporter {
             for(KeyframeManager kfm : keyframeManagers) {
                 WavManipulator wavManipulator = new WavManipulator(kfm, trackLenghtInMs, videoLengthInMs,debug);
                 wavManipulator.readFile(mergedTrack.getAudioTrack(kfm.getAudioTrackType()).getWavPath());
-                wavManipulator.writeFile(exportDirectory.getPath()+"/"+exportFileName+"-"+kfm.getAudioTrackType().name()+".wav");
+                wavManipulator.writeFile(exportDirectory.getPath()+"/"+exportFileName+"-"+mergedTrack.getTitle()+"-"+kfm.getAudioTrackType().name()+".wav");
             }
 
             File[] directoryList = exportDirectory.listFiles();
@@ -63,7 +63,7 @@ public class WavExporter {
             if(directoryList!=null){
                 for(KeyframeManager kfm : keyframeManagers){
                     for(File f : directoryList){
-                        if(f.equals(new File(exportDirectory.getPath()+"/"+exportFileName+"-"+kfm.getAudioTrackType().name()+".wav"))){
+                        if(f.equals(new File(exportDirectory.getPath()+"/"+exportFileName+"-"+mergedTrack.getTitle()+"-"+kfm.getAudioTrackType().name()+".wav"))){
                             result.add(true);
                         }
                     }
