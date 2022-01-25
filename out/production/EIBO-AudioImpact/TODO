@@ -2,11 +2,17 @@ ToDo:
 -Kommentieren, für Prüfung sinnvoll
 -Projekt aufräumen, nicht mehr benötigten Codefragemente entfernen
 -mergedTrack mit mehreren Genres?
--add Missinbg Wav Files for Exporting all themes
+
 
 
 
 Bugs:
+-Exporting Issues with following WAV Files:
+    Decoding History (Nur intensity & Atmosphere)
+    Krypton (nur depth?)
+    Dark Side (nur intensity)
+
+-Problem wenn VideoFile nicht mehr vorhanden
 (-button text springt)
 (-timeline scrubben error (Mac))
 
@@ -53,3 +59,4 @@ Erledigt:
 -exportview updaten bei neuem Projekt laden
 -exportview directory aus projekt einfügen
 -export
+-add Missinbg Wav Files for Exporting all themes

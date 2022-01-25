@@ -36,15 +36,6 @@ public class LibraryViewController {
                 return new MergedTrackListCell();
             }
         });
-/*
-        root.listView.setCellFactory(new Callback<ListView<MergedTrack>, MergedTrackListCell<MergedTrack>>() {
-            @Override
-            public ListCell<MergedTrack> call(ListView<MergedTrack> mergedTrackListView) {
-                return new MergedTrackListCell();
-            }
-        });
-
-*/
 
         root.listView.setOnMouseClicked((mouseEvent)->{
             project.setMergedTrackProperty(root.listView.getSelectionModel().getSelectedItem());

@@ -33,9 +33,7 @@ public class ListViewCell extends ListCell<MergedTrack> {
         title = new Label();
         title.setId("title-label");
         genre = new Label();
-        genre.setId("genre-label");
         duration = new Label();
-        duration.setId("duration-label");
 
         Insets coverInsets = new Insets(10);
         Insets trackInfoInsets = new Insets(10,10,10,20);

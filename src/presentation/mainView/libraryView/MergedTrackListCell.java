@@ -1,15 +1,10 @@
 package presentation.mainView.libraryView;
 
 import business.tracks.MergedTrack;
-import javafx.geometry.Pos;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.List;
 
 public class MergedTrackListCell extends ListCell<MergedTrack> {
 
