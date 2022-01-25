@@ -1,7 +1,7 @@
 package business.tracks;
 
 public enum Genre {
-    MOOD("Mood"),CINEMATIC("Cinematic"),ACTION("Action"), COMEDY("Comedy");
+    MOOD("Mood"),CINEMATIC("Cinematic"),ACTION("Action"), COMEDY("Comedy"), DRAMATIC("Dramatic"), INTENSE("Intense"), EPIC("Epic"), DARK("Dark");
 
     private String stringValue;
 

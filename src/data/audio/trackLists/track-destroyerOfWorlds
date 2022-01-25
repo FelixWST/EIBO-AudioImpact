@@ -1,6 +1,6 @@
 #EXTM3U
 #EXTINF NAME:Destroyer of Worlds
-#EXTINF GENRE:CINEMATIC
+#EXTINF GENRE:DRAMATIC
 #EXTINF COVER:src/data/audio/audioFiles/destroyerOfWorlds/cover.png
 src/data/audio/audioFiles/destroyerOfWorlds/atmosphere.mp3
 src/data/audio/audioFiles/destroyerOfWorlds/depth.mp3

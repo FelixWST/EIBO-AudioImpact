@@ -49,6 +49,7 @@ public class TimelineTracksController {
 
     public void initTimelineTracks(){
         root.resetToDefaultLayout();
+        /*Create TrackLayer for each AudioTrack of MergedTrack*/
         for(AudioTrack audioTrack : project.mergedTrackProperty().get().getAudioTracks()){
             trackLayers.put(audioTrack.getAudioTrackType(), new TrackLayer(audioTrack.getAudioTrackType()));
             trackLayers.get(audioTrack.getAudioTrackType()).prefHeightProperty().bind((root.heightProperty().divide(project.mergedTrackProperty().get().getAudioTracks().size())));
@@ -77,11 +78,13 @@ public class TimelineTracksController {
         for(KeyframeManager keyframeManager : project.getKeyframeManagers()){
             TrackLayer selectedTrackLayer = trackLayers.get(keyframeManager.getAudioTrackType());
             selectedTrackLayer.getChildren().clear();
+            //Calculate Scale of Timeline
             double pxPerMsHor = selectedTrackLayer.getWidth() / totalDuration;
             double pxPerGainVer = selectedTrackLayer.getHeight() / 86;
             Circle lastKeyframeCircle = null;
+
+            //If a audiotrack has no Keyframes yet, we can just draw a straight line from beginning to end at the current volume
             if(keyframeManager.getKeyframes().size()==0){
-                //If a audiotrack has no Keyframes yet, we can just draw a straight line from beginning to end at the current volume
                 Line onlyLine = connect(new Circle(0,selectedTrackLayer.getHeight()-pxPerGainVer * (TrackPlayer.DEFAULT_GAIN+mapVolumeToPositiveRange),5), new Circle(selectedTrackLayer.getWidth(), selectedTrackLayer.getHeight()-pxPerGainVer * (TrackPlayer.DEFAULT_GAIN+mapVolumeToPositiveRange),5), keyframeManager.getAudioTrackType());
                 onlyLine.setOnMouseClicked((event -> {
                     int newKfTime = (int) (event.getX()/pxPerMsHor);
@@ -92,6 +95,7 @@ public class TimelineTracksController {
                 selectedTrackLayer.getChildren().add(onlyLine);
             }
 
+            //Iterate through each Keyframe of Track and draw a Circle as Keyframe
             for(int i = 0; i<keyframeManager.getKeyframes().size(); i++){
                 Keyframe kf = keyframeManager.getKeyframes().get(i);
                 Circle keyframeCircle = new Circle();
@@ -100,6 +104,8 @@ public class TimelineTracksController {
                 keyframeCircle.setCenterX(pxPerMsHor * kf.getTime());
                 keyframeCircle.setCenterY(selectedTrackLayer.getHeight()-pxPerGainVer * (kf.getVolume()+mapVolumeToPositiveRange));
                 keyframeCircle.setCursor(Cursor.HAND);
+
+                //Mouse Pressed Eventhandler
                 keyframeCircle.setOnMousePressed((event -> {
                     orgSceneX = event.getSceneX();
                     orgSceneY = event.getSceneY();
@@ -110,6 +116,7 @@ public class TimelineTracksController {
 
                 }));
 
+                //Keyframe can be dragged inside Track
                 keyframeCircle.setOnMouseDragged((event -> {
                     double deltaX = event.getSceneX() - orgSceneX;
                     double deltaY = event.getSceneY() - orgSceneY;
@@ -128,6 +135,7 @@ public class TimelineTracksController {
                     }
                 }));
 
+                //Update Keyframe Value after drag completed
                 keyframeCircle.setOnMouseReleased((event -> {
                     Circle c = (Circle) event.getSource();
                     int newKfTime = (int) (c.getCenterX()/pxPerMsHor);
@@ -136,6 +144,7 @@ public class TimelineTracksController {
                     if(event.getButton() != MouseButton.SECONDARY){
                         keyframeManager.addKeyframe(new Keyframe(newKfTime, newKfValue));
                     }
+                    //Double Click on KLeyframe opens Dialog to exactly change Value
                     if(event.getClickCount()==2){
                         TextInputDialog textInputDialog = new TextInputDialog(""+kf.getVolume());
                         textInputDialog.setTitle("Change Keyframe Value");
@@ -154,6 +163,8 @@ public class TimelineTracksController {
                     repaint();
                 }));
                 selectedTrackLayer.getChildren().add(keyframeCircle);
+
+                //First Keyframe -> Draw Line from "Void" to Circle
                 if(lastKeyframeCircle==null){
                     Line firstLine = connect(new Circle(0, keyframeCircle.getCenterY(),5), keyframeCircle, keyframeManager.getAudioTrackType());
                     firstLine.startYProperty().bind(keyframeCircle.centerYProperty());
@@ -165,6 +176,8 @@ public class TimelineTracksController {
                     }));
                     selectedTrackLayer.getChildren().add(firstLine);
                 }
+
+                //Draw Line connecting two Keyframe Circles
                 if(lastKeyframeCircle!=null){
                     Line keyFrameConnect = connect(lastKeyframeCircle, keyframeCircle, keyframeManager.getAudioTrackType());
                     keyFrameConnect.setOnMouseClicked((event -> {
@@ -177,6 +190,8 @@ public class TimelineTracksController {
                 }
                 lastKeyframeCircle = keyframeCircle;
             }
+
+            //After iterating through Keyframes, the last Keyframe also gets a line to "void"
             if(lastKeyframeCircle != null){
                 Line lineToVoid = connect(lastKeyframeCircle, new Circle(selectedTrackLayer.getWidth(), lastKeyframeCircle.getCenterY(),5), keyframeManager.getAudioTrackType());
                 lineToVoid.endYProperty().bind(lastKeyframeCircle.centerYProperty());
@@ -191,6 +206,7 @@ public class TimelineTracksController {
         }
     }
 
+    /*This Method connects two circles with a line by binding them, so they are draggable*/
     private Line connect(Circle c1, Circle c2, AudioTrackType audioTrackType){
         Line line = new Line();
         line.startXProperty().bind(c1.centerXProperty());

@@ -92,15 +92,8 @@ public class TrackManager {
     }
 
     private Genre getGenre(String line) {
-        if(line.contains("CINEMATIC")) {
-            return Genre.CINEMATIC;
-        } else if(line.contains("ACTION")) {
-            return Genre.ACTION;
-        } else if (line.contains("MOOD")) {
-            return Genre.MOOD;
-        } else {
-            return Genre.COMEDY;
-        }
+        line = line.split(":")[1];
+        return Genre.valueOf(line);
     }
 
     private String getMergedTrackTitle(String line) {

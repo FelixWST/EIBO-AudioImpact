@@ -1,6 +1,6 @@
 #EXTM3U
 #EXTINF NAME:Krypton
-#EXTINF GENRE:CINEMATIC
+#EXTINF GENRE:INTENSE
 #EXTINF COVER:src/data/audio/audioFiles/krypton/cover.png
 src/data/audio/audioFiles/krypton/atmosphere.mp3
 src/data/audio/audioFiles/krypton/depth.mp3

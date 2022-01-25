@@ -37,12 +37,14 @@ public class TimelineTrackSettingsController {
             initializeTrackSettings();
         });
 
+        //When VideoFile Changes -> Duration of Timeline Changes -> Reinitialize
         project.videoFileProperty().addListener(((observableValue, videoFile, t1) -> {
             Platform.runLater(()->{
                 initializeTrackSettings();
             });
         }));
 
+        //When MergedTrack Changes -> KeyframeManagers change -> Reinitialize
         project.mergedTrackProperty().addListener(((observableValue, mergedTrack, t1) -> {
             Platform.runLater(()->{
                 initializeTrackSettings();
@@ -64,6 +66,8 @@ public class TimelineTrackSettingsController {
     public void initializeTrackSettings(){
         root.resetToDefaultLayout();
         trackLayers = new HashMap<>();
+
+        //Create TrackLayerSetting For each AudioTrack of MergedTrack
         for(AudioTrack audioTrack : project.mergedTrackProperty().get().getAudioTracks()){
             trackLayers.put(audioTrack.getAudioTrackType(), new TrackLayerSettings(audioTrack.getAudioTrackType()));
             String id = "";
@@ -79,7 +83,7 @@ public class TimelineTrackSettingsController {
             VBox.setMargin(trackLayers.get(audioTrack.getAudioTrackType()), new Insets(10,0,5,10));
             root.getChildren().add(trackLayers.get(audioTrack.getAudioTrackType()));
 
-
+            //Contextmenu for deleting all Keyframes of Track
             MenuItem deleteAll = new MenuItem("Clear all Keyframes");
             ContextMenu deleteAllContext = new ContextMenu(deleteAll);
             deleteAll.setOnAction((actionEvent -> {
@@ -92,6 +96,7 @@ public class TimelineTrackSettingsController {
             }));
 
 
+            //Moving Slider while Playing creates Keyframes in an Interval
             AtomicLong lastMilliTime = new AtomicLong(System.currentTimeMillis());
             trackLayers.get(audioTrack.getAudioTrackType()).getVolumeSettingSlider().valueProperty().addListener(((observableValue, number, t1) -> {
 
@@ -99,6 +104,7 @@ public class TimelineTrackSettingsController {
                     Platform.runLater(() -> {
                         playerManager.setTrackVolume(audioTrack.getAudioTrackType(), t1.floatValue());
                         if (videoViewController.getMediaPlayer().statusProperty().get() == MediaPlayer.Status.PLAYING) {
+                            //Check Interval after last Keyframe
                             if (System.currentTimeMillis() - lastMilliTime.get() > 500) {
                                 project.getKeyframeManager(audioTrack.getAudioTrackType()).addKeyframe(new Keyframe(playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).getPosition(), t1.doubleValue()));
                                 lastMilliTime.set(System.currentTimeMillis());
@@ -109,10 +115,11 @@ public class TimelineTrackSettingsController {
 
                     });
                 }
-                //property von -80 bis +6
+                //Set progressbar of hybrid slider (mapped to -80 bis +6)
                 trackLayers.get(audioTrack.getAudioTrackType()).getVolumeProgress().setProgress((t1.doubleValue() + 80) / 86);
             }));
 
+            //Slider is disabled as long as no audioplayer or Video is loaded
             if(playerManager == null || videoViewController.getMediaPlayer() == null){
                 trackLayers.get(audioTrack.getAudioTrackType()).getVolumeSettingSlider().setDisable(true);
             }
@@ -143,8 +150,8 @@ public class TimelineTrackSettingsController {
 
             trackLayers.get(audioTrack.getAudioTrackType()).getVolumeSettingSlider().setValue(playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).volumeProperty().getValue());
 
+            //Only update Slider with no volume, if it is not dragged atm
             playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).volumeProperty().addListener(((observableValue, number, t1) -> {
-
                 if(!trackLayers.get(audioTrack.getAudioTrackType()).getVolumeSettingSlider().valueChangingProperty().get()){
                     Platform.runLater(()->{
                         trackLayers.get(audioTrack.getAudioTrackType()).getVolumeSettingSlider().setValue(t1.doubleValue());
