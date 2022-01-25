@@ -4,32 +4,26 @@ import business.managing.PlayerManager;
 import business.managing.Project;
 import business.managing.TrackManager;
 import business.managing.VideoFile;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.input.Dragboard;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 import presentation.mainView.EditingViewController;
 import presentation.mainView.uicomponents.VideoControl;
-
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class VideoViewController {
-
     private VideoView root;
     private Project project;
     private PlayerManager playerManager;
     private TrackManager trackManager;
     private EditingViewController editingViewController;
-
-
     private VideoPlayer videoPlayer;
     private VideoControl videoControl;
     private VideoDropZoneController videoDropZoneController;
@@ -41,11 +35,9 @@ public class VideoViewController {
         this.project = project;
         this.playerManager = playerManager;
         this.trackManager = trackManager;
-
         this.videoControl = new VideoControl();
         this.videoPlayer = new VideoPlayer();
         this.videoDropZoneController = new VideoDropZoneController(project);
-
         this.root = new VideoView(videoPlayer, videoDropZoneController.getRoot(), videoControl);
 
         if(project.videoFileProperty().get()!=null){
@@ -82,8 +74,14 @@ public class VideoViewController {
                 List<File> droppedFiles = db.getFiles();
                 if(droppedFiles.size()==1){
                     success = true;
-                    System.out.println(droppedFiles.get(0)+"CHECK DATATYPE");
-                    project.setVideoFile(new VideoFile(droppedFiles.get(0)));
+                    String[] extension = droppedFiles.get(0).getName().split("\\.");
+                    if(extension[extension.length-1].equals("mp4")){
+                        try{
+                            project.setVideoFile(new VideoFile(droppedFiles.get(0)));
+                        }catch (IOException e){
+
+                        }
+                    }
                 }
             }
             dragEvent.setDropCompleted(success);
@@ -150,7 +148,7 @@ public class VideoViewController {
         });
 
         mediaPlayer.currentTimeProperty().addListener(((observableValue, duration, t1) -> {
-            root.videoProgressBar.setProgress(t1.toMillis()/mediaPlayer.getMedia().getDuration().toMillis());
+            root.getVideoProgressBar().setProgress(t1.toMillis()/mediaPlayer.getMedia().getDuration().toMillis());
             videoControl.getTimeLabel().setText(millisToTimecode((long) t1.toMillis()));
             if(!editingViewController.getTimelineViewController().getTimelineSlider().isValueChanging()){
                 editingViewController.getTimelineViewController().getTimelineSlider().setValue(t1.toMillis());

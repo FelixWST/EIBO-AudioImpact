@@ -1,9 +1,8 @@
 package business.managing;
 
-import javafx.application.Platform;
 import javafx.scene.media.Media;
-
 import java.io.File;
+import java.io.IOException;
 
 public class VideoFile {
     private int framerate;
@@ -12,10 +11,13 @@ public class VideoFile {
     private Media videoMedia;
 
 
-    public VideoFile(File videoFile){
+    public VideoFile(File videoFile) throws IOException {
         this.videoFile = videoFile;
-        //File existing?
-        this.videoMedia = new Media(videoFile.toURI().toString());
+        if(videoFile.exists()){
+            this.videoMedia = new Media(videoFile.toURI().toString());
+        }else{
+            throw new IOException("VideoFile is missing!");
+        }
         this.framerate = 25;
         this.frameTime = 1000 / framerate;
     }

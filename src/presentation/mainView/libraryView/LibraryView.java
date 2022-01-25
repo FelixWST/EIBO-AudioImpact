@@ -1,6 +1,5 @@
 package presentation.mainView.libraryView;
 
-import business.managing.TrackManager;
 import business.tracks.MergedTrack;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -8,8 +7,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 
 public class LibraryView extends VBox {
-    ListView<MergedTrack> listView;
-    Label titleLabel;
+    private ListView<MergedTrack> listView;
+    private Label titleLabel;
 
     public LibraryView(){
         this.getStylesheets().add("/presentation/mainView/libraryView/libraryView.css");
@@ -25,6 +24,9 @@ public class LibraryView extends VBox {
         VBox.setMargin(titleLabel, titleInset);
 
         this.getChildren().addAll(titleLabel, listView);
+    }
 
+    public ListView<MergedTrack> getListView() {
+        return listView;
     }
 }

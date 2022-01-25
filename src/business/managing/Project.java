@@ -7,7 +7,6 @@ import business.tracks.AudioTrackType;
 import business.tracks.MergedTrack;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -22,15 +21,6 @@ public class Project{
     private ArrayList<KeyframeManager> keyframeManagers;
     private SimpleObjectProperty<MergedTrack> mergedTrackProperty;
     private SimpleObjectProperty<VideoFile> videoFileProperty;
-
-
-    public Project(TrackManager trackManager){
-        this("unnamed Project", "unnamedProject.prj", "path/to/proj", null, trackManager);
-    }
-
-    public Project(String projectTitle, String fileName, String exportPath, TrackManager trackManager) {
-        this(projectTitle, fileName, exportPath, null, null, trackManager);
-    }
 
     public Project(String projectTitle, String fileName, String exportPath, MergedTrack mergedTrackProperty, TrackManager trackManager) {
         this(projectTitle, fileName, exportPath, mergedTrackProperty, null, trackManager);
@@ -48,6 +38,7 @@ public class Project{
         this.playerManager = new PlayerManager(mergedTrackProperty.get(), keyframeManagers);
     }
 
+    /*Erzeugt KeyframeManager für jeden MergedTrack*/
     private void createKeyframeManagers(){
         if(mergedTrackProperty !=null){
             keyframeManagers = new ArrayList<>();
@@ -107,6 +98,7 @@ public class Project{
         return this.projectTitle;
     }
 
+    /*Finds the next Keyframe over all Tracks*/
     public int findPreviousKeyframeTime(int millis){
         int timeDelta = Integer.MAX_VALUE;
         Keyframe closest = new Keyframe(0,0);
@@ -123,7 +115,7 @@ public class Project{
         }
         return closest.getTime();
     }
-
+    /*Finds the previous Keyframe over all Tracks*/
     public int findNextKeyframeTime(int millis){
         int timeDelta = Integer.MAX_VALUE;
         Keyframe closest = new Keyframe((int) videoFileProperty.get().getDuration(), 0);
@@ -141,6 +133,7 @@ public class Project{
         return closest.getTime();
     }
 
+    /*Saves a project into our own fileformat*/
     public void saveProject(File directory) throws IOException {
         String fileHeader, fileBody;
         if(directory!=null){
@@ -177,6 +170,7 @@ public class Project{
         }
     }
 
+    /*Loads a project from our own fileformat*/
     public void loadFromProject(File project) throws IOException {
         if(project.exists()){
             createKeyframeManagers();

@@ -1,19 +1,17 @@
 package business.playback;
 
-
 import business.editing.KeyframeManager;
 import business.tracks.AudioTrack;
-import business.tracks.AudioTrackType;
-import business.tracks.MergedTrack;
-import ddf.minim.AudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleAudioPlayer;
 import de.hsrm.mi.eibo.simpleplayer.SimpleMinim;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 
-import java.util.HashMap;
-
 public class TrackPlayer {
+    public static final float MIN_GAIN = -80;
+    public static final float MAX_GAIN = 6;
+    public static final float DEFAULT_GAIN = 6;
+
     private SimpleMinim minim;
     private SimpleAudioPlayer simpleAudioPlayer;
     private AudioTrack audioTrack;
@@ -24,9 +22,6 @@ public class TrackPlayer {
     private Thread playerThread;
     private int lastStoppedPosition = 0;
     private float totalVolumeModifier = 0;
-    public static final float MIN_GAIN = -80;
-    public static final float MAX_GAIN = 6;
-    public static final float DEFAULT_GAIN = 6;
     private VolumeModifierThread volumeModifierThread;
 
     public TrackPlayer(AudioTrack audioTrack, KeyframeManager keyframeManager) {
@@ -43,7 +38,6 @@ public class TrackPlayer {
 
     public void play() {
         if(!isPlaying()){
-            //Thread aufrufen
             if(audioTrack!=null){
                     playerThread = new Thread(){
                         public void run(){
@@ -73,11 +67,13 @@ public class TrackPlayer {
         play();
     }
 
-    public void setVolume(float gain) {
+    public void setVolume(float gain){
         float trackGain = gain;
+        //Increase or Decrease Playback Volume by monitor volume
         gain -= totalVolumeModifier;
         if(simpleAudioPlayer!=null){
             if(!muteProperty.get()){
+                //Check Volume Bounds
                 if(gain>=MIN_GAIN && gain<=MAX_GAIN){
                     simpleAudioPlayer.setGain(gain);
                     volumeProperty.set(trackGain);
@@ -129,6 +125,7 @@ public class TrackPlayer {
         }
     }
 
+    /*Custom Thread that updates the Volume every x ms with the interpolated Keyframe Values*/
     private class VolumeModifierThread extends Thread{
         VolumeModifierThread(){
             setDaemon(true);

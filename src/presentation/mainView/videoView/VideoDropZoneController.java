@@ -4,14 +4,12 @@ import business.managing.Project;
 import business.managing.VideoFile;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class VideoDropZoneController {
-
     private VideoDropZone root;
     private Project project;
 
@@ -26,7 +24,11 @@ public class VideoDropZoneController {
 
             if(loadedFile!=null){
                 if(loadedFile.isFile()){
-                    project.setVideoFile(new VideoFile(loadedFile));
+                    try{
+                        project.setVideoFile(new VideoFile(loadedFile));
+                    }catch (IOException e){
+
+                    }
                 }
             }
         }));
@@ -45,8 +47,14 @@ public class VideoDropZoneController {
                 List<File> droppedFiles = db.getFiles();
                 if(droppedFiles.size()==1){
                     success = true;
-                    System.out.println(droppedFiles.get(0)+"CHECK DATATYPE");
-                    project.setVideoFile(new VideoFile(droppedFiles.get(0)));
+                    String[] extension = droppedFiles.get(0).getName().split("\\.");
+                    if(extension[extension.length-1].equals("mp4")){
+                        try{
+                            project.setVideoFile(new VideoFile(droppedFiles.get(0)));
+                        }catch (IOException e){
+
+                        }
+                    }
                 }
             }
             dragEvent.setDropCompleted(success);

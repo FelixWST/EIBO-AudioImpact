@@ -5,9 +5,7 @@ import business.playback.TrackPlayer;
 import business.tracks.AudioTrack;
 import business.tracks.AudioTrackType;
 import business.tracks.MergedTrack;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,10 +17,6 @@ public class PlayerManager {
     private HashMap<AudioTrackType, KeyframeManager> keyframeManagers;
     private SimpleDoubleProperty totalVolumeProperty;
 
-
-    public PlayerManager(){
-        this(null,null);
-    }
 
     public PlayerManager(MergedTrack mergedTrack, ArrayList<KeyframeManager> keyframeManagers){
         if(mergedTrack!=null && keyframeManagers != null){
@@ -90,6 +84,7 @@ public class PlayerManager {
     }
 
     public void toggleSoloOnTrack(AudioTrackType trackType){
+        //If Track was solo -> desolo
         if(player.get(trackType).soloProperty().get()){
             player.get(trackType).soloProperty().set(false);
             if(isAnotherPlayerSolo()){
@@ -97,15 +92,18 @@ public class PlayerManager {
             }
             for(Map.Entry<AudioTrackType, TrackPlayer> entry : player.entrySet()){
                 if(entry.getValue().muteProperty().get() && !isAnotherPlayerSolo()){
-                    //Nur wenn kein player mehr auf Solo ist
+                    //demute Track, if no other player is solo
                     entry.getValue().mute();
                 }
             }
+        //Solo Track
         }else{
             player.get(trackType).soloProperty().set(true);
+            //If Track was muted before
             if(player.get(trackType).muteProperty().get()){
                 player.get(trackType).mute();
             }
+            //Iterate through every Track and Mute it if its not muted and not solo
             for(Map.Entry<AudioTrackType, TrackPlayer> entry : player.entrySet()){
                 if(entry.getKey()!=trackType){
                     if(!entry.getValue().muteProperty().get() && !entry.getValue().soloProperty().get()){
@@ -115,7 +113,7 @@ public class PlayerManager {
             }
         }
     }
-
+    /*Checks if another Track is solo*/
     public boolean isAnotherPlayerSolo(){
         for(Map.Entry<AudioTrackType, TrackPlayer> entry : player.entrySet()){
             if(entry.getValue().soloProperty().get()){

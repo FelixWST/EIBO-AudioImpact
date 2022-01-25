@@ -4,15 +4,12 @@ import business.exporting.WavExporter;
 import business.managing.Project;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-
 import java.io.File;
 import java.io.IOException;
 
 public class ExportViewController {
-
     private ExportView root;
     private Project project;
-
 
     public ExportViewController(Project project){
         this.project = project;
@@ -43,8 +40,6 @@ public class ExportViewController {
                 }
             }
         }));
-
-
 
         root.getOpenProject().setOnMouseClicked((event->{
             FileChooser fc = new FileChooser();
@@ -124,7 +119,6 @@ public class ExportViewController {
                     root.getFileNameTextField().setId("");
                 }
             }
-            //Check ob überhaupt schon exportierbereit ist
         }));
     }
 

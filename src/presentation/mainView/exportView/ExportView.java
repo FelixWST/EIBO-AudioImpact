@@ -10,7 +10,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class ExportView extends ScrollPane {
-
     private Label titleLabel, projectSubLabel, fileSubLabel, pathSubLabel;
     private TextField projectName, fileName, path;
     private Button directory, exportAudio, saveProject, openProject;
@@ -29,7 +28,6 @@ public class ExportView extends ScrollPane {
         fileName.setFocusTraversable(false);
         fileSubLabel = new Label("Filename");
         fileSubLabel.getStyleClass().addAll("label-sub-input");
-
 
         path = new TextField();
         path.setEditable(false);
@@ -75,8 +73,6 @@ public class ExportView extends ScrollPane {
         VBox.setMargin(openProject, new Insets(10));
 
         mainContainer.prefHeightProperty().bind(this.heightProperty());
-
-
 
         this.getStylesheets().add("/presentation/mainView/editingView.css");
         this.getStylesheets().add("/presentation/mainView/exportView/exportView.css");

@@ -35,8 +35,6 @@ public class TimelineTrackSettings extends VBox {
         hybridSlider = new StackPane(volumeProgress, totalVolume);
         hybridSlider.setId("hybrid-volume-slider");
 
-
-
         headphoneImage = new Image("/data/assets/headphones.png");
         iv = new ImageView(headphoneImage);
         iv.setFitHeight(15);
@@ -50,9 +48,7 @@ public class TimelineTrackSettings extends VBox {
         volumeContainer.setMaxHeight(38);
         HBox.setMargin(volumeLabel, new Insets(10));
 
-
         this.getChildren().addAll(volumeContainer);
-
     }
 
     public ProgressBar getVolumeProgress() {

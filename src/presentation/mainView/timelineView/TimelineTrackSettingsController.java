@@ -13,8 +13,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import presentation.mainView.videoView.VideoViewController;
-
-
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -34,7 +32,6 @@ public class TimelineTrackSettingsController {
         this.playerManager = playerManager;
         this.videoViewController = videoViewController;
         this.timelineTracksController = timelineTracksController;
-
 
         Platform.runLater(()->{
             initializeTrackSettings();
@@ -67,7 +64,6 @@ public class TimelineTrackSettingsController {
     public void initializeTrackSettings(){
         root.resetToDefaultLayout();
         trackLayers = new HashMap<>();
-        System.out.println(trackLayers);
         for(AudioTrack audioTrack : project.mergedTrackProperty().get().getAudioTracks()){
             trackLayers.put(audioTrack.getAudioTrackType(), new TrackLayerSettings(audioTrack.getAudioTrackType()));
             String id = "";
@@ -76,8 +72,8 @@ public class TimelineTrackSettingsController {
                 case INTENSITY -> id = "track-settings-volume-intensity";
                 case ATMOSPHERE -> id = "track-settings-volume-atmosphere";
             }
-            trackLayers.get(audioTrack.getAudioTrackType()).volumeProgress.setId(id);
-            trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setId(id);
+            trackLayers.get(audioTrack.getAudioTrackType()).getVolumeProgress().setId(id);
+            trackLayers.get(audioTrack.getAudioTrackType()).getVolumeSettingSlider().setId(id);
 
             trackLayers.get(audioTrack.getAudioTrackType()).prefHeightProperty().bind((root.heightProperty().divide(project.mergedTrackProperty().get().getAudioTracks().size())));
             VBox.setMargin(trackLayers.get(audioTrack.getAudioTrackType()), new Insets(10,0,5,10));
@@ -97,9 +93,9 @@ public class TimelineTrackSettingsController {
 
 
             AtomicLong lastMilliTime = new AtomicLong(System.currentTimeMillis());
-            trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.valueProperty().addListener(((observableValue, number, t1) -> {
+            trackLayers.get(audioTrack.getAudioTrackType()).getVolumeSettingSlider().valueProperty().addListener(((observableValue, number, t1) -> {
 
-                if (trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.valueChangingProperty().get()) {
+                if (trackLayers.get(audioTrack.getAudioTrackType()).getVolumeSettingSlider().valueChangingProperty().get()) {
                     Platform.runLater(() -> {
                         playerManager.setTrackVolume(audioTrack.getAudioTrackType(), t1.floatValue());
                         if (videoViewController.getMediaPlayer().statusProperty().get() == MediaPlayer.Status.PLAYING) {
@@ -114,44 +110,44 @@ public class TimelineTrackSettingsController {
                     });
                 }
                 //property von -80 bis +6
-                trackLayers.get(audioTrack.getAudioTrackType()).volumeProgress.setProgress((t1.doubleValue() + 80) / 86);
+                trackLayers.get(audioTrack.getAudioTrackType()).getVolumeProgress().setProgress((t1.doubleValue() + 80) / 86);
             }));
 
             if(playerManager == null || videoViewController.getMediaPlayer() == null){
-                trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setDisable(true); //Boolean binding?
+                trackLayers.get(audioTrack.getAudioTrackType()).getVolumeSettingSlider().setDisable(true);
             }
 
-            trackLayers.get(audioTrack.getAudioTrackType()).mute.setOnAction((event)->{
+            trackLayers.get(audioTrack.getAudioTrackType()).getMute().setOnAction((event)->{
                 playerManager.toggleMuteOnTrack(audioTrack.getAudioTrackType());
             });
 
-            trackLayers.get(audioTrack.getAudioTrackType()).solo.setOnAction((event)->{
+            trackLayers.get(audioTrack.getAudioTrackType()).getSolo().setOnAction((event)->{
                 playerManager.toggleSoloOnTrack(audioTrack.getAudioTrackType());
             });
 
             playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).muteProperty().addListener(((observableValue, aBoolean, t1) -> {
                 if(t1){
-                    trackLayers.get(audioTrack.getAudioTrackType()).mute.setId("mute-active");
+                    trackLayers.get(audioTrack.getAudioTrackType()).getMute().setId("mute-active");
                 }else{
-                    trackLayers.get(audioTrack.getAudioTrackType()).mute.setId("mute-inactive");
+                    trackLayers.get(audioTrack.getAudioTrackType()).getMute().setId("mute-inactive");
                 }
             }));
 
             playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).soloProperty().addListener(((observableValue, aBoolean, t1) -> {
                 if(t1){
-                    trackLayers.get(audioTrack.getAudioTrackType()).solo.setId("solo-active");
+                    trackLayers.get(audioTrack.getAudioTrackType()).getSolo().setId("solo-active");
                 }else{
-                    trackLayers.get(audioTrack.getAudioTrackType()).solo.setId("solo-inactive");
+                    trackLayers.get(audioTrack.getAudioTrackType()).getSolo().setId("solo-inactive");
                 }
             }));
 
-            trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setValue(playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).volumeProperty().getValue());
+            trackLayers.get(audioTrack.getAudioTrackType()).getVolumeSettingSlider().setValue(playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).volumeProperty().getValue());
 
             playerManager.getTrackPlayer(audioTrack.getAudioTrackType()).volumeProperty().addListener(((observableValue, number, t1) -> {
 
-                if(!trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.valueChangingProperty().get()){
+                if(!trackLayers.get(audioTrack.getAudioTrackType()).getVolumeSettingSlider().valueChangingProperty().get()){
                     Platform.runLater(()->{
-                        trackLayers.get(audioTrack.getAudioTrackType()).volumeSettingSlider.setValue(t1.doubleValue());
+                        trackLayers.get(audioTrack.getAudioTrackType()).getVolumeSettingSlider().setValue(t1.doubleValue());
                     });
                 }
             }));

@@ -12,14 +12,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class TrackLayerSettings extends VBox {
-
-    Slider volumeSettingSlider;
-    ProgressBar volumeProgress;
-    Button mute, solo;
-    AudioTrackType trackType;
-    HBox controlContainer;
-    Label trackTypeLabel;
-    StackPane mergedProgress;
+    private Slider volumeSettingSlider;
+    private ProgressBar volumeProgress;
+    private Button mute, solo;
+    private AudioTrackType trackType;
+    private HBox controlContainer;
+    private Label trackTypeLabel;
+    private StackPane mergedProgress;
 
     public TrackLayerSettings(AudioTrackType trackType){
         this.trackType = trackType;
@@ -37,7 +36,6 @@ public class TrackLayerSettings extends VBox {
 
         volumeProgress = new ProgressBar();
         volumeProgress.prefWidthProperty().bind(volumeSettingSlider.widthProperty());
-
 
         mute = new Button("M");
         mute.setPrefWidth(50);
@@ -62,5 +60,21 @@ public class TrackLayerSettings extends VBox {
         VBox.setMargin(trackTypeLabel, new Insets(10,10,10,20));
         VBox.setMargin(controlContainer, new Insets(0,10,10,20));
         this.getChildren().addAll(trackTypeLabel, controlContainer);
+    }
+
+    public Slider getVolumeSettingSlider() {
+        return volumeSettingSlider;
+    }
+
+    public ProgressBar getVolumeProgress() {
+        return volumeProgress;
+    }
+
+    public Button getMute() {
+        return mute;
+    }
+
+    public Button getSolo() {
+        return solo;
     }
 }

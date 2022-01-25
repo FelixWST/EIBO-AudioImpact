@@ -3,23 +3,17 @@ package presentation.application;
 import business.managing.PlayerManager;
 import business.managing.Project;
 import business.managing.TrackManager;
-import business.managing.VideoFile;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import presentation.mainView.EditingViewController;
-
 import java.awt.*;
 import java.io.*;
 import java.util.Properties;
 
 public class Main extends Application {
-
     private Stage primaryStage;
     private EditingViewController editingViewController;
-    private VideoFile videoFile;
     private TrackManager trackManager;
     private PlayerManager playerManager;
     private Project project;
@@ -34,16 +28,11 @@ public class Main extends Application {
         primaryStage.setMinWidth(1280);
         primaryStage.setMinHeight(900);
 
-
         trackManager = new TrackManager();
         project = new Project("Unnamed Project", "unnamed-export", "", trackManager.getMergedTrack(0), trackManager);
         playerManager = project.getPlayerManager();
 
         loadProperties();
-
-
-
-        //If Property: load last Project
 
         editingViewController = new EditingViewController(primaryStage, project, playerManager, trackManager);
         Scene scene = new Scene(editingViewController.getRoot(), windowSize[0], windowSize[1]);
@@ -95,7 +84,6 @@ public class Main extends Application {
             properties.store(output, null);
 
         }catch (IOException e){
-            e.printStackTrace();
         }
     }
 
@@ -121,7 +109,6 @@ public class Main extends Application {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

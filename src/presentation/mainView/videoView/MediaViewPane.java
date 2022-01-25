@@ -9,6 +9,7 @@ import javafx.geometry.VPos;
 import javafx.scene.layout.Region;
 import javafx.scene.media.MediaView;
 
+/*Edited ImageViewPane to work for MediaView*/
 public class MediaViewPane extends Region {
 
     private ObjectProperty<MediaView> mediaViewProperty = new SimpleObjectProperty<>();

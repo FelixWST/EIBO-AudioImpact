@@ -7,7 +7,6 @@ import business.tracks.MergedTrack;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.Mp3File;
 import com.mpatric.mp3agic.UnsupportedTagException;
-
 import java.io.*;
 import java.util.ArrayList;
 
@@ -16,11 +15,7 @@ public class TrackManager {
     private ArrayList<MergedTrack> trackList;
     private BufferedReader reader;
     private String line;
-    private long duration;
-    private String mergedTrackTitle;
-    private AudioTrack AtmosphereTrack;
-    private AudioTrack DepthTrack;
-    private AudioTrack IntensityTrack;
+    private AudioTrack atmosphereTrack, depthTrack, intensityTrack;
     private File f;
     private String path;
 
@@ -29,13 +24,13 @@ public class TrackManager {
         scanFiles();
     }
 
+    /*Scans Files in MergedTrack Directory*/
     public void scanFiles() {
         f = new File("src/data/audio/trackLists");
         File[] fileArray = f.listFiles();
         for(int i = 0; i < fileArray.length;i++){
             if(fileArray[i].isFile()){
                 path = String.valueOf(fileArray[i]);
-                System.out.println(fileArray[i]);
                 loadMergedTrack(path);
             }
         }
@@ -44,12 +39,12 @@ public class TrackManager {
         }
     }
 
+    /*Custom Method to load MergedTrack from track-file*/
     public void loadMergedTrack(String path) {
-        AudioTrackType audioTrackType;
         String mergedTrackName ="defualt Name";
         String coverPath = "defautl";
         Genre genre = null;
-
+        long duration = 0;
 
         try {
             reader = new BufferedReader(new FileReader(path));
@@ -61,40 +56,35 @@ public class TrackManager {
                     if(line.contains("GENRE")){
                         genre = getGenre(line);
                     }
-
                     if(line.contains("COVER")){
                         coverPath = (String) getCoverPath(line);
                     }
-
                     if(line.contains(".mp3")) {
                         Mp3File mp3File = new Mp3File(line);
                         duration = mp3File.getLengthInSeconds();
 
                        if(getAudioTrackType(line).equals(AudioTrackType.ATMOSPHERE)) {
-                           AtmosphereTrack = new AudioTrack(line, AudioTrackType.ATMOSPHERE);
+                           atmosphereTrack = new AudioTrack(line, AudioTrackType.ATMOSPHERE);
                        } else if(getAudioTrackType(line).equals(AudioTrackType.DEPTH)) {
-                           DepthTrack = new AudioTrack(line, AudioTrackType.DEPTH);
+                           depthTrack = new AudioTrack(line, AudioTrackType.DEPTH);
                        } else {
-                           IntensityTrack = new AudioTrack(line, AudioTrackType.INTENSITY);
+                           intensityTrack = new AudioTrack(line, AudioTrackType.INTENSITY);
                        }
                     }
                 }
-                System.out.println("MergedTrack Name:"+ mergedTrackTitle);
             } catch(IOException | UnsupportedTagException | InvalidDataException e) {
                 e.printStackTrace();
             }
         } catch(FileNotFoundException e) {
             e.printStackTrace();
         }
-
         MergedTrack mergedTrack = new MergedTrack(mergedTrackName, duration,coverPath, genre);
 
-        mergedTrack.addTrack(AtmosphereTrack);
-        mergedTrack.addTrack(DepthTrack);
-        mergedTrack.addTrack(IntensityTrack);
+        mergedTrack.addTrack(atmosphereTrack);
+        mergedTrack.addTrack(depthTrack);
+        mergedTrack.addTrack(intensityTrack);
 
         this.trackList.add(mergedTrack);
-        System.out.println("Merged Track added");
     }
 
     private Object getCoverPath(String line) {
@@ -102,7 +92,6 @@ public class TrackManager {
     }
 
     private Genre getGenre(String line) {
-        //Checken, ob Enum zu String existiert, statt jeden Fall abzufangen?
         if(line.contains("CINEMATIC")) {
             return Genre.CINEMATIC;
         } else if(line.contains("ACTION")) {
@@ -115,7 +104,7 @@ public class TrackManager {
     }
 
     private String getMergedTrackTitle(String line) {
-           return mergedTrackTitle = line.substring(line.indexOf(":")+1, line.length());
+           return line.substring(line.indexOf(":")+1, line.length());
     }
 
     private AudioTrackType getAudioTrackType(String line) {

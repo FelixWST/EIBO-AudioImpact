@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 public class VideoDropZone extends HBox {
-
     private Label addLabel;
     private Image addIcon;
     private ImageView iconView;

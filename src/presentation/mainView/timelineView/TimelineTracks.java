@@ -1,6 +1,5 @@
 package presentation.mainView.timelineView;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 
@@ -8,7 +7,6 @@ public class TimelineTracks extends VBox {
     private Slider timelineSlider;
 
     public TimelineTracks(){
-
         timelineSlider = new Slider();
         timelineSlider.getStyleClass().addAll("timeLineSlider");
         timelineSlider.setShowTickMarks(true);
@@ -19,7 +17,6 @@ public class TimelineTracks extends VBox {
         timelineSlider.setSnapToTicks(true);
         timelineSlider.setMinHeight(38);
         timelineSlider.setMaxHeight(38);
-
         this.getChildren().addAll(timelineSlider);
     }
 

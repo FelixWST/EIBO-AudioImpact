@@ -11,11 +11,9 @@ import javafx.util.Duration;
 import javafx.util.StringConverter;
 import presentation.mainView.EditingViewController;
 import presentation.mainView.videoView.VideoViewController;
-
 import java.util.concurrent.TimeUnit;
 
 public class TimelineViewController {
-
     private TimeLineView root;
     private EditingViewController editingViewController;
     private Project project;
@@ -37,9 +35,7 @@ public class TimelineViewController {
         this.root = new TimeLineView();
         timelineTrackSettingsController.getRoot().prefWidthProperty().bind(root.widthProperty().multiply(0.3));
         timelineTracksController.getRoot().prefWidthProperty().bind(root.widthProperty().multiply(0.7));
-
         timelineTrackSettingsController.getRoot().getHybridSlider().prefHeightProperty().bind(timelineTracksController.getRoot().getTimelineSlider().heightProperty());
-
         root.getChildren().addAll(timelineTrackSettingsController.getRoot(), timelineTracksController.getRoot());
         HBox.setMargin(timelineTrackSettingsController.getRoot(), new Insets(10,0,10,10));
         HBox.setMargin(timelineTracksController.getRoot(), new Insets(10,10,10,0));
@@ -53,8 +49,6 @@ public class TimelineViewController {
                 initializeVideoControls();
             }
         }));
-
-
 
         timelineTracksController.getRoot().getTimelineSlider().setLabelFormatter(new StringConverter<Double>() {
             @Override

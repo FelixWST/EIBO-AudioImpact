@@ -1,31 +1,24 @@
 package business.tracks;
 
-import javafx.scene.image.Image;
-
 import java.util.ArrayList;
 
 public class MergedTrack {
-
     private String title;
-    private ArrayList<Genre> genres;
+    private Genre genre;
     private long duration;
     private ArrayList<AudioTrack> audioTracks;
     private String coverPath;
 
-    public MergedTrack(String title, long duration,String coverPath, Genre ... genres){
-        this(title, duration, new ArrayList<AudioTrack>(),coverPath, genres);
+    public MergedTrack(String title, long duration,String coverPath, Genre genre){
+        this(title, duration, new ArrayList<AudioTrack>(),coverPath, genre);
     }
 
-    public MergedTrack(String title, long duration, ArrayList<AudioTrack> audioTracks, String coverPath,Genre... genres){
+    public MergedTrack(String title, long duration, ArrayList<AudioTrack> audioTracks, String coverPath,Genre genre){
         this.title = title;
         this.duration = duration;
         this.audioTracks = audioTracks;
         this.coverPath = coverPath;
-
-        this.genres = new ArrayList<>();
-        for(Genre g : genres){
-            this.genres.add(g);
-        }
+        this.genre = genre;
     }
     public String getCoverPath(){return this.coverPath;}
 
@@ -38,11 +31,7 @@ public class MergedTrack {
     }
 
     public String getGenre() {
-        String output ="";
-        for(Genre g : genres){
-            output += g.toString();
-        }
-        return output;
+        return genre.toString();
     }
 
     public ArrayList<AudioTrack> getAudioTracks() {
@@ -60,7 +49,7 @@ public class MergedTrack {
 
     @Override
     public String toString() {
-        return title + " " + genres + " " + duration;
+        return title + " " + genre + " " + duration;
 
     }
 
