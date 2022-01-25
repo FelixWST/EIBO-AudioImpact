@@ -10,16 +10,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.skin.ListViewSkin;
+import javafx.scene.control.skin.VirtualFlow;
 import javafx.util.Callback;
+import presentation.mainView.videoView.VideoViewController;
 
 public class LibraryViewController {
 
-    LibraryView root;
-    TrackManager trackManager;
-    Project project;
-    PlayerManager playerManager;
+    private LibraryView root;
+    private TrackManager trackManager;
+    private Project project;
+    private PlayerManager playerManager;
+    private int first = 0;
+    private int last  = 0;
 
-    public LibraryViewController(TrackManager trackManager, Project project, PlayerManager playerManager) {
+    public LibraryViewController(TrackManager trackManager, Project project, PlayerManager playerManager, VideoViewController videoViewController) {
         this.trackManager = trackManager;
         this.project = project;
         this.playerManager = playerManager;
@@ -40,7 +45,9 @@ public class LibraryViewController {
         root.listView.setOnMouseClicked((mouseEvent)->{
             project.setMergedTrackProperty(root.listView.getSelectionModel().getSelectedItem());
             playerManager.changeMergedTrack(root.listView.getSelectionModel().getSelectedItem(), project.getKeyframeManagers());
-            //Stop video playback?
+            if(videoViewController.getMediaPlayer()!=null){
+                videoViewController.getMediaPlayer().pause();
+            }
         });
 
         if(project.mergedTrackProperty().get()!=null){
@@ -51,22 +58,31 @@ public class LibraryViewController {
         project.mergedTrackProperty().addListener(((observableValue, mergedTrack, t1) -> {
             if(t1!=null){
                 root.listView.getSelectionModel().select(t1);
-                root.listView.scrollTo(t1);
-            }
-        }));
-
-        root.listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MergedTrack>() {
-            @Override
-            public void changed(ObservableValue<? extends MergedTrack> observableValue, MergedTrack mergedTrack, MergedTrack t1) {
-                if(t1 != null){
-                    System.out.println(t1);
+                if(!isItemVisibleInListView(root.listView, root.listView.getSelectionModel().getSelectedIndex())){
+                    root.listView.scrollTo(t1);
                 }
             }
-        });
+        }));
     }
 
     public LibraryView getRoot(){
         return this.root;
+    }
+
+    public boolean isItemVisibleInListView(ListView<?> t, int index) {
+        try {
+            ListViewSkin<?> ts = (ListViewSkin<?>) t.getSkin();
+            VirtualFlow<?> vf = (VirtualFlow<?>) ts.getChildren().get(0);
+            first = vf.getFirstVisibleCell().getIndex();
+            last = vf.getLastVisibleCell().getIndex();
+            if(index > first && index < last){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception ex) {
+        }
+        return false;
     }
 
 }

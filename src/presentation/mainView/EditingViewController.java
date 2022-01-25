@@ -31,7 +31,7 @@ public class EditingViewController {
         this.root = new EditingView();
         this.exportViewController = new ExportViewController(project);
         this.videoViewController = new VideoViewController(this, project, playerManager, trackManager);
-        this.libraryViewController = new LibraryViewController(trackManager, project, playerManager);
+        this.libraryViewController = new LibraryViewController(trackManager, project, playerManager, videoViewController);
         this.timelineViewController = new TimelineViewController(this, project, playerManager, trackManager);
 
         Insets videoViewInsets = new Insets(10,20,20,20);
